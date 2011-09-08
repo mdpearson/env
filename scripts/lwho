@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# Copyright (c) 2001-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: lwho,v 1.9 2007/09/12 19:02:04 mdp Exp $
+# print a list of other users on the system
+#
+
+PATH=/bin:/usr/bin
+
+USAGE="usage: `basename $0` [-cqsh]"
+VSAGE="\t-c don't check console logins\n\
+       \t-q print nothing if no-one else is using host\n\
+       \t-s print abbreviated output (less info on root logins)\n\
+       \t-h print this message\n"
+
+# on some systems there is no nawk
+awk 1 /dev/null 2>&- >&-
+[ $? -eq 0 ] && alias nawk=awk
+
+while getopts cqsh arg
+do
+	case $arg in
+	    c)	noconsole=y ;;
+	    q)	quiet=y ;;
+	    s)	short=y ;;
+	    h)	echo $USAGE
+		printf "$VSAGE"
+		exit 0 ;;
+	    *)	echo $USAGE
+		exit 1 ;;
+	esac
+done
+
+# get a list of users other than yourself
+#wholines=`who --lookup 2>&-`
+#[ $? -eq 0 ] || wholines=`who`
+wholines=`who`
+wholist=`echo "$wholines" | sort | fgrep -v __G_USER__`
+
+# optionally strike out console users
+[ "$noconsole" ] && wholist=`echo "$wholist" | grep -v console`
+
+users=`echo "$wholist" | cut -d" " -f1 | uniq`
+
+if [ "$short" ]
+then
+	usercnt=`echo "$users" | wc -l`
+
+	# simple list of users, including root
+	if [ "$usercnt" -ge 2 ]
+	then
+		echo $usercnt " users:" $users
+	elif [ "$users" ]
+	then
+		echo "1 user:" $users
+	fi
+else
+	# strike out root users
+	users=`echo "$users" | grep -v root`
+	usercnt=`echo "$users" | wc -l`
+
+	# all users but root on one line
+	if [ "$usercnt" -ge 2 ]
+	then
+		echo $usercnt " users:" $users
+	elif [ "$users" ]
+	then
+		echo "1 user:" $users
+	fi
+
+	# and root users along with the connecting host
+	roots=`echo "$wholist" | nawk '/root/ {
+		sub(":.*","",$6)
+		if ($6)
+			print $6	# connecting from
+		else
+			print $2	# or connected to
+	    }' | sed -e 's/)//' -e 's/(//' | uniq`
+	[ "$roots" ] && echo "root via:" $roots
+fi
+
+[ "${users}${roots}${quiet}" ] || \
+    echo "no one else on `uname -n`"
+
+#EOF __TAGGED__

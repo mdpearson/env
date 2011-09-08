@@ -1,0 +1,16 @@
+#!/bin/csh
+#
+# Copyright (c) 2005 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.tcshrc,v 1.2 2005/06/19 05:22:13 matmone Exp $
+# used on alpha systems that use tcsh as a login shell.
+#
+
+# Default path does not contain CVS on Broad alphas.
+# This line enables ssh cvs connections to find the CVS binaries.
+setenv PATH ${PATH}:/util/bin
+
+#EOF __TAGGED__

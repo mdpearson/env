@@ -1,0 +1,193 @@
+#!/bin/ksh
+#
+# Copyright (c) 2004-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: clust_fvwmenu,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# generate a dynamic fvwm menu for a cluster from a resource file
+#
+
+#
+# See menus/clusters.Menu for a commented example of a resource file
+# sourced by this script. Variables in capital letters are inherited
+# from that file.
+#
+# This script, along with heir_fvwmenu, generates a heirarchical menu
+# of clusters and nodes that mirror a directory structure somewhere in
+# the user's path. heir_fvwmenu generates the directory tree while
+# this script makes the leaves. It reads a resource file that contains
+# information about a compute node or cluster (name, members, master
+# node, etc.), then generates a dynamic fvwm2 popup menu based on it.
+#
+# Because the menu is dynamic there is a provision for a call to a
+# shell script to be run on the remote side. See rsh_wrap() and
+# INFO_COMMAND below.
+#
+
+# load up the resource file
+[ ! -f "$1" ] && exit; . $1
+
+# can't even print an fvwm-readable error message without this variable
+[ "$MENU_NAME" ] || exit
+
+# make sure required variables are set
+if [ ! "$MENU_TITLE" -o ! "$CLUSTER_NODES" ]
+then
+	printf 'AddToMenu %s "%s: %s\t " Title top\n' \
+	    $MENU_NAME "$(basename $1)" "bad format"
+	exit 0
+fi
+
+# default this parameter if it isn't set in the conf file
+[ "$SUBMENU_SIZE" ] || SUBMENU_SIZE=4
+
+# get node count
+nodecount=$(echo "$CLUSTER_NODES" | wc -w)
+# if there is only one node, assume it is the master node
+[ $nodecount -eq 1 ] && [ ! "$MASTER_NODE" ] && MASTER_NODE=$CLUSTER_NODES
+
+#
+# rsh_wrap <host> <command>
+#
+# A wrapper function for rsh that checks to make sure the host is
+# alive before passing line arguments directly to rsh.
+#
+rsh_wrap () {
+	tfile=/tmp/rup-$1-$SECONDS
+
+	rup $1 > $tfile 2>&1 &
+	tlim=$(( $SECONDS + 2 ))
+	while [ "$(jobs)" ]
+	do
+		# busy wait for rup for a second or so
+		[ $SECONDS -ge $tlim ] && break
+	done
+
+	if [ "$(jobs)" ]
+	then
+		kill %% 2>&-
+		print "unreachable"
+		rm $tfile
+		return 1
+	elif [ $(cat $tfile | grep -c " up ") -ne 1 ]
+	then
+		print "unreachable"
+		rm $tfile
+		return 1
+	fi
+
+	rm $tfile
+	infostring=$(rsh -n $* 2>&-)
+	print "${infostring:-unknown}"
+
+	return 0
+}
+
+echo DestroyMenu recreate $MENU_NAME
+
+# print a title for the menu, if applicable, with the master node's info
+if [ "$MASTER_NODE" -a "$INFO_COMMAND" ]
+then
+	title=$(rsh_wrap $MASTER_NODE $INFO_COMMAND)
+	printf 'AddToMenu %s "%s" Title top\n' "$MENU_NAME" "$title"
+else
+	echo AddToMenu $MENU_NAME
+fi
+
+# print commands to log into the cluster if appropriate values are set
+if [ "$CONSOLE_NAME" -a "$CONSOLE_HOST" ]
+then
+	[ "$MASTER_NODE" ] && [ "$INFO_COMMAND" ] && echo + \"\" Nop
+
+	if [ "$DISPLAY" ]
+	then
+		mdisp=$(echo $DISPLAY | sed 's/unix//')
+		[ $(echo "$mdisp" | cut -c1) = ':' ] && \
+		    mdisp=${HOST}${mdisp}
+	fi
+
+	[ ! "$mdisp" ] && mdisp=${HOST}:0.0
+
+	for cmd in cconsole crlogin ctelnet
+	do
+		cmd_menu=`echo $cmd | sed 's/^c/c\&/'`
+		printf "+ \"%s\t \"\t%s %s '%s \"%s %s %s\"'\n" \
+		    $cmd_menu "Exec exec rsh" "$CONSOLE_HOST" \
+		    "sh -c" "DISPLAY=$mdisp" \
+		    /opt/SUNWcluster/bin/$cmd "$CONSOLE_NAME"
+	done
+fi
+
+nodei=0
+
+for node in $CLUSTER_NODES
+do
+	if [ $nodecount -le $SUBMENU_SIZE ]
+	then
+		# print a divider line if something preceded this
+		if [ "$CONSOLE_NAME" -a "$CONSOLE_HOST" ] ||
+		    [ "$MASTER_NODE" -a "$INFO_COMMAND" ] ||
+		    [ $nodei -gt 0 ]
+		then
+			echo + \"\" Nop
+		fi
+	else
+		# generate a submenu for the next SUBMENU_SIZE entries
+		if [ $(( $nodei % $SUBMENU_SIZE )) -eq 0 ]
+		then
+			menurank=$(( $nodei / $SUBMENU_SIZE ))
+			menuitem[$menurank]="$node"
+			menulast[$menurank]=""
+			echo DestroyMenu recreate $MENU_NAME.$menurank
+			echo AddToMenu $MENU_NAME.$menurank
+		else
+			menulast[$menurank]=" to ${node}"
+			echo + \"\" Nop
+		fi
+	fi
+
+	nodei=$(( $nodei + 1 ))
+
+	#
+	# Set the title of the menu block relating to this node. If
+	# there is only one node in the cluster, the title is implied.
+	# Otherwise get info on the node, or simply print out the
+	# node-name (depending on whether there is a master node).
+	#
+
+	if [ $nodecount -eq 1 ]
+	then
+		title="... as $USER"
+	elif [ "$INFO_COMMAND" -a ! "$MASTER_NODE" ]
+	then
+		info=$(rsh_wrap $node $INFO_COMMAND)
+		title="$node: $info"
+	else
+		title="$node"
+	fi
+
+	printf "+ \"%s\t \"\tNewShell %s %s\n" "$title" $node $USER
+	printf "+ \"... as root\t \"\tRootShell %s\n" $node
+	printf "+ \"... on console\t \"\tConsoleShell %s\n" $node
+done
+
+# add in the generated submenu titles once their entries are set up
+if [ $nodecount -gt $SUBMENU_SIZE ]
+then
+	echo AddToMenu $MENU_NAME
+	echo + \"\" Nop
+
+	menuindex=0
+	while [ $menuindex -le $menurank ]
+	do
+		printf '+ "%s%s...\t"\tPopup %s\n' \
+		    "${menuitem[$menuindex]}" \
+		    "${menulast[$menuindex]}" \
+		    $MENU_NAME.$menuindex
+		menuindex=$(( $menuindex + 1 ))
+	done
+fi
+
+#EOF __TAGGED__

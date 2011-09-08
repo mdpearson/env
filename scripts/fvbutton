@@ -1,0 +1,139 @@
+#!/bin/ksh
+#
+# Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: fvbutton,v 1.3 2005/06/19 05:22:13 matmone Exp $
+# generate a button bar for FVWM configured for the X environment
+#
+
+#
+# This script defines a table of four horizonal buttons that spans the
+# bottom right of the screen. The first is a clock and the second is a
+# console viewer. The third is either xload or CDE's perf meter,
+# depending on what is available. The width of this button varies
+# depending on which meter is desplayed. The fourth button is a
+# standard FVWMpager window. The dimensions of this button vary
+# depending on dimensions of the screen.
+#
+
+HEIGHT=10	# height of fvwm bar, in cells
+CELLSZ=10	# height of a cell, in pixels
+
+#
+# Why two variables? FvwmButtons has trouble with tables with
+# large numbers of rows. Otherwise height would just be 100.
+# The button bar will be HEIGHT * CELLSZ pixels tall.
+#
+
+clockname=xclock
+clock_wid=`echo "1 * $HEIGHT" | bc | sed -e 's/\..*//'`
+clock_cmd="xclock -analog -padding 2 -update 1 -bg __CLOCK_BACKG__ \
+    -fg __CLOCK_TICKS__ -hl __CLOCK_OUTLN__ -hd __CLOCK_HANDS__"
+
+consname=console
+cons_wid=`echo "2 * $HEIGHT" | bc | sed -e 's/\..*//'`
+cons_cmd="xterm -C -bg __MOD_BG__ -fg __MOD_TERM__ -fn 5x7 -title console \
+    -bw 0 -b 2 -rw -aw -s -j -sb -si -vb -cr __MOD_TERM__ -e \
+    sh -c \"BUTTONS=true bash\""
+
+type sdtperfmeter 2>&- >&-
+if [ $? -eq 0 ]
+then
+	loadname="Sdtperfmeter"
+	load_cmd=sdtperfmeter
+	load_wid=`echo "2.5 * $HEIGHT" | bc | sed -e 's/\..*//'`
+else
+	loadname=xload
+	load_cmd="xload -update 1 -fg __MOD_FG__ -bg __MOD_BG__ -hl \
+	    __PAGER_FOCUS_FG__ -nolabel"
+	load_wid=`echo "1 * $HEIGHT" | bc | sed -e 's/\..*//'`
+fi
+
+pagername="FvwmPager"
+# get the aspect ratio of the main display
+aspect=`xdpyinfo -display :0.0 | awk '/dimensions/ {print $2}' | \
+    awk -Fx '{print ($1/$2)}'`
+# pager is 3x2 desktops (see .fvwm2rc), or 1.5x screen aspect ratio
+pager_wid=`echo "1.5 * $aspect * $HEIGHT" | bc | sed -e 's/\..*//'`
+pager_cmd="FvwmPager"
+
+#
+# Now that we have dimensions and contents for all four buttons,
+# define some utility functions and output the actual FvwmButtons and
+# FvwmPager commands needed.
+#
+
+pconfig()
+{
+	printf "*FvwmButtons: "
+	echo $*
+}
+
+ppager()
+{
+	printf "*FvwmPager: "
+	echo $*
+}
+
+pbutton()
+{
+	unset command name padding width
+	while getopts c:n:p:w: arg
+	do
+		case $arg in
+		    c)	command="$OPTARG" ;;
+		    n)	name="$OPTARG" ;;
+		    p)	padding="$OPTARG" ;;
+		    w)	width="$OPTARG" ;;
+		esac
+	done
+
+	[ "$width" ] || return		# required parameter
+
+	printf "*FvwmButtons: (%dx%d, Frame 1, NoHints, " $width $HEIGHT
+	[ "$padding" ] && printf "Padding %d %d, " $padding $padding
+	if [ "$name" ]
+	then
+		printf "Swallow \"%s\"" "$name"
+		[ "$command" ] && printf " '%s'" "$command"
+		printf ", "
+	fi
+
+	printf "Size %d %d)\n" \
+	    `expr $width \* $CELLSZ` `expr $HEIGHT \* $CELLSZ`
+}
+
+ppager Fore __PAGER_DESKTOP_FG__
+ppager Back __PAGER_DESKTOP_BG__
+ppager Hilight __PAGER_HILIGHT__
+ppager WindowColors __PAGER_UNFOC_FG__ __PAGER_UNFOC_BG__ \
+    __PAGER_FOCUS_FG__ __PAGER_FOCUS_BG__
+ppager SmallFont __SMALL_FONT__
+ppager Font none
+ppager Balloons
+ppager BalloonFont __SMALL_FONT__
+ppager BalloonFore __PAGER_BAL_FG__
+ppager BalloonBack __PAGER_BAL_BG__
+ppager BalloonBorderColor __MOD_BG__
+ppager BalloonBorderWidth 2
+ppager BalloonYOffset +1
+
+pconfig Fore __MOD_FG__
+pconfig Back __MOD_BG__
+pconfig Geometry -0-0
+pconfig BoxSize fixed
+pconfig Rows $HEIGHT
+pconfig Columns `expr $clock_wid + $load_wid + $cons_wid + $pager_wid`
+
+pbutton -w "$clock_wid" -p 1 -n "$clockname" -c "Exec exec $clock_cmd"
+pbutton -w "$cons_wid" -n "$consname" -c "Exec exec $cons_cmd"
+pbutton -w "$load_wid" -n "$loadname" -c "Exec exec $load_cmd"
+pbutton -w "$pager_wid" -n "$pagername" -c "$pagername 0 0"
+
+echo AddToFunc StartFunction
+echo + "I"	Module FvwmButtons
+
+#EOF __TAGGED__

@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+# Copyright (c) 2001-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: xping,v 1.5 2005/06/19 05:22:13 matmone Exp $
+# quickly check to see if controlling side of terminal supports X
+#
+
+# inherit path from environment
+PATH=$PATH:/usr/bin:/bin
+
+sname=`basename $0`
+res=0
+
+xrdb_path=`(type xrdb 2>&1) | awk '{ print $NF}'`
+
+if [ ! -x "$xrdb_path" ]
+then
+	echo "$sname: xrdb is not installed."
+	res=1
+elif [ ! "$DISPLAY" ]
+then
+	echo "$sname: DISPLAY undefined."
+	res=1
+else
+	#
+	# Check to see if xrdb can query the X server. xrdb may hang
+	# if there is nothing on the other side, so run it as a
+	# subprocess and busy wait for 1-2 seconds. If it times out
+	# or generates any error messages assume X is dead.
+	#
+
+	stime=`date | sed -e 's/.*://' -e 's/ .*//'`
+
+	$xrdb_path -n -nocpp -query >&- 2>/tmp/check.$$ &
+
+	while [ `ps -p $! >&-; echo $?` -eq 0 ]
+	do
+		ctime=`date | sed -e 's/.*://' -e 's/ .*//'`
+		rtime=`expr \( $ctime - $stime \) \% 60`
+		[ $rtime -lt 0 ] && rtime=`expr $rtime + 60`
+
+		if [ $rtime -gt 1 ]
+		then
+			kill $! 2>&- >&-
+			echo "$sname: timeout contacting display $DISPLAY."
+			res=1
+			break
+		fi
+	done
+
+	# any error messages imply problems with X
+	if [ -s /tmp/check.$$ ]
+	then
+		echo "$sname: xrdb reports:"
+		head /tmp/check.$$
+		res=1
+	fi
+
+	rm -f /tmp/check.$$
+fi
+
+[ $res -eq 0 ] && echo "$sname: display $DISPLAY seems to be sane."
+exit $res
+
+#EOF __TAGGED__

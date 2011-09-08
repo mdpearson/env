@@ -1,0 +1,40 @@
+#!/bin/ksh
+#
+# Copyright (c) 2001-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: ot_fvwmenu,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# generate a list of command line utilities for an FVWM menu
+#
+
+print "AddToMenu utilities-menu"
+for app in sdtaudiocontrol bugtraq dtcalc galaxy maker teamware xv
+do
+	printf "+ \"%s\t \"\tExec exec %s\n" $app $app
+done
+for cmdline in dc ftp iftp telnet
+do
+	printf "+ \"%s\t \"\tRunInShell %s\n" $cmdline $cmdline
+done
+
+print "AddToMenu desktop-menu"
+
+printf '+ "random\t "\texec sdtp -r\n'
+printf '+ "default\t "\texec xsetroot -def\n'
+printf '+ ""\tNop\n'
+
+for f in $(find $HOME/img/desks -type f | sort -u)
+do
+	fname=$(basename $f)
+	fdesc=$(echo $fname | sed 's/[^-a-z]\{1,\}.*//')
+	fres=$(echo $f | sed -e 's/^.*\/\([^\/]*\)\/[^\/]*$/\1/')
+	fdepth=$(echo $fname | sed -e 's/[^0-9]*\([0-9]*\).*/\1/')
+	ftitle=$fdesc" (@ "${fres}${fdepth:+x$fdepth}")"
+	printf '+ "%s\t "\tExec exec sdtp %s\n' "$ftitle" $fname
+done
+
+print "AddToMenu main-menu"
+
+#EOF __TAGGED__

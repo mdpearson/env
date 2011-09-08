@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Copyright (c) 2003-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: tap,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# [DEPRECATED] connect to a given host using ssh or rlogin
+#
+
+PATH=/bin:/usr/bin
+
+USAGE="usage: `basename $0` [-sh] <hostname> [-l <user>]"
+
+while getopts sh arg
+do
+	case $arg in
+	    s)	silent=y ;;
+	    h)	echo $USAGE
+		exit 0 ;;
+	    *)	echo $USAGE
+		exit 1 ;;
+	esac
+done
+
+shift `expr $OPTIND - 1`
+host=$1
+shift
+
+if [ -f $HOME/.ssh/known_hosts ] && \
+    [ `fgrep -c "$host" $HOME/.ssh/known_hosts` -ge 1 ]
+then
+	[ "$silent" ] || echo "[ exec ssh $host via $HOST ]"
+	TERM=vt100 exec ssh "$host" $*
+else
+	[ "$silent" ] || echo "[ exec rlogin $host via $HOST ]"
+	TERM=vt100 exec rlogin "$host" $*
+fi
+
+#EOF __TAGGED__

@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.sessionetc,v 1.3 2005/06/19 05:22:13 matmone Exp $
+# xhost/xrdb commands for the DT environment
+#
+
+PATH=/usr/openwin/bin:/usr/bin:/bin
+
+[ -f $HOME/.Xdefaults ] && xrdb -load $HOME/.Xdefaults
+
+if [ $USER != "root" ] && [ "$DISPLAY" = ":0.0" ]
+then
+	xhost + nis:${USER}@ 1>&-
+	xhost + nis:root@ 1>&-
+	xhost + local: 1>&-
+fi
+
+#EOF __TAGGED__

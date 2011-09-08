@@ -1,0 +1,31 @@
+#!/not/executable
+#
+# Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.dbxrc,v 1.3 2005/06/19 05:22:13 matmone Exp $
+# aliases for dbx debugger
+#
+
+dbxenv suppress_startup_message 4.0
+dbxenv suppress_startup_message 5.0
+set -o emacs
+dalias l list
+dalias b "stop at"
+dalias p print
+dalias n next
+dalias s step
+dalias r run
+dalias q quit
+dalias c cont
+dalias u up
+dalias d down
+dalias fin step up
+dalias lw list -w
+dalias t thread
+dalias ts threads
+dalias w where
+
+#EOF __TAGGED__

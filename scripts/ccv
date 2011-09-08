@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# Copyright (c) 2003-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: ccv,v 1.8 2009/10/21 18:07:32 mdp Exp $
+# print out information about the c compiler and make in $PATH
+#
+
+# inherit path from environment
+PATH=$PATH:/usr/bin:/bin
+
+type gcc 2>&- >&-
+if [ $? -eq 0 ]
+then
+	gccver=`gcc -V 2>&1 | awk '/ C / {print}' | \
+	    sed -e 's/cc: //' -e 's/ *on.*//'`
+	[ "$gccver" ] || gccver=`gcc -v 2>&1 | grep version`
+	[ "$gccver" ] || gccver='unknown gcc'
+	gccver=`echo $gccver | sed 's/version //'`
+else
+	[ "$gccver" ] || gccver='[ gcc not found ]'
+fi
+
+type make 2>&- >&-
+if [ $? -eq 0 ]
+then
+	make --version 2>&- >&-
+	if [ $? -eq 0 ]
+	then
+		makever='GNU make '`make --version | \
+		    make --version | awk 'NR == 1 {print}' | \
+		    sed -e 's/^[^0-9]*//' -e 's/[^0-9]*$//'`
+	else
+		makever='unix make'
+	fi
+else
+	makever='[ make not found ]'
+fi
+
+type java 2>&- >&-
+if [ $? -eq 0 ]
+then
+	javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
+else
+	javaver='[ java not found ]'
+fi
+
+echo "$javaver / $gccver / $makever"
+
+#EOF __TAGGED__

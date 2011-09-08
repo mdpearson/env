@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# Copyright (c) 2003-9 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: cleanup,v 1.2 2009/07/22 15:15:36 mdp Exp $
+# print out information about the c compiler and make in $PATH
+#
+
+paths=`svn status | grep '^\?' | awk '{print $2}'`
+
+for p in $paths
+do
+	if [ -d "$p" ]
+	then
+		echo "won't touch $p: is a directory"
+		continue
+	fi
+
+	extension=`echo $p | sed -e 's/^.*\(\.[^\.]*\)$/\1/'`
+
+	case $extension in
+		.java|.py|.gz|.mdp)
+			def="n"
+			;;
+		*)
+			def="y"
+			;;
+	esac
+
+	printf "remove $p? [$def] "
+	read response
+
+	case $response in
+		y|n|Y|N)
+			doit=`echo $response | tr a-z A-Z`
+			;;
+		*)
+			doit=$def
+			;;
+	esac
+
+	if [ $doit = "y" ]
+	then
+		echo "rm -f $p"
+		rm -f $p
+	fi
+
+done
+
+#EOF __TAGGED__

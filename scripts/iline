@@ -1,0 +1,821 @@
+#!/bin/sh
+#
+# Copyright (c) 2001-2010 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: iline,v 1.17 2010/02/20 04:28:34 mdp Exp $
+# print a line of useful hw or sw information about a host
+#
+
+PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/sbin
+
+USAGE="usage: `basename $0` [-abnsvwh] [-l <extra length>]"
+VSAGE="\t-a precede machine type with article (a/an) [not valid with -s] \n\
+       \t-b bold hostname [only valid with -n] \n\
+       \t-n precede machine description with hostname \n\
+       \t-s print software description [invalidates previous 3 opts] \n\
+       \t-v print additional, somewhat obscure information \n\
+       \t-w attempt to shorten string to fit terminal width \n\
+       \t-h print this message \n\
+       \t-l <n> shorten string to (terminal width-n) chars [implies -w] \n\n\
+       \t`basename $0` prints a single line summarizing the hardware or \n\
+       \tsoftware configuration of the current host. It has a \n\
+       \tvariety of command line options to format the output. \n"
+
+# on some systems there is no nawk
+awk 1 /dev/null 2>&- >&-
+[ $? -eq 0 ] && alias nawk=awk
+
+round() {	# round float $2 to the int $1th place - slow
+	echo 'f=10.0^'$1';	/* $1 >= 0 */
+	      n='$2'*f;		/* shift left */
+	      r=n%1;		/* get remainder */
+	      b=n-r;		/* get floor */
+	      if(r>=0.5)b=b+1;	/* round */
+	      scale='$1'+1;	/* set precision */
+	      print b/f,"\n"	/* shift right */' | \
+		bc | sed 's/\.\{0,1\}0*$//'
+}
+
+toghz() {	# blindly add a decimal point at the 9th place
+	echo "$*" | sed 's/\([0-9]\{9,9\}\)$/\.\1/'
+}
+
+tomhz() {	# blindly add a decimal point at the 6th place
+	echo "$*" | sed 's/\([0-9]\{6,6\}\)$/\.\1/'
+}
+
+#
+# Software detection routines
+#
+# These functions take no arguments.
+# They should set the following variable.
+#
+#	INFO:	contains os name, major/minor number,
+#		addressing mode if applicable and build id.
+#		may contain update patchlevel and full build id
+#		if $verbose is set.
+#
+
+sunsw() {
+	if [ -x /bin/isainfo ]
+	then
+		mode=`/bin/isainfo -nv | awk '{ print $1 }'`
+	else
+		mode='32-bit'
+		if [ -x /bin/optisa ]
+		then
+			/bin/optisa sparcv9 2>&-
+			[ $? = 0 ] && mode='64-bit'
+		fi
+	fi
+
+	release=`uname -r`
+	[ "$verbose" ] && bldinfo=`uname -v`
+	archtype=`uname -p | tr '[:lower:]' '[:upper:]'`
+	systype=`uname -s`
+
+	if [ -r /etc/release ]
+	then
+		# extract minor release number from uname output
+		minor=`echo $release | sed 's/.*\.//'`
+		# extract minor release number from /etc/release
+		rlmin=`nawk 'NR == 1 {
+		  sub(".\.","",$2)
+		  print $2
+		  }' /etc/release`
+
+		#
+		# On some machines /etc/release may be out of date. If
+		# its version number doesn't match uname's, then don't
+		# bother reading it.
+		#
+		# Note the release numbers are compared as strings
+		# rather than numbers, because some development kernels
+		# report "unusual" version "numbers".
+		#
+		if [ "$verbose" ] && [ "$minor" = "$rlmin" ]
+		then
+			#
+			# First line of /etc/release looks like:
+			#
+			#  Solaris VERS <assembly string> ARCH
+			#
+			# awk numbers fields starting with 1 so extract
+			# words 3 to NF-1.
+			#
+			# Parse out the second and fifth words from the
+			# maintenance update line (if present) to make
+			# the familar sXmuY version string.
+			#
+			eval set -- `nawk 'NR == 1 {
+				for(i=3; i<NF; i++) str=$i" "str
+				sub(" $","",str)
+				printf "\"%s\" ", str
+			  }
+			  /Maintenance/ {
+				printf "\"(s%dmu%d)\"\n", $2, $5
+			  }' /etc/release`
+			relinfo=$1
+			smuinfo=$2
+		fi
+	fi
+
+	#
+	# Precede the relinfo flag with a literal backslash. Info lines
+	# in /etc/release may be slightly out of date even if the
+	# release numbers pass the above sanity check. The backslash
+	# indicates that build information after it may not be
+	# completely accurate. The last three fields may or may not be
+	# present, depending on the system and the value of $verbose.
+	# Hence the variable references are preceded by spaces.
+	#
+
+	INFO=`printf '%s %s %s %s%s%s%s\n' \
+	  ${mode} ${systype} ${release} ${archtype} \
+	  ${smuinfo:+" ${smuinfo}"} ${bldinfo:+" ${bldinfo}"} \
+	  ${relinfo:+\\\\"${relinfo}"}`
+}
+
+osxsw() {
+	#
+	# Mac OSX has two version components - the overall (marketing)
+	# name, e.g., OSX 10.2.1, as well as the kernel version which
+	# is returned by traditional command line utilities such as
+	# uname. Try to report both.
+	#
+
+	# get the kernel version
+	release=`sysctl -n kern.ostype kern.osrelease`
+	release=`echo $release`		# strip newlines
+
+	#
+	# Get the overall version name from SystemVersion.plist. This
+	# awk command, and the fallthrough, both return a formatted
+	# string that encapsulates a reference to $release.
+	#
+	if [ -f /System/Library/CoreServices/SystemVersion.plist ]
+	then
+		mainstr=`nawk \
+			'function detag(string) {
+				gsub("\t*</?string>","",string)
+				return(string)
+			}
+			/ProductBuildVersion/ { flag="build"; next }
+			/ProductName/ { flag="name"; next }
+			/ProductUserVisibleVersion/ { flag="vers"; next }
+			flag != "" {
+				info[flag]=detag($0)
+				flag=""
+			}
+			END {
+				printf("\"%s %s, $release (build %s)\"\n",
+				  info["name"], info["vers"], info["build"])
+			}' /System/Library/CoreServices/SystemVersion.plist`
+	else
+		# shouldn't happen
+		mainstr="\"OS X 10.x, $release\""
+	fi
+
+	if [ "$verbose" ]
+	then
+		INFO=`eval echo $mainstr`" "`uname -v | \
+		  sed 's/.*;[[:space:]]*\(root:\)\{0,1\}//'`
+	else
+		# strip the build info
+		INFO=`eval echo $mainstr | sed 's/ (.*$//'`
+	fi
+}
+
+linuxsw() {
+	release=`uname -r`
+	[ "$verbose" ] && bldinfo=`uname -v`
+	archtype=`uname -m | tr '[:lower:]' '[:upper:]'`
+	systype=`uname -s`
+
+	if [ -r /proc/version ]
+	then
+		distrib=`cat /proc/version | sed -e 's/.*(//' -e 's/).*//'`
+	fi
+
+	INFO=`printf '%s%s %s%s\n' \
+	  ${distrib:+"${distrib} "} ${systype} ${release} \
+	  ${bldinfo:+" ${bldinfo}"}`
+}
+
+decsw() {
+	INFO=`sizer -v`
+}
+
+#
+# Hardware detection routines
+#
+# These functions take no arguments.
+# They should set the following seven variables.
+#
+#	NAME:	host name of the machine (string)
+#	CLASS:	type of machine (string)
+#	CHIP:	type of microprocessor (string)
+#	CHIPC:	number of procs (integer or string)
+#	CMHZ:	speed of processors (integer plus units string)
+#	RAM:	installed ram, in megabytes (integer ONLY)
+#	EXTRA:	bus speed, slots count, etc. (string)
+#		(only needed if $verbose is set.)
+#
+
+sunhw() {
+	plat=`uname -i`
+	NAME=`hostname`
+
+	CMHZ=`psrinfo -v | awk '/M[Hh]z/ { print $(NF-1); exit 0 }'`MHz
+	CHIPC=`psrinfo | wc -l`
+
+	if [ $plat != 'i86pc' -a -x /usr/platform/$plat/sbin/prtdiag ]
+	then
+		fname=/tmp/iline.$$
+		/usr/platform/${plat}/sbin/prtdiag > $fname &
+		baseline=`date | sed -e 's/.*://' -e 's/ .*//'`
+
+		#
+		# prtdiag can be very slow sometimes. Busy wait for
+		# three seconds or so; if it is still running after
+		# that, kill it, give up and run prtconf instead.
+		#
+		while [ `ps -p $! >&-; echo $?` -eq 0 ]
+		do
+			seconds=`date | sed -e 's/.*://' -e 's/ .*//'`
+			elapsed=`expr \( $seconds - $baseline \) \% 60`
+			[ $elapsed -lt 0 ] && elapsed=`expr $elapsed + 60`
+
+			if [ $elapsed -gt 3 ]
+			then
+				kill $! 2>&-
+				#
+				# We only need the first few lines of
+				# prtdiag's output. Before giving up,
+				# check to see if there's anything in
+				# the temp file. If there is, we're ok.
+				# If not, set check=f to tell the next
+				# block to run prtconf instead.
+				#
+				# We only need the first four lines.
+				# Note that in some cases prtdiag will
+				# print a one-line error msg to stdout.
+				# In that case this check will fail and
+				# prtconf will run later (as it should).
+				#
+				if [ `cat $fname | wc -l` -lt 4 ]
+				then
+					rm $fname
+					check=f
+				fi
+				break
+			fi
+		done
+
+		if [ "$check" != f ]	# prtdiag worked, inspect results
+		then
+			#
+			# Get information on installed CPU's from prtconf.
+			#
+			# Need to use the -p option. On some dev machines
+			# the prtconf tree gets mangled after booting.
+			#
+			# If this branch is executing, we must be running
+			# on an UltraSPARC - so there's no need for as
+			# long a chip detection routine as appears later.
+			#
+			CHIP=`prtconf -p | \
+				nawk '/SPARC/ { \
+					sub("SUNW,","")
+					# remove commas and single quotes
+					gsub(",'"|\'"'","")
+					sub("-cEngine","")
+					print $2
+					exit
+				}'`
+
+			tmp=`uname -m`
+			set -- `cat $fname | \
+				nawk 'BEGIN {
+					plat=hz="?"
+					mem=0
+				}
+				# platform follows arch str (e.g., sun4u)
+				{ if (match($5,arch)) {
+					sub(".*"arch" ","")
+					plat=$0
+					}
+				}
+				/size:/ { if ($3 ~ /./) mem=$3 }
+				/clock/ { if ($4 ~ /./) hz=$4 }
+				END { printf("%s %s %s\n",mem,hz,plat) }' \
+				arch=$tmp`
+			rm $fname
+			rawram=$1
+			bmhz=$2
+			shift 2
+			rawclass=$*
+			check=t
+		fi
+	fi
+
+	if [ "$check" != t ]	# prtdiag didn't work or wasn't installed
+	then
+		set -- `prtconf -p | nawk '
+			/size/ { mem=$3 }
+			/^Node/ {
+				gsub("'"\'"'","")
+				sub($1,"")
+				plat=$0
+			}
+			#
+			# There are at least four ways chips can be named
+			# in prtconf. Apparently, they used to be identified
+			# by foundry.
+			#
+			/SPARC/ {
+				gsub("'"\'"'","")
+				sub("SUNW,","")
+				chip=$2
+			}
+			/TI/ {
+				gsub("'"\'"'","")
+				sub("TI,","")
+				sub("TMS390Z50","SuperSPARC")
+				sub("TMS390Z55","SuperSPARC/S$")
+				sub("TMS390S10","MicroSPARC")
+				chip=$2
+			}
+			/FMI/ {
+				gsub("'"\'"'","")
+				sub("FMI,","")
+				sub("MB86904","MicroSPARC II")
+				chip=$2
+			}
+			/Ross/ {
+				gsub("'"\'"'","")
+				sub("Ross,","")
+				sub("RT625","HyperSPARC")
+				chip=$2
+			}
+			END {
+				if (!chip) chip="cpu"
+				printf("%s %s %s\n",mem,chip,plat)
+			}'`
+		rawram=$1
+		CHIP=$2
+		shift 2
+		rawclass=$*'_type'
+	fi
+
+	#
+	# If we couldn't parse the chip from prtconf/diag, call isalist
+	# to at least get a better idea.
+	#
+	[ ! "$CHIP" -o "$CHIP" = "cpu" ] && CHIP=`isalist | \
+	  sed -e 's/ .*//' -e 's/p\(entium\)/P\1/' -e 's/p\(ro\)/P\1/' \
+	  -e 's/+mmx/ MMX/' -e 's/+.*//' -e 's/_/ /'`
+
+	# strip MB, GB, and so on from rawram string
+	RAM=`echo $rawram | sed 's/[[:alpha:]]*//g'`
+	# sometimes prtdiag doesn't report ram properly - use prtconf
+	[ ! "$RAM" ] || [ $RAM -eq '0' ] && \
+	  RAM=`prtconf -p | awk '/size/ { print $3; exit }' | \
+	  sed 's/[[:alpha:]]*//g'`
+	# convert gb to mb if needed
+	[ "`echo $rawram | fgrep -ci gb 2>&-`" -eq 1 ] && \
+	  RAM=`echo "1024*$RAM" | bc | sed 's/\.0*$//'`
+
+	if [ "$verbose" ]
+	then
+		slot=`echo "$rawclass" | \
+		  sed -n 's/^\([0-9]*\)[- ][Ss]lot.*/\1 slots/p'`
+		EXTRA="${slot:+${slot}${bmhz:+, }}${bmhz:+${bmhz}MHz}"
+	fi
+
+	#
+	# prtconf and prtdiag use slightly different formats to report
+	# the class of machine. This long and convoluted expression
+	# attempts to format all possible class strings into an easy-
+	# to-read format.
+	#
+	CLASS=`echo "$rawclass" | sed '
+#	  # convert dashes
+	  s/-/ /g
+	  s/_/-/g
+#	  # strip slot info
+	  s/^[0-9]* [Ss]lot *//
+#	  # ignore all parenthetical info
+	  s/ ([^)]*)//g
+#	  # remove "Sun" and "SUNW,"
+	  s/S[Uu][Nn]\(W,\)* *//g
+#	  # strip redundant Ultra marks
+	  s/Ultra \([A-Za-z]\)/\1/
+#	  # remove trademark info
+	  s/(tm)/ /
+#	  # shorten CP and SX system-on-a-card names
+	  s/CP /CP/
+	  s/SX /SX/
+	  /type/!{
+#		# change "E[nterprise]" to "E-"
+		s/E[[:alpha:]]* *\([^-]\)/E-\1/
+#		# remove "E" prefix from some midrange models
+		s/E\([[:digit:]]\)/\1/
+#		# change "F[ire]" to "F-"
+		s/Fire *\([^-]\)/F-\1/
+	  }
+#	  # get rid of SBus/UPA notes
+	  s/UPA\/[A-Za-z]* *//
+	  s/SBus *//
+#	  # hyphenate Ultra machines
+	  s/\(Ultra\) \([[:digit:]]\)/\1-\2/
+#	  # hyphenate SPARC machines
+	  s/\(SPARC[A-Za-z]\{2,\}\) \([0-9]\{1,\}\)/\1-\2/
+#	  # change x000/y000 to x/y000
+	  s/0\{3,\}\//\//g
+#	  # change xx000 to xxK
+	  s/\([0-9]\{2,\}\)0\{3,3\}/\1K/
+#	  # properly name v880/1280-class machines
+	  s/880/V880/
+	  s/1280/V1280/
+#	  # strip "-type" from SPARCstations
+	  /station/s/-type//'`
+}
+
+osxhw() {
+	sysline=`grep -n "<key>ComputerName</key>" \
+	  /Library/Preferences/SystemConfiguration/preferences.plist | \
+	  sed 's/:.*//'`
+	sysline=`expr $sysline + 1`
+	# note the literal tab + space in this sed expression
+	NAME=`awk "NR==$sysline { print }" \
+	  /Library/Preferences/SystemConfiguration/preferences.plist | \
+	  sed -e 's/^[ 	]*//' -e 's/<[^>]*>//g'`
+	# strike out the " - <user_name> AT syntax the Broad uses
+	NAME=`echo $NAME | sed 's/ - .*//'`
+	NAME=`echo $NAME | sed 's/-[A-Z][a-z][a-z][a-z].*$//'`
+	[ "$NAME" ] || NAME=`hostname`
+
+	freq=`sysctl -n hw.cpufrequency`
+	if [ $freq -ge 1000000000 ]
+	then
+		fmhz=`toghz $freq`
+		CMHZ=`round 2 $fmhz`GHz
+	else
+		fmhz=`tomhz $freq`
+		CMHZ=`round 1 $fmhz`MHz
+	fi
+
+	if [ "$verbose" ]
+	then
+		busfreq=`sysctl -n hw.busfrequency`
+		busfmhz=`tomhz $busfreq`
+		bmhz=`round 1 $busfmhz`
+		EXTRA="${bmhz}MHz"
+	fi
+
+	if [ -x /usr/bin/hostinfo ]
+	then
+		set -- `hostinfo | nawk '
+			/physically/ {	# indicates processor count
+				chipc=$1
+			}
+			/Primary/ {		# indicates memory
+				sub("\.0+$","",$4)
+				ram=$4
+				if ($5 ~ /giga/)
+				ram = ram * 1024
+			}
+			/type/ {		# only cpu lines have this word
+				sub(".*[(]","")
+				sub("[)].*","")
+				chip=$0
+			}
+			END { printf("%s %s %s\n",ram,chipc,chip) }'`
+		RAM=$1
+		CHIPC=$2
+		shift 2
+		CHIP=$*
+	else
+		physmem=`sysctl -n hw.physmem`
+		RAM=`expr $physmem '/' '(' 1024 '*' 1024 ')'`
+		CHIPC="unknown number of" # can't count cpu's w/o hostinfo
+		CHIP=`machine`
+	fi
+
+	fullstr=`sysctl -n machdep.cpu.brand_string`
+	if [ "$fullstr" ]
+	then
+		CHIP=`echo $fullstr | sed -e 's/ *@.*//' -e 's/([^)]*)//g' -e 's/CPU//' -e 's/  */ /g'`
+	fi
+
+	fullstr=`sysctl -n machdep.cpu.cores_per_package`
+	if [ "$fullstr" ]
+	then
+		CHIPC=`expr $CHIPC / $fullstr`
+	fi
+
+	#
+	# There is little rhyme or reason to Apple's naming scheme.
+	# The rosetta stone is located at:
+	# http://developer.apple.com/documentation/Hardware/
+	#
+	major=`sysctl -n hw.model`
+	minor=`echo $major | awk -F, '{print $2}'`
+	case "$major" in
+		iMac*)
+			CLASS="iMac" ;;
+		MacBookPro*)
+			CLASS="MacBook Pro" ;;
+		MacBook*)
+			CLASS="MacBook" ;;
+		PowerBook6*)
+			case "$minor" in
+				1)	CLASS="12\" PowerBook G4" ;;
+				2)	CLASS="12\" PowerBook G4" ;;
+				3)	CLASS="iBook G4" ;;
+				4)	CLASS="12\" PowerBook G4" ;;
+				5)	CLASS="iBook G4" ;;
+				8)	CLASS="12\" PowerBook G4" ;;
+				*)	CLASS="12\" PowerBook G4" ;;
+			esac ;;
+		PowerBook5*)
+			case "$minor" in
+				1)	CLASS="17\" PowerBook G4" ;;
+				2)	CLASS="15\" PowerBook G4" ;;
+				3)	CLASS="17\" PowerBook G4" ;;
+				4)	CLASS="15\" PowerBook G4" ;;
+				5)	CLASS="17\" PowerBook G4" ;;
+				6)	CLASS="15\" PowerBook G4" ;;
+				7)	CLASS="17\" PowerBook G4" ;;
+				8)	CLASS="15\" PowerBook G4 (hi-res)" ;;
+				9)	CLASS="17\" PowerBook G4 (hi-res)" ;;	
+				*)	CLASS="PowerBook G4" ;;
+			esac ;;
+		PowerBook4*)
+			CLASS="iBook G3" ;;
+		PowerBook3*)
+			case "$minor" in
+				1)	CLASS="PowerBook G3" ;;
+				*)	CLASS="PowerBook G4 [Ti]" ;;
+			esac ;;
+		PowerBook2*)
+			CLASS="iBook [clamshell]" ;;
+		PowerBook*)
+			CLASS="PowerBook" ;;
+
+		PowerMac10*)
+			CLASS="Mac Mini" ;;
+		PowerMac9*)		# 1cpu
+			CLASS="Power Mac G5" ;;
+		PowerMac8*)
+			CLASS="iMac G5" ;;
+		PowerMac7*)		# 2cpu
+			CLASS="Power Mac G5" ;;
+		PowerMac6*)
+			case "$minor" in
+				4)	CLASS="eMac" ;;
+				*)	CLASS="iMac G4" ;;
+			esac ;;
+		PowerMac5*)
+			CLASS="G4 Cube" ;;
+		PowerMac4*)
+			case "$minor" in
+				1)	CLASS="iMac" ;;
+				4)	CLASS="eMac" ;;
+				*)	CLASS="iMac G4" ;;
+			esac ;;
+		PowerMac3*)
+			CLASS="Power Mac G4" ;;
+		PowerMac2*)
+			CLASS="iMac" ;;
+		PowerMac1*)
+			CLASS="Power Mac G3" ;;
+		PowerMac*)
+			CLASS="Mac Desktop" ;;
+
+		RackMac3*)
+			CLASS="XServe G5" ;;
+		RackMac1*)
+			CLASS="XServe G4" ;;
+		RackMac*)
+			CLASS="XServe" ;;
+	esac
+}
+
+linuxhw() {
+	NAME=`hostname`
+	CLASS=`uname -m`"-type machine"
+
+	CHIPC=`fgrep -c 'bogomips' /proc/cpuinfo`
+
+	rawram=`sed -ne '/^Memory:/ {
+		s/^.*\///
+		s/[kK].*$//
+		p
+	}' /var/log/dmesg 2>&-`
+
+	[ "$rawram" ] || rawram=`awk '/MemTotal/ {print $2}' /proc/meminfo`
+
+	RAM=`echo "scale=0; $rawram / 1024" | bc`
+
+	eval `nawk '
+		/model name|cpu[ \t]*:/ {
+			if ($NF ~ /[0-9.]+[KMGkmg]?Hz/) {
+				printf("%s=\"%s\"\n","CMHZ",$NF)
+				sub($NF,"")
+			}
+			sub(".*: *","")
+			gsub("[(][^)]*[)]","")
+			sub(" *CPU *","")
+			sub(" *Processor","")
+			sub("Core","core")
+			sub("One","1")
+			sub("Two","2")
+			sub("Four","4")
+			sub("Six","6")
+			sub("Eight","8")
+			printf("%s=\"%s\"\n","CHIP",$0)
+		}
+		/clock/ {
+			printf("%s=\"%s\"\n","CMHZ",$NF)
+		}
+		/cpu MHz/ {
+			printf("%s=\"%s\"\n","CMHZ",$NF)
+		}' /proc/cpuinfo`
+
+	# change MHz to GHz, allowing for weird linux reporting of chip speeds
+	CMHZ=`echo 'scale=1; a='$CMHZ'; if (a > 1000) print a / 999, " GHz" else print a, " MHz"' | bc`
+
+	EXTRA=""
+}
+
+dechw() {
+	NAME=`hostname`
+	CLASS="DEC/HP Alpha "`sizer -implver`
+	CHIP=`sizer -c | awk '{gsub("\"","", $2); print $2}'`
+	CHIPC=`sizer -p`
+	CMHZ="unknown"
+	RAM=`vmstat -P | awk '/Total Physical Memory =/ {print $5}'`
+	EXTRA=""
+}
+
+while getopts abnsvwl:h arg
+do
+	case $arg in
+		a)	article=y ;;
+		b)	usebold=y ;;
+		n)	hostn=y ;;
+		s)	softinfo=y ;;
+		v)	verbose=y ;;
+		w)	chkwidth=y ;;
+		l)	limit=$OPTARG
+		chkwidth=y ;;
+		h)	echo $USAGE
+		printf "$VSAGE"
+		exit 0 ;;
+		*)	echo $USAGE
+		exit 1 ;;
+	esac
+done
+
+OST=`uname -s`
+
+if [ "$softinfo" ]
+then
+	case "$OST" in
+		'SunOS')
+			sunsw ;;
+		'Darwin')
+			osxsw ;;
+		'Linux')
+			linuxsw ;;
+		'OSF1')
+			decsw ;;
+		*)
+			INFO=`uname -a` ;;
+	esac
+
+	msg=$INFO
+
+else
+	case "$OST" in
+		'SunOS')
+			sunhw ;;
+		'Darwin')
+			osxhw ;;
+		'Linux')
+			linuxhw ;;
+		'OSF1')
+			dechw ;;
+		*)
+			echo `hostname`
+		exit 0 ;;
+	esac
+
+	if [ "$CHIPC" = 1 ]
+	then
+		case "$CMHZ" in
+			8*) CHIPC="an" ;;
+			*)	CHIPC="a"  ;;
+		esac
+	else
+		case "$CHIPC" in
+			2) CHIPC="two" ;;
+			3) CHIPC="three" ;;
+			4) CHIPC="four" ;;
+			6) CHIPC="six" ;;
+			8) CHIPC="eight" ;;
+			10) CHIPC="ten" ;;
+			12) CHIPC="twelve" ;;
+			16) CHIPC="sixteen" ;;
+			*) CHIPC="${CHIPC} x" ;;
+		esac
+		CHIP="$CHIP""'s"
+	fi
+
+	[ "$article" ] && case "$CLASS" in
+		[aAeEiIoOuU8x]*) prefix="an" ;;
+		F-*) prefix="an" ;;
+		*) prefix="a" ;;
+	esac
+	if [ "$hostn" ]
+	then
+		if [ "$usebold" ]
+		then
+			wholine=`who -m --lookup 2>&-`
+			[ $? -eq 0 ] || wholine=`who -m`
+			
+			if [ $USER != __G_USER__ ]
+			then
+				# running as different user
+				pre=`tput smul 2>&-; tput bold 2>&-; tput setaf 1 2>&-`
+			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
+			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
+			then
+				# remote host
+				pre=`tput smul 2>&-; tput bold 2>&-; tput setaf 4 2>&-`
+			else
+				# local host
+				pre=`tput smul 2>&-; tput bold 2>&-`
+			fi
+			post=`tput sgr0`
+			#
+			# tput embeds invisible control chars, the
+			# "width" of which varies by o/s.
+			#
+			tmp=`echo ${pre}${post} | wc -c`
+			ccharf=`expr $tmp - 1`
+		fi
+		NAME=`echo $NAME | sed 's/\..*//'` # trim domain
+		prefix=${pre}${NAME}${post}${prefix:+", "$prefix}
+	fi
+
+	if [ "$RAM" -ge 1024 ]
+	then
+		RAM=`echo "scale=1; $RAM/1024" | bc | sed 's/\.\{0,1\}0*$/ GB/'`
+	else
+		RAM=$RAM" MB"
+	fi
+
+	# organize the fields from xxxhw
+	msg=`printf '%s%s with %s %s %s (%s%s)\n' \
+	  "${prefix:+$prefix }" "$CLASS" "$CHIPC" "$CMHZ" \
+	  "$CHIP" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
+
+	tmp=`tput cols`
+	termwidth=`expr $tmp - ${limit:-0} + 1 + ${ccharf:-0}`
+
+	# if the resulting string is too long, try using sed to shorten it
+	if [ "$chkwidth" ] && [ `echo $msg | wc -c` -gt $termwidth ]
+	then
+		msg=`echo $msg | sed -e 's/with /w\//' \
+		  -e 's/III/3/' -e 's/II/2/'`
+	fi
+fi
+
+if [ "$chkwidth" ]
+then
+	#
+	# If the string is going to be wider than the screen, trim it
+	# and mark the cut end with a < to indicate incompleteness.
+	#
+	tmp=`tput cols`
+	clear=`expr $tmp - ${limit:-0} - 1 + ${ccharf:-0}`
+	if [ "$clear" -gt 0 ]
+	then
+		if [ "$clear" -lt 256 ]
+		then
+			echo "$msg" | sed -e "s/\(.\{$clear,$clear\}\)..*/\1</"
+		else
+			echo "$msg"
+		fi
+	fi
+else
+	echo $msg
+fi
+
+#EOF __TAGGED__

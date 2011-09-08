@@ -1,0 +1,52 @@
+!
+! Copyright (c) 2002-5 Matthew Pearson <mdp@matmo.net>.
+!
+! These scripts are free. There is no warranty; your mileage may vary.
+! Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+!
+! $Id: base.dtperf,v 1.4 2005/06/19 05:22:13 matmone Exp $
+! preferences for Solaris/CDE sdtperfmeter
+!
+
+Sdtperfmeter*AutoLoadByHost:	false
+Sdtperfmeter*CanvasColor:	0
+Sdtperfmeter*Direction:		horizontal
+Sdtperfmeter*DisplayList:	1,0,2,7
+Sdtperfmeter*GraphType:		solid
+Sdtperfmeter*LabelColor:	1
+Sdtperfmeter*Log:		false
+Sdtperfmeter*SampleTime:	1
+Sdtperfmeter*ShowLimit:		false
+Sdtperfmeter*ShowMenubar:	false
+Sdtperfmeter*ShowStripChart:	true
+Sdtperfmeter*SizeToFit:		true
+
+Sdtperfmeter*cpu.CurMax:	100
+Sdtperfmeter*cpu.Limit:		50
+Sdtperfmeter*cpu.LimitColor:	1
+Sdtperfmeter*cpu.MaxMax:	100
+Sdtperfmeter*cpu.MeterColor:	1
+Sdtperfmeter*cpu.MinMax:	80
+
+Sdtperfmeter*disk.CurMax:	40
+Sdtperfmeter*disk.Limit:	20
+Sdtperfmeter*disk.LimitColor:	1
+Sdtperfmeter*disk.MaxMax:	8388607
+Sdtperfmeter*disk.MeterColor:	1
+Sdtperfmeter*disk.MinMax:	40
+
+Sdtperfmeter*load.CurMax:	4
+Sdtperfmeter*load.Limit:	2
+Sdtperfmeter*load.LimitColor:	1
+Sdtperfmeter*load.MaxMax:	8388607
+Sdtperfmeter*load.MeterColor:	1
+Sdtperfmeter*load.MinMax:	4
+
+Sdtperfmeter*pkts.CurMax:	64
+Sdtperfmeter*pkts.Limit:	16
+Sdtperfmeter*pkts.LimitColor:	1
+Sdtperfmeter*pkts.MaxMax:	8388607
+Sdtperfmeter*pkts.MeterColor:	1
+Sdtperfmeter*pkts.MinMax:	32
+
+!EOF __TAGGED__

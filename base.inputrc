@@ -1,0 +1,30 @@
+#!/not/executable
+#
+# Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.inputrc,v 1.4 2007/09/11 14:07:26 mdp Exp $
+# additional command-line customizations for bash
+#
+
+set bell-style none
+set completion-query-items 64
+set editing-mode emacs
+set expand-tilde On
+set history-reserve-point On
+set horizontal-scroll-mode Off
+set input-meta Off
+set mark-directories On
+set mark-modified-lines On
+set mark-symlinked-directories On
+set match-hidden-files Off
+set show-all-if-ambiguous On
+set visible-stats On
+
+Control-f: forward-word
+Control-b: backward-word
+Control-l: redraw-current-line
+
+#EOF __TAGGED__

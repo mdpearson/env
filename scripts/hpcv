@@ -1,0 +1,92 @@
+#!/bin/sh
+#
+# Copyright (c) 2001-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: hpcv,v 1.3 2005/06/19 05:22:13 matmone Exp $
+# [DEPRECATED] print what version of the OS/HPC software is installed
+#
+
+PATH=/bin:/usr/bin
+
+USAGE="usage: `basename $0` [-nrsvXh]"
+VSAGE="\t-n print even if no HPC software is installed \n\
+       \t-r print the RTE currently enabled \n\
+       \t-s print the o/s revision \n\
+       \t-v [deprecated] \n\
+       \t-X print the number of CPU's on the node \n\
+       \t-h print this message \n\n\
+       \t`basename $0` displays the version of HPC ClusterTools software \n\
+       \tthat is currently installed and active on the system. \n"
+
+while getopts nrsvXh arg
+do
+	case $arg in
+	    n)	: ;;	# deprecated
+	    r)	rte=y ;;
+	    s)	osv=y ;;
+	    v)	: ;;	# deprecated
+	    X)	cpuc=y ;;
+	    h)	echo $USAGE
+		printf "$VSAGE"
+		exit 0 ;;
+	    *)	echo $USAGE
+		exit 1 ;;
+	esac
+done
+
+[ "$osv" ] && str=`uname -rs`
+
+if [ "$cpuc" ]
+then
+	cpuc=`uname -X | awk '/NumCPU/ { print $3 }'`
+	[ "$cpuc" != '1' ] && str="${cpuc:-?}X, $str"
+fi
+
+if [ ! -d /opt/SUNWhpc/bin ]
+then
+	echo "$str"
+	exit 0
+fi
+
+#
+# the rest of this script is rather Sun-specific
+#
+
+# find the active verstion of HPC Clustertools
+active=`ls -ld /opt/SUNWhpc/bin | sed -e 's/[^H]*\(HPC[0-9.]*\).*/\1/'`
+
+# find the corresponding pkginfo file
+pkginfo=`grep -l SUNW_PRODVERS=$active /var/sadm/pkg/SUNWhpmsc*/pkginfo`
+
+if [ -f "$pkginfo" ] # get minor version number
+then
+	minor=`grep REV $pkginfo | /usr/xpg4/bin/sed -e 's/.*REV=//' \
+	    -e 's/\([0-9]*\.\)\{4,4\}//'`
+	if [ "$minor" ] && [ `echo "$minor" | cut -c1-3` != 'int' ]
+	then
+		major=5.0
+		minor='int'${minor}
+	fi
+fi
+
+[ "$major" ] || major=`echo "$active" | sed 's/HPC//'`
+[ "$minor" ] || minor="release"
+
+vers=${major}-${minor}
+
+if [ "$rte" ]
+then
+	if [ -x /opt/SUNWhpc/bin/hpc_rte ]
+	then
+		rte=`/opt/SUNWhpc/bin/hpc_rte`
+	else
+		rte='none'
+	fi
+fi
+
+print ${str}', '${vers}'/'${rte}
+
+#EOF __TAGGED__

@@ -1,0 +1,43 @@
+#!/not/executable
+#
+# Copyright (c) 2003-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: clusters.Menu,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# template file - fill in and parse using clust_fvwmenu
+#
+
+# menu name, used internally by fvwm. generally <filename>-menu.
+# should not have spaces or punctuation.
+MENU_NAME=450c-menu
+
+# title of menu as it should appear in fvwm menus. should be a
+# quoted string. spaces and punctuation (except for ") are safe.
+MENU_TITLE="hpc-450c"
+
+# name of cluster in /etc/clusters. ok to leave blank.
+CONSOLE_NAME=450-c
+
+# host on which relevant /etc/clusters entry is located.
+CONSOLE_HOST=gws-server
+
+# master node of cluster. if there is no master node, leave blank.
+MASTER_NODE=hpc-450-4
+
+# space-delimited, quoted list of nodes in cluster.
+CLUSTER_NODES="hpc-450-4 hpc-450-5 hpc-450-6 hpc-450-7"
+
+# shell command to run on master node (if set) or all nodes (if not)
+# to determine additional information for menu names. note, this
+# script will be run through rsh so a full path is required.
+INFO_COMMAND="$HOME/bin/exec/hpcv -ns"
+
+# optional flag to indicate how many nodes should appear per submenu.
+# if the number of nodes in the cluster is larger than this value,
+# then the menu will generate submenus each with this many entries.
+SUBMENU_SIZE=
+
+# script to use to parse this file. do not change.
+MENU_SCRIPT=clust_fvwmenu

@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Copyright (c) 2004-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: bat,v 1.6 2007/07/27 00:58:03 mdp Exp $
+# print out battery statistics extracted from ioreg
+#
+
+[ -x /usr/sbin/ioreg ] || exit 1
+
+# convert the IOBatteryInfo device line into variable assignments
+# XXX - need to better handle case where no battery exists
+eval $(/usr/sbin/ioreg -w 0 -c AppleSmartBattery | \
+  sed -ne '/BatteryInfo/ {
+	s/.*{//
+	s/}.*//
+	s/ /_/g
+	s/,/; /g
+	s/"//g
+	p
+	}' ) #'
+
+[ "$Voltage" ] || Voltage="unknown"
+
+echo -n "volts=$Voltage, "
+
+if [ "$Current" -a "$Capacity" -a "$AbsoluteMaxCapacity" ]
+then
+	pct1=$(echo "scale=1; 100 * $Current / $Capacity" | \
+	  bc | sed 's/\.0//')
+	pct2=$(echo "scale=1; 100 * $Current / $AbsoluteMaxCapacity" | \
+	  bc | sed 's/\.0//')
+
+	echo -n "charge=$Current/$Capacity/$AbsoluteMaxCapacity ($pct1/$pct2%)"
+
+elif [ "$Current" -a "$Capacity" ]
+then
+	pct=$(echo "scale=1; 100 * $Current / $Capacity" | \
+	  bc | sed 's/\.0//')
+
+	echo -n "charge=$Current/$Capacity ($pct%)"
+
+elif [ "$Current" ]
+then
+	echo -n "charge=$Current"
+else
+	echo -n "charge=unknown"
+fi
+
+if [ "$Cycle_Count" ]
+then
+	echo ", cycles=$Cycle_Count"
+else
+	echo ""
+fi
+
+#EOF __TAGGED__
+

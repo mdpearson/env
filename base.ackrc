@@ -1,0 +1,18 @@
+#!/not/executable
+#
+# Copyright (c) 2011 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.ackrc,v 1.2 2011/02/03 17:57:34 mdp Exp $
+# commands to GNU dircolors; see also BSD LSCOLORS in .sh_aliases
+#
+
+--color-filename=bold black
+--color-match=bold green
+--color-lineno=reset
+--smart-case
+--sort-files
+
+#EOF __TAGGED__

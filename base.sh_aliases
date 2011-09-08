@@ -1,0 +1,194 @@
+#!/bin/sh
+#
+# Copyright (c) 2000-2010 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.sh_aliases,v 1.44 2011/06/26 19:20:59 mdp Exp $
+# alias definitions and other sh cmds that must be run per tty
+#
+
+hash -r
+
+isinstalled() {
+	type $* 2>&- >&-
+	[ $? -eq 0 ] && echo 1
+}
+
+unalias cp 2>&-
+unalias ls 2>&-
+unalias rm 2>&-
+tcp=`type cp | awk '{print $NF; exit}'`
+tls=`type ls | awk '{print $NF; exit}'`
+trm=`type rm | awk '{print $NF; exit}'`
+alias truecp="$tcp"
+alias truels="$tls"
+alias truerm="$trm"
+unset tcp tls trm
+
+alias cp="cp -i"
+alias cpf="truecp -f"
+
+checkls=`ls --color=auto -ah 2>&1 > /dev/null`
+if [ $? -ne 0 ] || [ "$checkls" ]
+then
+	alias ls='ls -Fb'
+else
+	alias ls='ls -Fbh --color=auto'
+fi
+unset checkls
+
+if [ `uname` = "Darwin" ]
+then
+	long_lsflags="O"
+	verylong_lsflags="Oe@"
+fi
+
+alias lsa="ls -A"
+alias lsd="ls -d"
+alias ll="ls -lh"$long_lsflags
+alias lla="ls -Alh"$long_lsflags
+alias lld="ls -Alhd"$long_lsflags
+alias lll="ls -Alh"$verylong_lsflags
+
+unset long_lsflags
+unset verylong_lsflags
+
+alias rm="rm -i"
+alias rmf="truerm -f"
+alias rmrf="truerm -rf"
+
+alias mv="mv -i"
+
+alias rehash='hash -r'
+alias hi="history"
+alias u="uptime"
+alias beep="printf '\007\007'"
+
+alias grepn="grep -Hn"
+
+alias nfilt="grep -v \
+  '\(SCCS\|Bin\|depend\/\|deleted\|TAGS\|pkg\|\.svn\|RCS\|CVS\)'"
+
+rgrep()
+{
+	grep -r "$*" * | nfilt
+}
+
+[ `isinstalled dbx` ] && alias rdbx="dbx -s $HOME/.dbxrc"
+[ `isinstalled cstyle` ] && alias cstyle="cstyle -chpvP"
+[ `isinstalled bsub` ] && [ `isinstalled bsub_wrapper` ] && \
+  alias bsub="bsub_wrapper"
+
+if [ `isinstalled a2ps` ]
+then
+	alias c2ps="a2ps -=code"
+	alias m2ps="a2ps -=man"
+	alias s2ps="a2ps -=source"
+	alias t2ps="a2ps -=text"
+fi
+
+if [ -x $HOME/Sites/util/publish ]
+then
+	alias publish="$HOME/Sites/util/publish $HOME/Sites"
+fi
+
+if [ `uname -s` = 'Darwin' ]
+then
+	alias top="TERM=vt100 top -un 20"
+	psargs='-axo user,pid,state,pri,%cpu,command'
+else
+	alias ping="ping -sn"
+	psargs='-eo user,pid,s,pri,pcpu,args'
+fi
+alias psa="ps $psargs"
+alias psam="ps $psargs | grep __G_USER__"
+alias findp="psa | grep -v grep | grep -i"
+unset psargs
+
+unalias less 2>&-
+lessl=`(type less 2>&-) | awk '{print $NF}'`
+if [ -x "$lessl" ]
+then
+	PAGER="$lessl"
+	LESS='-XaeqP?f%f:stdin. ?m[%i of %m] .?lB%lB?L/%L. .?eEOF:?pB%pB\%..%t'
+	export LESS PAGER
+	alias more="less"
+fi
+unset lessl
+
+if [ "$DISPLAY" ]
+then
+	alias x="xrdb -load \$XENVIRONMENT"
+	alias tt="ttsession -p -c"
+fi
+
+if [ `isinstalled ctags` ]
+then
+	tagannot()
+	{
+		cd __G_WORKSPACE__
+		ctags --exclude=build --exclude=schema --excmd=number --extra=+f+q \
+		  --fields=+a+f+i+k+m+n+s+S --file-scope=no --languages=Java,Python \
+		  --links=no --tag-relative=yes --totals -R \
+		  --Java-kinds=+c-f+i-l+m-p --Python-kinds=+c+f-m \
+		  common pidgin plugins pluginsGeneCaller
+	}
+fi
+
+alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'
+if [ `isinstalled bbedit` ]
+then
+	openmods()
+	{
+		for f in `mods`
+		do
+			bbedit $f
+		done
+	}
+fi
+
+alias sane='tput rmacs'
+alias bye='exit'
+
+cerr()
+{
+	cd $1
+	cat *.err
+}
+
+alias cvs='cvs -q'
+alias cvsmods='cvs -q -n update 2>/dev/null | grep "^[AM]"'
+alias lt='ll -rt | tail'
+#alias devjython='rlwrap -p"1;34" devjython'
+alias devjython='rlwrap -A -t dumb devjython'
+
+# use ssh protocol 1 for portability
+[ `isinstalled ssh1` ] && alias ssh='ssh1'
+#[ `ssh -V 2>&1 | grep -c "OpenSSH"` -gt 0 ] && alias ssh='ssh -1'
+
+set_colors()
+{
+	# BSD colors
+	LSCOLORS="xxxxAxAxxxAxAxBxBxxdxx"
+	CLICOLOR=1
+	export LSCOLORS CLICOLOR
+
+	# GNU colors
+	unset LS_COLORS
+	dirc=`(type dircolors 2>&1) | awk '{print $NF}'`
+	if
+	[ -x "$dirc" ]
+	then
+		eval "`$dirc -b $HOME/.dircolors` 2>&-"
+		export LS_COLORS
+	fi
+	unset dirc
+}
+
+set_colors
+
+unset isinstalled
+
+#EOF __TAGGED__

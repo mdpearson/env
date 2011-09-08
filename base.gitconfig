@@ -1,0 +1,37 @@
+[core]
+	editor = emacs
+	pager = cat
+	autocrlf = input
+	safecrlf = true
+[user]
+	name = __G_USER_TRUENAME__
+	email = __G_USER__@broadinstitute.org
+[color]
+	diff = always
+	ui = true
+	pager = false
+	status = auto
+	branch = auto
+[alias]
+	ci = commit
+	co = checkout
+	oneline = log --pretty=oneline
+	st = status
+	br = branch
+	pdiff = whatchanged -n 1 -p
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
+	lc = log ORIG_HEAD.. --stat --no-merges
+	cancel = reset --soft HEAD^
+	changes = diff --name-stats -r
+	diffstat = diff --stat -r
+	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+[log]
+	decorate = short
+	abbrev-commit = true
+[diff]
+    tool = "bbdiff"
+[difftool]
+    prompt = false
+[difftool "bbdiff"]
+    cmd = /usr/bin/bbdiff --wait --resume "$LOCAL" "$REMOTE"

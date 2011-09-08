@@ -1,0 +1,129 @@
+#!/bin/ksh
+#
+# Copyright (c) 2004-5 Matthew Pearson <mdp@matmo.net>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: heir_fvwmenu,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# dynamically generate a heirarchical menu modeled on a dir. tree
+#
+
+#
+# This script generates menu commands that fvwm2 can interpret
+# dynamically. It defines a tree of submenus that mirrors the layout
+# of the directory passed in $1. This directory is expected to contain
+# directories and menu resource files, so the output of this script
+# will be a heirarchical menu, organized according to the directory
+# structure, with each entry defined by a menu resource file.
+#
+# The only type of menu resource file currently defined is a cluster
+# resource file, although there could be any number of other menu item
+# types, each with its own type of menu resource file. For the
+# purposes of this script, any menu resource file must fulfill the
+# following requirements:
+#
+# - it must be a plaintext file ending in .Menu
+# - it must be able to be sourced by ksh
+# - it must define the following variables:
+#
+#   MENU_NAME:	    fvwm2 name of the menu for internal consumption,
+#		    cannot contain whitespace - no quotes
+#   MENU_TITLE:	    title of the menu as it appears to the user,
+#		    may contain whitespace - use quotes
+#   MENU_SCRIPT:    name of script to call with .Menu file as its
+#		    argument when the menu is to be generated;
+#		    should print out a dynamic fvwm2 menu when
+#		    run as follows: $MENU_SCRIPT <file.Menu>
+#
+# (See clust_fvwmenu for more information on cluster menus, and
+# menus/cluster.Menu for an example of a menu resource file.)
+#
+# This script is recursive and traverses the directory tree given in
+# $1. If it encounters a directory it generates a popup menu entry
+# with itself as the runtime function. If it encounters a file ending
+# in .Menu it sources it, then generates a dynamic popup menu entry.
+# That menu entry calls the appropriate script to generate the menu
+# itself when needed.
+#
+
+USAGE="usage: `basename $0` <menu directory>"
+
+while getopts r arg
+do
+	case $arg in
+	    r)	recursive=y ;;	# internal flag
+	    *)	echo $USAGE
+		exit 1 ;;
+	esac
+done
+shift $(( $OPTIND - 1 ))
+
+parent_name=$(basename $1)-menu
+
+if [ ! "$recursive" ]
+then
+	echo AddToFunc $parent_name.func
+	printf '+ I PipeRead "%s %s"\n' "$(basename $0) -r" "$*"
+	echo AddToMenu $parent_name
+	echo + DynamicPopUpAction Function $parent_name.func
+	echo + DynamicPopDownAction DestroyMenu recreate $parent_name
+	exit 0
+fi
+
+[ -d "$1" ] && for dent in $(ls $1)
+do
+	e=$1/$dent
+	unset MENU_NAME MENU_SCRIPT MENU_TITLE
+
+	if [ -d $e ]
+	then
+		MENU_NAME=$(basename $e)-menu
+		MENU_SCRIPT="heir_fvwmenu -r"
+		if [ -r $e/title.txt ]
+		then
+			MENU_TITLE=$(cat $e/title.txt)
+		else
+			MENU_TITLE="$MENU_NAME"
+		fi
+	elif [[ $e = *.Menu ]] || [[ $e = *.crc ]]
+	then
+		. $e
+	fi
+
+	if [ "$MENU_NAME" ] && [ "$MENU_TITLE" ]
+	then
+		menucmd=$(echo "$MENU_SCRIPT" | cut -d' ' -f1)
+		menuent=1
+		if [ "$menucmd" ] && \
+		    [ $(type "$menucmd" 2>&- >&-; echo $?) -eq 0 ]
+		then
+			echo DestroyMenu $MENU_NAME
+			echo DestroyFunc $MENU_NAME.func
+
+			echo AddToFunc $MENU_NAME.func
+			printf '+ I PipeRead "%s %s"\n' \
+			    "$MENU_SCRIPT" "$e"
+
+			echo AddToMenu $MENU_NAME
+			printf '+ DynamicPopUpAction %s %s.func\n' \
+			    "Function" $MENU_NAME
+			printf '+ DynamicPopDownAction %s %s\n' \
+			    "DestroyMenu recreate" $MENU_NAME
+
+			echo AddToMenu $parent_name
+			printf '+ "%s...\t "\tPopup %s\n' \
+			    "$MENU_TITLE" "$MENU_NAME"
+		else
+			echo AddToMenu $parent_name
+			printf '+ "%s: %s\t " Nop\n' \
+			    "$(basename $e)" "bad script"
+		fi
+
+	fi
+done
+
+[ "$menuent" ] || printf 'AddToMenu %s "%s: %s\t " Title top\n' \
+    $parent_name "$(basename $1)" "empty"
+
+#EOF __TAGGED__

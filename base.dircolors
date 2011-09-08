@@ -1,0 +1,63 @@
+#!/not/executable
+#
+# Copyright (c) 2000-2010 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+#
+# $Id: base.dircolors,v 1.8 2010/12/15 15:53:29 mdp Exp $
+# commands to GNU dircolors; see also BSD LSCOLORS in .sh_aliases
+#
+
+
+
+TERM	color-xterm
+TERM	dtterm
+TERM	nxterm
+TERM	vs100
+TERM	vt100
+TERM	vt100-w
+TERM	vt102
+TERM	vt220
+TERM	xnuppc
+TERM	xterm
+TERM	xterm-color
+
+NORMAL	00
+FILE	00
+DIR		00
+EXEC	00
+LINK	04		# underline symlinks
+ORPHAN	04;31	# broken symlinks are red
+MISSING	04;31	# missing files are red
+
+# mark device-special files in bold
+
+FIFO	01
+SOCK	01
+DOOR	01
+BLK		01
+CHR		01
+
+SETUID	01;31	# setuid files are bold red
+SETGID	01;31	# setgid files are bold red
+
+STICKY	43						# highlight sticky files in yellow
+STICKY_OTHER_WRITABLE	43		# highlight sticky files in yellow
+OTHER_WRITABLE	00				# world-writeable files are not special
+
+# backup files are printed in red
+
+*~	36
+*#	36
+._*	36
+
+# unimportant macos files are green
+
+.DS_Store				32
+.CFUserTextEncoding		32
+.icns					32
+.localized				32
+*Icon\r					32
+
+#EOF __TAGGED__

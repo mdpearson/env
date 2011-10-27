@@ -12,10 +12,6 @@
   -->
 <plist version="1.0">
 <dict>
-	<key>CVS_RSH</key>
-	<string>ssh</string>
-	<key>CVSROOT</key>
-	<string>__G_CVSROOT__</string>
 	<key>JAVA_HOME</key>
 	<string>/System/Library/Frameworks/JavaVM.framework/Home/</string>
 </dict>

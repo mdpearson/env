@@ -161,8 +161,8 @@ cerr()
 alias cvs='cvs -q'
 alias cvsmods='cvs -q -n update 2>/dev/null | grep "^[AM]"'
 alias lt='ll -rt | tail'
-#alias devjython='rlwrap -p"1;34" devjython'
 alias devjython='rlwrap -A -t dumb devjython'
+alias jython4calhoun='rlwrap -A -t dumb jython4calhoun'
 
 # use ssh protocol 1 for portability
 [ `isinstalled ssh1` ] && alias ssh='ssh1'

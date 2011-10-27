@@ -321,11 +321,9 @@ then
 	# AUTOMOUNT_FIXNAMES=true
 	# export AUTOMOUNT_FIXNAMES
 
-	CVS_RSH="ssh"
-	[ "__G_CVSROOT__" ] && CVSROOT=__G_CVSROOT__
 	[ "__G_PRINTER__" ] && PRINTER=__G_PRINTER__
 	UT_NO_USAGE_TRACKING=1
-	export CVS_RSH CVSROOT PRINTER UT_NO_USAGE_TRACKING
+	export PRINTER UT_NO_USAGE_TRACKING
 
 	#
 	# Make files group-writable by default on systems with

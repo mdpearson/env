@@ -757,10 +757,10 @@ else
 			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 			then
 				# remote host
-				pre=`tput smul 2>&-; tput bold 2>&-; tput setaf 4 2>&-`
+				pre=`tput smul 2>&-; tput bold 2>&-`
 			else
 				# local host
-				pre=`tput smul 2>&-; tput bold 2>&-`
+				pre=`tput bold 2>&-`
 			fi
 			post=`tput sgr0`
 			#

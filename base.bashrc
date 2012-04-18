@@ -110,13 +110,13 @@ function init_bash_prompt
 		elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
-			uf='34;01'		# bold, blue user
-			pf='34;01'		# bold, blue prompt
-			hf='34;04;01'	# bold, blue, underlined hostname
-		else			# local:
 			uf='30;01'		# bold, black user
 			pf='30;01'		# bold, black prompt
 			hf='30;04;01'	# bold, black, underlined hostname
+		else			# local:
+			uf='30;01'		# bold, black user
+			pf='30;01'		# bold, black prompt
+			hf='30;01'		# bold, black, hostname
 		fi
 
 		userstr="\[\e[${uf}m\]\u\[\e[0m\]"

@@ -421,6 +421,8 @@ then
 #		printf "." >&2
 		reuse -q BLAST
 		printf "." >&2
+		reuse -q Maven-2.2
+		printf "." >&2
 
 		if [ "__G_DOTKITS__" ]
 		then

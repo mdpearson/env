@@ -22,7 +22,7 @@ do
 	extension=`echo $p | sed -e 's/^.*\(\.[^\.]*\)$/\1/'`
 
 	case $extension in
-		.java|.py|.gz|.mdp)
+		.java|.py|.gz|.mdp|.py-dev|.java-dev|.py-working|.java-working)
 			def="n"
 			;;
 		*)

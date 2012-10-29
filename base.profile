@@ -409,18 +409,18 @@ then
 		printf "." >&2
 		reuse -q Java-1.5
 		printf "." >&2
-		reuse -q Python-2.6
-		printf "." >&2
-		reuse -q set-LDFLAGS++
-		printf "." >&2
-		reuse -q GCC-4.4
-		printf "." >&2
+#		reuse -q Python-2.6
+#		printf "." >&2
+#		reuse -q set-LDFLAGS++
+#		printf "." >&2
+#		reuse -q GCC-4.4
+#		printf "." >&2
 		reuse -q CTAGS
 		printf "." >&2
 #		reuse -q GCC-trunk
 #		printf "." >&2
-		reuse -q BLAST
-		printf "." >&2
+#		reuse -q BLAST
+#		printf "." >&2
 		reuse -q Maven-2.2
 		printf "." >&2
 
@@ -502,6 +502,17 @@ then
 
 	export PATH MANPATH
 	echo " <done>" >&2
+
+	#
+	# configure virtual environments for Python
+	#
+	for vew_home in /seq/a2e0/tools/util/python/bin/2.7.3/bin \
+	  /Library/Frameworks/Python.framework/Versions/2.7/bin
+	do
+		[ `check_path $vew_home` -eq 1 ] && . $vew_home/virtualenvwrapper.sh
+	done
+	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
+	export VIRTUALENVWRAPPER_PYTHON
 
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]

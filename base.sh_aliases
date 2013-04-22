@@ -135,6 +135,7 @@ then
 		  --Java-kinds=+c-f+i-l+m-p --Python-kinds=+c+f-m \
 		  common pidgin plugins pluginsGeneCaller
 	}
+	alias ctags='ctags -R --totals --excmd=number --Java-kinds=+cei-flmp --Python-kinds=+cfm-iv --exclude=build --exclude=schema --extra=+f-q --fields=k --file-scope=no --languages=Java,Python --links=no'
 fi
 
 alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'

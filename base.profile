@@ -407,7 +407,7 @@ then
 		printf " (invoking \`use\` " >&2
 #		reuse -q envdiff
 #		printf "." >&2
-		reuse -q Subversion-1.6
+		reuse -q .subversion-1.7.2
 		printf "." >&2
 		reuse -q LSF
 		printf "." >&2

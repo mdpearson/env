@@ -510,11 +510,21 @@ then
 	#
 	# configure virtual environments for Python
 	#
-	for vew_home in /seq/a2e0/tools/util/python/bin/2.7.3/bin \
+	for vew_home in /usr/local/bin/ /seq/a2e0/tools/util/python/bin/2.7.3/bin \
 	  /Library/Frameworks/Python.framework/Versions/2.7/bin
 	do
-		[ `check_path $vew_home` -eq 1 ] && . $vew_home/virtualenvwrapper.sh
+		if [ `check_path $vew_home` -eq 1 ]
+		then
+			if [ -f $vew_home/virtualenvwrapper.sh ]
+			then
+				unalias cd 2>&-
+				. $vew_home/virtualenvwrapper.sh
+				alias workoff="deactivate"
+				break
+			fi
+		fi
 	done
+
 	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
 	export VIRTUALENVWRAPPER_PYTHON
 

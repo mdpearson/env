@@ -237,7 +237,7 @@ then
 			kill $pid >&- 2>&-
 			res=0
 		else
-			res=`test -d $1 && echo 1 || echo 0`
+			res=`test -d "$1" && echo 1 || echo 0`
 		fi
 
 		echo "$res"
@@ -247,8 +247,8 @@ then
 	# add a directory $2 to the end of a :-separated pathlist $1
 	append_path() {
 		[ "$1" ] && [ "$2" ] || return
-		res=`check_path $2`
-		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}$2
+		res=`check_path "$2"`
+		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
 		printf "." >&2
 	}
 
@@ -477,7 +477,8 @@ then
 		do
 			if [ $ppath != null_guard ]
 			then
-				append_path customp $ppath
+				ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+				append_path customp "$ppath_repl"
 			fi
 		done
 	fi
@@ -490,7 +491,8 @@ then
 	then
 		for ppath in __G_MANPATH__ null_guard
 		do
-			append_path customm $ppath
+			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			append_path customm "$ppath_repl"
 		done
 	fi
 
@@ -502,7 +504,7 @@ then
 
 	unset userp customp
 	unset userm customm
-	unset ppath
+	unset ppath ppath_repl
 
 	export PATH MANPATH
 	echo " <done>" >&2

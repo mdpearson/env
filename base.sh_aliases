@@ -76,8 +76,10 @@ rgrep()
 	grep -r "$*" * | nfilt
 }
 
-[ `isinstalled dbx` ] && alias rdbx="dbx -s $HOME/.dbxrc"
 [ `isinstalled cstyle` ] && alias cstyle="cstyle -chpvP"
+[ `isinstalled dbx` ] && alias rdbx="dbx -s $HOME/.dbxrc"
+[ `isinstalled node` ] && alias clonejs="node ~/bin/clone.js"
+
 [ `isinstalled bsub` ] && [ `isinstalled bsub_wrapper` ] && \
   alias bsub="bsub_wrapper"
 
@@ -92,6 +94,12 @@ fi
 if [ -x $HOME/Sites/util/publish ]
 then
 	alias publish="$HOME/Sites/util/publish $HOME/Sites"
+fi
+
+if [ `isinstalled sysctl` ]
+then
+	MAKEFLAGS="-j`sysctl -n hw.ncpu`"
+	export MAKEFLAGS
 fi
 
 if [ `uname -s` = 'Darwin' ]
@@ -138,8 +146,15 @@ then
 	alias ctags='ctags -R --totals --excmd=number --Java-kinds=+cei-flmp --Python-kinds=+cfm-iv --exclude=build --exclude=schema --extra=+f-q --fields=k --file-scope=no --languages=Java,Python --links=no'
 fi
 
+if [ `isinstalled edit` ]
+then
+	alias bbdiff="twdiff"
+	alias bbedit="edit"
+	alias bbfind="twfind"
+fi
+
 alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'
-if [ `isinstalled bbedit` ]
+if [ `isinstalled bbedit` ] || [ `isinstalled edit` ]
 then
 	openmods()
 	{

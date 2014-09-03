@@ -5,7 +5,7 @@
 	safecrlf = true
 [user]
 	name = __G_USER_TRUENAME__
-	email = __G_USER__@broadinstitute.org
+	email = __G_USER__@__G_USER_DOMAIN__
 [color]
 	diff = always
 	ui = true

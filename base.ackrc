@@ -1,11 +1,11 @@
 #!/not/executable
 #
-# Copyright (c) 2011 Matthew Pearson.
+# Copyright (c) 2011-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.ackrc,v 1.2 2011/02/03 17:57:34 mdp Exp $
+# $Id$
 # commands to GNU dircolors; see also BSD LSCOLORS in .sh_aliases
 #
 

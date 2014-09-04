@@ -1,12 +1,12 @@
 ;
-; Copyright (c) 1998-2005 Matthew Pearson <mdp@matmo.net>.
+; Copyright (c) 1998-2014 Matthew Pearson <matthewpearson@gmail.com>.
 ; Based on software (c) 1997 Dartmouth Computer Science Department.
 ; Based on software (c) 2000 employees of Sun Microsystems.
 ;
 ; These scripts are free. There is no warranty; your mileage may vary.
-; Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+; Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 ;
-; $Id: base.emacs,v 1.4 2005/06/19 05:22:13 matmone Exp $
+; $Id$
 ; various and sundry emacs customizations, particularly for perl and c
 ;
 

@@ -1,11 +1,11 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-5 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.kshrc,v 1.7 2011/05/23 22:00:27 mdp Exp $
+# $Id$
 # shell commands executed each time a ksh (not bash) shell is invoked
 #
 

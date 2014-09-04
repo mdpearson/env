@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Copyright (c) 2005-7 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2005-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.bash_logout,v 1.4 2007/08/01 15:55:33 mdp Exp $
+# $Id$
 # sort and remove duplicates from history file on shell exit
 #
 

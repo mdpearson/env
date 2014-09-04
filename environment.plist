@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" 
  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  .. Copyright (c) 2005 Matthew Pearson <mdp@matmo.net>.
+  .. Copyright (c) 2005-2014 Matthew Pearson <matthewpearson@gmail.com>.
   .. 
   .. These scripts are free. There is no warranty; your mileage may vary.
-  .. Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+  .. Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
   .. 
-  .. $Id: environment.plist,v 1.7 2009/07/10 17:25:32 mdp Exp $
+  .. $Id$
   .. export development environment variables to all Mac OS applications
   -->
 <plist version="1.0">

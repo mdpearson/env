@@ -1,44 +1,45 @@
 !
-! Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+! Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
+! Based on software (c) 1997 Dartmouth Computer Science Department.
 !
 ! These scripts are free. There is no warranty; your mileage may vary.
-! Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+! Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 !
-! $Id: base.Xdefaults,v 1.3 2005/06/19 05:22:13 matmone Exp $
+! $Id$
 ! instructions and defaults for xrdb
 !
 
 ! run FVWM2, rather than the rinky-dink CDE DTWM
-Dtsession*wmStartupCommand:		__G_FVWM_EXEC_CMD__
-Dtsession*waitWmTimeout:		1
+Dtsession*wmStartupCommand:			__G_FVWM_EXEC_CMD__
+Dtsession*waitWmTimeout:			1
 
 !
 ! global CDE color-use settings
 !
 
-*colorPalette:				__CDE_PALETTE__
-*colorUse:				__CDE_DEPTH__
-*dynamicColor:				False
-*shadowPixmaps:				False
-*writeXrdbColors:			True
-*frameStyle:				slab
+*colorPalette:						__CDE_PALETTE__
+*colorUse:							__CDE_DEPTH__
+*dynamicColor:						False
+*shadowPixmaps:						False
+*writeXrdbColors:					True
+*frameStyle:						slab
 *XmCascadeButton*shadowThickness:	2
-*scrollBar*marginWidth:			2
+*scrollBar*marginWidth:				2
 
 !
 ! CDE environment fonts
 !
 
 ! WM titlebars and menu entries
-Dtwm*fontList:				__CDE_WM_MENU_FONT__
-*FontSet:				__CDE_WM_MENU_FONT__
+Dtwm*fontList:						__CDE_WM_MENU_FONT__
+*FontSet:							__CDE_WM_MENU_FONT__
 
 ! misc. application menubar fonts
-*menubar*fontList:			__CDE_APP_MENU_FONT__
-*FontList:				__CDE_APP_MENU_FONT__
+*menubar*fontList:					__CDE_APP_MENU_FONT__
+*FontList:							__CDE_APP_MENU_FONT__
 
 ! iconified labels
-Dtwm*icon*fontList:			__CDE_WM_ICON_FONT__
+Dtwm*icon*fontList:					__CDE_WM_ICON_FONT__
 
 ! front panel buttons and menus
 Dtwm*FrontPanel*highResFontList:	__CDE_BUTTON_FONT__
@@ -46,102 +47,102 @@ Dtwm*FrontPanel*mediumResFontList:	__CDE_BUTTON_FONT__
 Dtwm*FrontPanel*lowResFontList:		__CDE_BUTTON_FONT__
 
 ! dialog box input
-*XmText*FontList:			__CDE_DIALOG_TEXT__
-*XmTextField*FontList:			__CDE_DIALOG_TEXT__
+*XmText*FontList:					__CDE_DIALOG_TEXT__
+*XmTextField*FontList:				__CDE_DIALOG_TEXT__
 
 ! misc.
-*UserFont:				__CDE_HEADER_FONT__
-*SystemFont:				__CDE_HEADER_BI_FONT__
-*ButtonFontList:			__CDE_HEADER_I_FONT__
-*LabelFontList:				__CDE_HEADER_I_FONT__
-*Font:					__CDE_HEADER_B_FONT__
+*UserFont:							__CDE_HEADER_FONT__
+*SystemFont:						__CDE_HEADER_BI_FONT__
+*ButtonFontList:					__CDE_HEADER_I_FONT__
+*LabelFontList:						__CDE_HEADER_I_FONT__
+*Font:								__CDE_HEADER_B_FONT__
 
 !
 ! terminal settings
 !
 
-Dtterm*dtTermView.marginWidth:				3
-Dtterm*dtTermView.marginHeight:				3
-Dtterm*dtTermScrolledWindowFrame.marginWidth:		0
-Dtterm*dtTermScrolledWindowFrame.marginHeight:		0
-Dtterm*dtTermScrolledWindow.shadowThickness:		0
+Dtterm*dtTermView.marginWidth:							3
+Dtterm*dtTermView.marginHeight:							3
+Dtterm*dtTermScrolledWindowFrame.marginWidth:			0
+Dtterm*dtTermScrolledWindowFrame.marginHeight:			0
+Dtterm*dtTermScrolledWindow.shadowThickness:			0
 Dtterm*dtTermScrolledWindow.scrolledWindowMarginWidth:	0
 Dtterm*dtTermScrolledWindow.scrolledWindowMarginHeight:	0
-Dtterm*dtTermScrolledWindow.spacing:			4
+Dtterm*dtTermScrolledWindow.spacing:					4
 
-Dtterm*blinkRate:		500
-Dtterm*charCursorStyle:		char_cursor_box
-Dtterm*menuBar:			False
-Dtterm*pointerBlank:		True
-Dtterm*pointerBlankDelay:	0
-Dtterm*reverseWrap:		True
-Dtterm*sunFunctionKeys:		True
-Dtterm*borderWidth:		0
+Dtterm*blinkRate:					500
+Dtterm*charCursorStyle:				char_cursor_box
+Dtterm*menuBar:						False
+Dtterm*pointerBlank:				True
+Dtterm*pointerBlankDelay:			0
+Dtterm*reverseWrap:					True
+Dtterm*sunFunctionKeys:				True
+Dtterm*borderWidth:					0
 
-Dtterm*textFontList:		__TERM_FONT__
-Dtterm*userFont:		__TERM_FONT__
-Dtterm*userBoldFont:		__TERM_BD_FONT__
-Dtterm*dtTerm*background:	__SHELL_BACKGROUND__
-Dtterm*dtTerm*foreground:	__SHELL_LOCAL__
-Dtterm*backgroundIsSelect:	False
-Dtterm*reverseVideo:		False
-Dtterm*pointerColor:		__SHELL_POINTER__
-Dtterm*pointerColorBackground:	__SHELL_BACKGROUND__
+Dtterm*textFontList:				__TERM_FONT__
+Dtterm*userFont:					__TERM_FONT__
+Dtterm*userBoldFont:				__TERM_BD_FONT__
+Dtterm*dtTerm*background:			__SHELL_BACKGROUND__
+Dtterm*dtTerm*foreground:			__SHELL_LOCAL__
+Dtterm*backgroundIsSelect:			False
+Dtterm*reverseVideo:				False
+Dtterm*pointerColor:				__SHELL_POINTER__
+Dtterm*pointerColorBackground:		__SHELL_BACKGROUND__
 
-Xterm*ActiveIcon:		On
+Xterm*ActiveIcon:					On
 
-cconsole*termw*marginWidth:		2
+cconsole*termw*marginWidth:			2
 cconsole*termw*marginHeight:		2
 cconsole*termw*shadowThickness:		2
 
-cconsole*termw*shadowType:		SHADOW_IN
+cconsole*termw*shadowType:			SHADOW_IN
 cconsole*termw*charCursorStyle:		CHAR_CURSOR_BAR
 cconsole*termw*pointerBlank:		True
-cconsole*termw*saveLines:		100s
-cconsole*termw*rows:			12
+cconsole*termw*saveLines:			100s
+cconsole*termw*rows:				12
 
 cconsole*termw*pointerBlankDelay:	0
-cconsole*termw*userFont:		6x10
+cconsole*termw*userFont:			6x10
 cconsole*groupTermWindowsDefault:	Off
 
 !
 ! CDE mailer and calendar settings
 !
 
-Dtmail*Work_Area*fontList:		__CDE_APP_SUBMENU_FONT__
+Dtmail*Work_Area*fontList:				__CDE_APP_SUBMENU_FONT__
 Dtmail*Work_Area*Message_List*fontList:	__CDE_TEXT_FONT__
-Dtmail*UserFont:			__CDE_COMP_FONT__
+Dtmail*UserFont:						__CDE_COMP_FONT__
 
-Dtcm*labelFont:				__CDE_APP_SUBMENU_IT_FONT__
-Dtcm*viewFont:				__CDE_APP_SUBMENU_FONT__
-Dtcm*boldFont:				__CDE_APP_MENU_FONT__
-Dtcm*view:				week
+Dtcm*labelFont:							__CDE_APP_SUBMENU_IT_FONT__
+Dtcm*viewFont:							__CDE_APP_SUBMENU_FONT__
+Dtcm*boldFont:							__CDE_APP_MENU_FONT__
+Dtcm*view:								week
 
 !
 ! Emacs settings, see also $HOME/.emacs
 !
 
-Emacs*background:			__SHELL_BACKGROUND__
-Emacs*foreground:			white
-Emacs*font:				__TERM_FONT__
-Emacs*iconName:				emacs
-Emacs*bitmapIcon:			true
+Emacs*background:					__SHELL_BACKGROUND__
+Emacs*foreground:					white
+Emacs*font:							__TERM_FONT__
+Emacs*iconName:						emacs
+Emacs*bitmapIcon:					true
 
 Emacs.modeline*attributeForeground:	white
 Emacs.modeline*attributeBackground:	#550055
 
-Emacs*menubar*fontList:			__CDE_APP_MENU_FONT__
-Emacs*menubar*Font:			__CDE_APP_MENU_FONT__
-Emacs*menubar*Foreground:		#550055
-Emacs*menubar*Background:		white
+Emacs*menubar*fontList:				__CDE_APP_MENU_FONT__
+Emacs*menubar*Font:					__CDE_APP_MENU_FONT__
+Emacs*menubar*Foreground:			#550055
+Emacs*menubar*Background:			white
 
 Emacs*region*attributeForeground:	white
 Emacs*region*attributeBackground:	firebrick
-Emacs*cursorColor:			__SHELL_CURSOR__
-Emacs*pointerColor:			__SHELL_POINTER__
+Emacs*cursorColor:					__SHELL_CURSOR__
+Emacs*pointerColor:					__SHELL_POINTER__
 
-Emacs*internalBorder:			3
-Emacs*ToolBar:				0
+Emacs*internalBorder:				3
+Emacs*ToolBar:						0
 
 ! not sure what these attributes are for, copied from Dartmouth's
 Emacs*topToolBarShadowColor:		Gray90
@@ -149,10 +150,10 @@ Emacs*bottomToolBarShadowColor:		Gray40
 Emacs*backgroundToolBarColor:		Gray75
 Emacs*toolBarShadowThickness:		2
 Emacs*menubar*buttonForeground:		Blue
-Emacs*XlwMenu*selectColor:		ForestGreen
+Emacs*XlwMenu*selectColor:			ForestGreen
 Emacs*XmToggleButton*selectColor:	ForestGreen
-Emacs*popup*Foreground:			white
-Emacs*popup*Background:			midnightblue
+Emacs*popup*Foreground:				white
+Emacs*popup*Background:				midnightblue
 Emacs*XlwScrollBar*Foreground:		Grey70
 Emacs*XlwScrollBar*Background:		Grey35
 Emacs*XmScrollBar*Foreground:		Grey70
@@ -164,39 +165,39 @@ Emacs*XlwScrollBar.ArrowPosition:	same
 ! Other miscellaneous utility resources
 !
 
-Sdtperfmeter*background:		__MOD_BG__
-Sdtperfmeter*foreground:		__MOD_FG__
-Sdtperfmeter*labelFont:			__SMALL_FONT__
+Sdtperfmeter*background:				__MOD_BG__
+Sdtperfmeter*foreground:				__MOD_FG__
+Sdtperfmeter*labelFont:					__SMALL_FONT__
 
 ! DTWM screensaver settings
-dtsession*extension.lockTimeout:	25
-dtsession*extension.saverList:		StartDtscreenBlank
+dtsession*extension.lockTimeout:		25
+dtsession*extension.saverList:			StartDtscreenBlank
 Dtsession*lockLabelPixmap.imageName:	__CDE_LOGIN_IMG__
 
-Purify*font:				__TERM_FONT__
-Purify*OI_multi_text.font:		__TERM_FONT__
-Purify*OI_scroll_text.font:		__TERM_FONT__
-Purify*OI_entry_field.font:		__TERM_FONT__
-Purify*PS_OI_MultiText.font:		__TERM_FONT__
-Purify*PS_OI_ScrollText.font:		__TERM_FONT__
-Purify*PS_OI_ScrollTextGang.font:	__TERM_FONT__
+Purify*font:							__TERM_FONT__
+Purify*OI_multi_text.font:				__TERM_FONT__
+Purify*OI_scroll_text.font:				__TERM_FONT__
+Purify*OI_entry_field.font:				__TERM_FONT__
+Purify*PS_OI_MultiText.font:			__TERM_FONT__
+Purify*PS_OI_ScrollText.font:			__TERM_FONT__
+Purify*PS_OI_ScrollTextGang.font:		__TERM_FONT__
 
-Netscape*noAboutSplash:			True
-Netscape*fontList:			__CDE_APP_SUBMENU_FONT__
+Netscape*noAboutSplash:					True
+Netscape*fontList:						__CDE_APP_SUBMENU_FONT__
 
-Netscape*XmTextField.fontList:		__CDE_COMP_FONT__
-Netscape*XmText.fontList:		__CDE_COMP_FONT__
-Netscape*XmList*fontList:		__CDE_COMP_FONT__
-Netscape*popup*fontList:		__CDE_APP_SUBMENU_FONT__
+Netscape*XmTextField.fontList:			__CDE_COMP_FONT__
+Netscape*XmText.fontList:				__CDE_COMP_FONT__
+Netscape*XmList*fontList:				__CDE_COMP_FONT__
+Netscape*popup*fontList:				__CDE_APP_SUBMENU_FONT__
 
-Dtpad*statusLine:			true
-Dtpad*wrapToFit:			true
-Dtpad*main*editor*FontList:		__CDE_COMP_FONT__
+Dtpad*statusLine:						true
+Dtpad*wrapToFit:						true
+Dtpad*main*editor*FontList:				__CDE_COMP_FONT__
 
-acrossl.helpViewer:			netscape
-acrossl.helpPath:			$HOME/share/help/acl
+acrossl.helpViewer:						netscape
+acrossl.helpPath:						$HOME/share/help/acl
 
 ! set by OpenOffice 1.0.1 - no clue what it means
-Dtwm*VCLSalFrame*secondariesOnTop:	True
+Dtwm*VCLSalFrame*secondariesOnTop:		True
 
 !EOF __TAGGED__

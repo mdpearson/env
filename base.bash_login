@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Copyright (c) 2003-5 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2003-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.bash_login,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# $Id$
 # redirect bash to correct dotfiles when it runs as a login shell
 #
 

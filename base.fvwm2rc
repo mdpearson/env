@@ -1,11 +1,11 @@
 #!/not/executable
 #
-# Copyright (c) 1999-2005 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 1999-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.fvwm2rc,v 1.3 2005/06/19 05:22:13 matmone Exp $
+# $Id$
 # functions, window definitions and other parameters for FVWM
 #
 
@@ -40,7 +40,7 @@ AddToDecor Main
 + TitleStyle	LeftJustified
 + ButtonStyle	1 Default
 + ButtonStyle	2 Vector 5 40x25@1 60x25@1 60x75@0 \
-			   40x75@0 40x25@1 MWMDecorMax
+						   40x75@0 40x25@1 MWMDecorMax
 
 # define appearance of demiwindows
 AddToDecor Demi
@@ -52,45 +52,45 @@ AddToDecor Demi
 #
 
 Style "_base"	MWMBorder, MWMFunctions, MWMDecor, MWMButtons, \
-		DecorateTransient, NoIconTitle, NoIcon, \
-		HintOverride, OLDecor, NoPPosition, Lenience, \
-		ClickToFocusRaises, MouseFocusClickRaises, \
-		ClickToFocusPassesClickOff, SkipMapping, \
-		SmartPlacement, RandomPlacement, MinOverlapPlacement
+				DecorateTransient, NoIconTitle, NoIcon, \
+				HintOverride, OLDecor, NoPPosition, Lenience, \
+				ClickToFocusRaises, MouseFocusClickRaises, \
+				ClickToFocusPassesClickOff, SkipMapping, \
+				SmartPlacement, RandomPlacement, MinOverlapPlacement
 
 # properties normal windows have
 Style "_main"	UseStyle "_base", UseDecor Main, SloppyFocus, \
-		Color __UNFOC_FG__/__UNFOC_BG__, Font __TITLE_FONT__, \
-		HilightFore __FOCUS_FG__, HilightBack __FOCUS_BG__, \
-		HandleWidth 7, BorderWidth 7
+				Color __UNFOC_FG__/__UNFOC_BG__, Font __TITLE_FONT__, \
+				HilightFore __FOCUS_FG__, HilightBack __FOCUS_BG__, \
+				HandleWidth 7, BorderWidth 7
 
 # dialog boxes
 Style "_box"	UseStyle "_base", UseDecor Main, SloppyFocus, \
-		Color __UNFOC_FG__/__UNFOC_BG__, Font __TITLE_FONT__, \
-		HilightFore __FOCUS_FG__, HilightBack __FOCUS_BG__, \
-		HandleWidth 7, BorderWidth 7, \
-		StaysOnTop, CirculateSkip, StippledTitleOff, \
-		NoButton 1, NoButton 2, NoButton 3
+				Color __UNFOC_FG__/__UNFOC_BG__, Font __TITLE_FONT__, \
+				HilightFore __FOCUS_FG__, HilightBack __FOCUS_BG__, \
+				HandleWidth 7, BorderWidth 7, \
+				StaysOnTop, CirculateSkip, StippledTitleOff, \
+				NoButton 1, NoButton 2, NoButton 3
 
 # WM helper windows like FvwmButtons
 Style "_aux"	UseStyle "_base", UseDecor Demi, \
-		Color __UNFOC_FG__/__UNFOC_BG__, \
-		HilightFore __UNFOC_FG__, HilightBack __UNFOC_BG__, \
-		HandleWidth 5, BorderWidth 5, \
-		NoTitle, CirculateSkip, WindowListSkip, \
-		NoButton 1, NoButton 2, NoButton 3
+				Color __UNFOC_FG__/__UNFOC_BG__, \
+				HilightFore __UNFOC_FG__, HilightBack __UNFOC_BG__, \
+				HandleWidth 5, BorderWidth 5, \
+				NoTitle, CirculateSkip, WindowListSkip, \
+				NoButton 1, NoButton 2, NoButton 3
 
 # WM helper windows like FvwmIconMan
 Style "_man"	UseStyle "_base", UseDecor Demi, ClickToFocus, \
-		Color __MENU_BG__/__MENU_BG__, \
-		HilightFore __MENU_BG__, HilightBack __MENU_BG__, \
-		HandleWidth 3, BorderWidth 3, \
-		NoTitle, CirculateSkip, WindowListSkip, \
-		NoButton 1, NoButton 2, NoButton 3
+				Color __MENU_BG__/__MENU_BG__, \
+				HilightFore __MENU_BG__, HilightBack __MENU_BG__, \
+				HandleWidth 3, BorderWidth 3, \
+				NoTitle, CirculateSkip, WindowListSkip, \
+				NoButton 1, NoButton 2, NoButton 3
 
 
 # apply these styles to actual windows
-Style "*"	UseStyle "_main"
+Style "*"		UseStyle "_main"
 Style "xbiff"	UseStyle "_aux"
 Style "*clock"	UseStyle "_aux", Sticky
 Style "*Form"	UseStyle "_box"
@@ -100,29 +100,29 @@ Style "Fv*Man"	UseStyle "_man", Sticky, MouseFocus
 Style "*etscape"	NoDecorHint, StartsOnPage 0 0 1
 Style "*ozilla*"	NoDecorHint, StartsOnPage 0 0 1
 Style "Maker"		StartsOnPage 0 1 1
-Style "ppp"		NoIcon, Sticky
+Style "ppp"			NoIcon, Sticky
 Style "Maile*"		NoIcon, Sticky
 Style "coverDialog"	StaysOnTop
 Style "Dtsession"	StaysOnTop, Sticky
 
 # set the appearance of menus
 MenuStyle "*"	TitleUnderlines0, SeparatorsShort, \
-		TrianglesRelief, Hilight3DThin, \
-		Animation, PopupOffset 10 80, \
-		Font __MENU_FONT__, Greyed __MENU_GREY__
+				TrianglesRelief, Hilight3DThin, \
+				Animation, PopupOffset 10 80, \
+				Font __MENU_FONT__, Greyed __MENU_GREY__
 
 CopyMenuStyle "*" "win"
 
 # general menu style
 MenuStyle "*"	Background __MENU_BG__, \
-		Foreground __MENU_FG__, \
-		HilightBack __MENU_SELECT_BG__, \
-		ActiveFore __MENU_SELECT_FG__
+				Foreground __MENU_FG__, \
+				HilightBack __MENU_SELECT_BG__, \
+				ActiveFore __MENU_SELECT_FG__
 # menu accessed via menubar buttons
 MenuStyle "win"	Background __FOCUS_BG__, \
-		Foreground __FOCUS_FG__, \
-		HilightBack __UNFOC_BG__, \
-		ActiveFore __UNFOC_FG__
+				Foreground __FOCUS_FG__, \
+				HilightBack __UNFOC_BG__, \
+				ActiveFore __UNFOC_FG__
 
 #
 # Module definitions
@@ -130,44 +130,44 @@ MenuStyle "win"	Background __FOCUS_BG__, \
 
 PipeRead "fvbutton"	# button bar now defined by a script
 
-*FvwmIconMan*buttongeometry		150x0
+*FvwmIconMan*buttongeometry			150x0
 *FvwmIconMan*managergeometry		1x0-0+0
-*FvwmIconMan*drawicons			false
-*FvwmIconMan*format			"%t (%c)"
-*FvwmIconMan*resolution			global
-*FvwmIconMan*title			"FvwmIconMan"
-*FvwmIconMan*usewinlist			true
-*FvwmIconMan*followfocus		true
+*FvwmIconMan*drawicons				false
+*FvwmIconMan*format					"%t (%c)"
+*FvwmIconMan*resolution				global
+*FvwmIconMan*title					"FvwmIconMan"
+*FvwmIconMan*usewinlist				true
+*FvwmIconMan*followfocus			true
 *FvwmIconMan*action Mouse 1 A		sendcommand Deiconify+Raise+Warp
 *FvwmIconMan*action Mouse 2 A		sendcommand Iconify
 *FvwmIconMan*action Mouse 3 A		sendcommand Deiconify+Raise+Warp
-*FvwmIconMan*foreground			__MENU_FG__
-*FvwmIconMan*background			__MENU_BG__
-*FvwmIconMan*font			__TITLE_FONT__
-*FvwmIconMan*plainbutton		flat __MENU_FG__ __MENU_BG__
-*FvwmIconMan*focusbutton		up __MENU_SELECT_FG__ \
-					   __MENU_SELECT_BG__
-*FvwmIconMan*selectbutton		down __PAGER_FOCUS_FG__ \
-					     __PAGER_FOCUS_BG__
+*FvwmIconMan*foreground				__MENU_FG__
+*FvwmIconMan*background				__MENU_BG__
+*FvwmIconMan*font					__TITLE_FONT__
+*FvwmIconMan*plainbutton			flat __MENU_FG__ __MENU_BG__
+*FvwmIconMan*focusbutton			up __MENU_SELECT_FG__ \
+									   __MENU_SELECT_BG__
+*FvwmIconMan*selectbutton			down __PAGER_FOCUS_FG__ \
+									     __PAGER_FOCUS_BG__
 *FvwmIconMan*focusandselectbutton	down __PAGER_FOCUS_FG__ \
-					     __PAGER_FOCUS_BG__
+									     __PAGER_FOCUS_BG__
 
 
-*FvwmIdent:	Fore			__FOCUS_FG__
-*FvwmIdent:	Back			__FOCUS_BG__
-*FvwmIdent:	Font			__CDE_COMP_FONT__
+*FvwmIdent:	Fore		__FOCUS_FG__
+*FvwmIdent:	Back		__FOCUS_BG__
+*FvwmIdent:	Font		__CDE_COMP_FONT__
 
 
 *ShellFormWarpPointer
-*ShellFormTitle		"Login to remote host..."
+*ShellFormTitle			"Login to remote host..."
 
-*ShellFormBack		__FOCUS_BG__
-*ShellFormFore		__FOCUS_FG__
-*ShellFormItemBack	__UNFOC_FG__
-*ShellFormItemFore	__FOCUS_FG__
-*ShellFormFont		__TITLE_FONT__
+*ShellFormBack			__FOCUS_BG__
+*ShellFormFore			__FOCUS_FG__
+*ShellFormItemBack		__UNFOC_FG__
+*ShellFormItemFore		__FOCUS_FG__
+*ShellFormFont			__TITLE_FONT__
 *ShellFormButtonFont	__TITLE_FONT__
-*ShellFormInputFont	__CDE_COMP_FONT__
+*ShellFormInputFont		__CDE_COMP_FONT__
 
 *ShellFormLine		center
 *ShellFormText		""
@@ -198,8 +198,8 @@ PipeRead "fvbutton"	# button bar now defined by a script
 *ShellFormText		" "
 *ShellFormButton	quit "OK" ^M
 *ShellFormCommand	$(RootLogin?RootShell $(Hostname)) \
-			$(UserLogin?NewShell $(Hostname) $[USER]) \
-			$(OtherLogin?TelnetShell $(Hostname))
+					$(UserLogin?NewShell $(Hostname) $[USER]) \
+					$(OtherLogin?TelnetShell $(Hostname))
 *ShellFormButton	quit "Cancel"
 *ShellFormButton	restart "Clear"
 *ShellFormText		" "
@@ -213,48 +213,48 @@ PipeRead "fvbutton"	# button bar now defined by a script
 
 AddToMenu main-menu
 + "$[USER] @ $[HOST]"	Title
-+ ""			Nop
-+ "&terminal"		NewLocal
-+ "&root terminal"	NewRoot
++ ""					Nop
++ "&terminal"			NewLocal
++ "&root terminal"		NewRoot
 $ADDL_LOGIN
-+ "&gws-server"		NewShell gws-server $[USER]
-+ "&other host..."	Module FvwmForm ShellForm
-+ ""			Nop
-+ "&emacs"		Exec exec emacs
-+ "&mailer"		Exec exec dtmail
-+ "mo&zilla"		Exec exec mozilla
-+ "&netscape"		Exec exec netscape
-+ "netscape&6"		Exec exec ns6
-+ "calcu&lator"		Exec exec dtcalc
-+ "calen&dar"		Exec exec dtcm
-+ ""			Nop
-+ "clusters..."		Popup clusters-menu
++ "&gws-server"			NewShell gws-server $[USER]
++ "&other host..."		Module FvwmForm ShellForm
++ ""					Nop
++ "&emacs"				Exec exec emacs
++ "&mailer"				Exec exec dtmail
++ "mo&zilla"			Exec exec mozilla
++ "&netscape"			Exec exec netscape
++ "netscape&6"			Exec exec ns6
++ "calcu&lator"			Exec exec dtcalc
++ "calen&dar"			Exec exec dtcm
++ ""					Nop
++ "clusters..."			Popup clusters-menu
 PipeRead "heir_fvwmenu $[HOME]/clusters"
 AddToMenu main-menu
-+ "set desktop..."	Popup desktop-menu
-+ "utilities..."	Popup utilities-menu
++ "set desktop..."		Popup desktop-menu
++ "utilities..."		Popup utilities-menu
 PipeRead "ot_fvwmenu"
 AddToMenu main-menu
-+ ""			Nop
-+ "&special..."		Popup special
++ ""					Nop
++ "&special..."			Popup special
 
 AddToMenu special
-+ "&lock display"	Exec exec /usr/dt/bin/dtaction LockDisplay
++ "&lock display"		Exec exec /usr/dt/bin/dtaction LockDisplay
 + "&refresh windows"	Refresh
-+ "reca&pture"		Recapture
-+ ""			Nop
-+ "restart &FVWM2"	Restart fvwm2
-+ "log out of &X"	Exec exec /usr/dt/bin/dtaction ExitSession
-+ "switch to CD&E"	Restart /usr/dt/bin/dtwm
-+ ""			Nop
++ "reca&pture"			Recapture
++ ""					Nop
++ "restart &FVWM2"		Restart fvwm2
++ "log out of &X"		Exec exec /usr/dt/bin/dtaction ExitSession
++ "switch to CD&E"		Restart /usr/dt/bin/dtwm
++ ""					Nop
 + "unmanage &windows"	Quit
-+ "&kill window"	Exec exec xkill
-+ ""			Nop
++ "&kill window"		Exec exec xkill
++ ""					Nop
 + "&update environs"	Exec exec stub > /dev/console
 + "reload X de&faults"	Exec exec xrdb -load $[HOME]/.Xdefaults > /dev/console
-+ ""			Nop
-+ "xhost &open"		Exec exec xhost +
-+ "xhost &close"	Exec exec xhost -
++ ""					Nop
++ "xhost &open"			Exec exec xhost +
++ "xhost &close"		Exec exec xhost -
 
 AddToMenu window
 + "move"		Move
@@ -262,9 +262,9 @@ AddToMenu window
 + "raise"		Raise
 + "lower"		Lower
 + "iconify"		Iconify
-+ "(un)stick"		Stick
++ "(un)stick"	Stick
 + ""			Nop
-+ "identify"		Module FvwmIdent
++ "identify"	Module FvwmIdent
 + ""			Nop
 + "destroy"		Destroy
 + "close"		Close
@@ -294,16 +294,16 @@ AddToFunc Deiconify+Raise+Warp
 + "I"	WarpToWindow 50 33
 
 AddToFunc NewShell	"I" Exec exec dtterm -fg __SHELL_REMOTE__ -name \
-				"$1@$0" -e tap -s $0 -l $1
+						"$1@$0" -e tap -s $0 -l $1
 AddToFunc RootShell	"I" Exec exec dtterm -fg __SHELL_ROOT__ -name \
-				"root@$0" -e tap $0 -l root
+						"root@$0" -e tap $0 -l root
 AddToFunc ConsoleShell	"I" Exec exec dtterm -fg __SHELL_SPECIAL__ -name \
-				"$0 (console)" -e cons $0
+							"$0 (console)" -e cons $0
 AddToFunc NewLocal	"I" Exec exec dtterm -name "$[USER]@$[HOST]" -e bash $0
 AddToFunc NewRoot	"I" Exec exec dtterm -name "root@$[HOST]" \
-				-fg __SHELL_ROOT__ -e su -
+						-fg __SHELL_ROOT__ -e su -
 AddToFunc TelnetShell	"I" Exec exec dtterm -fg __SHELL_SPECIAL__ -name \
-				"telnet@$0" $1 -e telnet $0
+							"telnet@$0" $1 -e telnet $0
 
 AddToFunc RunInShell	"I" Exec exec dtterm -name "$0" -e "$0"
 AddToFunc SetDeskXPM	"I" Exec exec xpmroot $[HOME]/img/"$0"

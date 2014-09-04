@@ -1,11 +1,11 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2010 Matthew Pearson.
+# Copyright (c) 2000-2014 Matthew Pearson.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: Makefile,v 1.22 2011/01/27 21:25:26 mdp Exp $
+# $Id$
 # filter and install env dotfiles in their appropriate locations
 #
 
@@ -19,8 +19,8 @@ SHELL = /bin/bash
 
 include $(CONF)
 
-DOTFILES = .ackrc .common.ksh .cvsrc .dbxrc .dircolors .emacs .gitconfig .inputrc \
-  .kshrc .profile .profile_custom .sh_aliases .tcshrc .MacOSX/environment.plist
+DOTFILES = .ackrc .common.ksh .cvsrc .dbxrc .dircolors .emacs .gitconfig .hgrc \
+  .inputrc .kshrc .profile .profile_custom .sh_aliases .tcshrc .MacOSX/environment.plist
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 

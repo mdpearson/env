@@ -1,11 +1,11 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-2010 Matthew Pearson.
+# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.common.ksh,v 1.11 2010/02/19 21:32:14 mdp Exp $
+# $Id$
 # shell commands executed each time a bash or ksh shell starts
 #
 

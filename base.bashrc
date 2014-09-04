@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2010 Matthew Pearson.
+# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.bashrc,v 1.34 2011/06/26 19:20:59 mdp Exp $
+# $Id$
 # shell commands executed each time a bash shell is invoked
 #
 
@@ -31,9 +31,9 @@ then
 	[ "$passl" ] || passl=$(grep "^__G_USER__:" /etc/passwd 2>&-)
 	HOME=$(echo "$passl" | awk -F: '{print $6}' 2>&-)
 
+	# unreliable: last resort
 	if [ ! "$HOME" ]
 	then
-		# unreliable: last resort
 		if [ `uname -s` = 'Darwin' ]
 		then
 			HOME=/Users/__G_USER__
@@ -56,6 +56,13 @@ then
 	HISTFILE=$HOME/.bash_histories/$THOST
 else
 	HISTFILE=$HOME/.bash_histories/$HOST
+fi
+
+if [ -d $HOME/.autoenv ]
+then
+	. $HOME/.autoenv/activate.sh
+else
+	alias autoenv_init=
 fi
 
 HISTCONTROL=ignoredups
@@ -172,7 +179,7 @@ function cd_wrapper
 	
 	if [ $(echo $* | grep -c '^[0-9]\{6,9\}$') -eq 1 ]
 	then
-		# it's a job directory
+		# it's a Broad Institute job directory
 		last3=$(echo $* | sed 's/.*\([0-9]\{3,3\}\)$/\1/')
 		first=$(echo $* | sed "s/$last3\$//")
 		dest="/seq/annotation/prod/jobs/$first/$*"
@@ -186,6 +193,7 @@ function cd_wrapper
 		echo "cd: working directory now $PWD"
 		[ $(truels -C | wc -l) -le 6 ] && ls
 		unset fcnt
+		autoenv_init
 	fi
 	unset dest first last3 thispwd
 }
@@ -223,10 +231,10 @@ function list_cdable_dirs
 init_bash_prompt
 PROMPT_COMMAND=prompt_update
 
-set -b			# immediately notify of terminated processes
-set -C			# i.e., noclobber
-set -o posix	# do the right thing
-set -P			# cd ../ follows physical not logical structure
+set -b					# immediately notify of terminated processes
+set -C					# i.e., noclobber
+set -o posix			# do the right thing
+set -P					# cd ../ follows physical not logical structure
 
 shopt -s cdspell		# look for minor typos in cd cmds
 shopt -s cmdhist		# save multiline cmds in one hist entry
@@ -240,7 +248,7 @@ shopt -u sourcepath		# don't use PATH for `.' commands
 
 # the following shopts work only for 2.05 or greater
 shopt -s no_empty_cmd_completion 2>&-	# don't freeze on an accidental tab
-shopt -s xpg_echo 2>&-			# use xpg4 semantics for echo
+shopt -s xpg_echo 2>&-					# use xpg4 semantics for echo
 [ $? -eq 0 ] || alias echo="/bin/echo"	# use /bin/echo if above fails
 
 # command-line completion

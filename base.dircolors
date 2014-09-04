@@ -1,15 +1,13 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2010 Matthew Pearson.
+# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.dircolors,v 1.8 2010/12/15 15:53:29 mdp Exp $
+# $Id$
 # commands to GNU dircolors; see also BSD LSCOLORS in .sh_aliases
 #
-
-
 
 TERM	color-xterm
 TERM	dtterm

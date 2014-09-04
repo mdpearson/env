@@ -1,11 +1,11 @@
 #!/bin/csh
 #
-# Copyright (c) 2000-5 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id: base.login,v 1.5 2005/06/19 05:22:13 matmone Exp $
+# $Id$
 # instruct csh-based login shells to exec a bourne-compatible shell
 #
 

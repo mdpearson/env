@@ -1,10 +1,10 @@
 !
-! Copyright (c) 2002-5 Matthew Pearson <mdp@matmo.net>.
+! Copyright (c) 2002-2014 Matthew Pearson <matthewpearson@gmail.com>.
 !
 ! These scripts are free. There is no warranty; your mileage may vary.
-! Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+! Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 !
-! $Id: base.dtperf,v 1.4 2005/06/19 05:22:13 matmone Exp $
+! $Id$
 ! preferences for Solaris/CDE sdtperfmeter
 !
 

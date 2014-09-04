@@ -1,3 +1,14 @@
+#!/not/executable
+#
+# Copyright (c) 2012-2014 Matthew Pearson <matthewpearson@gmail.com>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# $Id$
+# configuration setup for git
+#
+
 [core]
 	editor = emacs
 	pager = cat
@@ -5,7 +16,7 @@
 	safecrlf = true
 [user]
 	name = __G_USER_TRUENAME__
-	email = __G_USER__@__G_USER_DOMAIN__
+	email = __G_USER_EMAIL__
 [color]
 	diff = always
 	ui = true
@@ -34,4 +45,6 @@
 [difftool]
     prompt = false
 [difftool "bbdiff"]
-    cmd = /usr/local/bin/bbdiff --wait --resume "$LOCAL" "$REMOTE"
+    cmd = bbdiff --wait --resume "$LOCAL" "$REMOTE"
+
+#EOF __TAGGED__

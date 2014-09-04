@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2010 Matthew Pearson.
+# Copyright (c) 2000-2014 Matthew Pearson.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
 # sh-compatible commands executed at login for sh, ksh, bash
@@ -145,7 +145,7 @@ then
 	  /Library/Preferences/SystemConfiguration/preferences.plist | \
 	  sed -e 's/<[^>]*>//g' -e 's/^[ 	]*//' ` # note literal space+tab
 	THOST=`echo $THOST | sed 's/[ 	].*$//'`
-	# strike out the " - <user_name>" AT syntax the Broad uses
+	# strike out the " - <user_name>" AT syntax the Broad Institute uses
 	THOST=`echo $THOST | sed 's/ - .*//'`
 	THOST=`echo $THOST | sed 's/-[A-Z][a-z][a-z][a-zA-Z-]*$//'`
 	[ "$THOST" ] && export THOST

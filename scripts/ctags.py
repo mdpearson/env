@@ -1,12 +1,10 @@
 #!/usr/bin/python
 #
-# Copyright (c) 2014 Matthew Pearson.
-# Code derives from code presented in the BBEdit User Manual 10.5.5, p. 308, available at
-# http://pine.barebones.com/manual/BBEdit_10_User_Manual.pdf
-# which is Copyright (c) 1992-2013 Bare Bones Software, Inc.
+# Copyright (c) 2014 Logos Research Systems.
 #
-# These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+# Code derives from demo code in the BBEdit User Manual 10.5.5, available
+# at http://pine.barebones.com/manual/BBEdit_10_User_Manual.pdf (p. 308),
+# which is Copyright (c) 1992-2013 Bare Bones Software, Inc.
 #
 # $Id$
 # (re)builds a BBEdit-compatible set of ctags within the specified directory

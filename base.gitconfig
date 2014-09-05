@@ -41,10 +41,10 @@
 	decorate = short
 	abbrev-commit = true
 [diff]
-    tool = "bbdiff"
+    tool = "twdiff"
 [difftool]
     prompt = false
-[difftool "bbdiff"]
-    cmd = bbdiff --wait --resume "$LOCAL" "$REMOTE"
+[difftool "twdiff"]
+    cmd = twdiff --wait --resume "$REMOTE" "$LOCAL"
 
 #EOF __TAGGED__

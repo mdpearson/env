@@ -26,7 +26,7 @@ OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 
 XDOTFILES = .Xdefaults .dtprofile .fvwm/.fvwm2rc .dt/sessionetc .dt/sessions/dtperf
 
-SCRIPTS = ccv cleanup iline lwho stub tap xping uniq_history Darwin/bat
+SCRIPTS = ccv cleanup ctags.py iline lwho stub tap xping uniq_history Darwin/bat
 
 XSCRIPTS = clust_fvwmenu fvbutton heir_fvwmenu hpcv ot_fvwmenu sdtp
 

@@ -133,20 +133,6 @@ then
 	alias tt="ttsession -p -c"
 fi
 
-if [ `isinstalled ctags` ]
-then
-	tagannot()
-	{
-		cd __G_WORKSPACE__
-		ctags --exclude=build --exclude=schema --excmd=number --extra=+f+q \
-		  --fields=+a+f+i+k+m+n+s+S --file-scope=no --languages=Java,Python \
-		  --links=no --tag-relative=yes --totals -R \
-		  --Java-kinds=+c-f+i-l+m-p --Python-kinds=+c+f-m \
-		  common pidgin plugins pluginsGeneCaller
-	}
-	alias ctags='ctags -R --totals --excmd=number --Java-kinds=+cei-flmp --Python-kinds=+cfm-iv --exclude=build --exclude=schema --extra=+f-q --fields=k --file-scope=no --languages=Java,Python --links=no'
-fi
-
 if [ `isinstalled edit` ] && ! [ `isinstalled bbedit` ]
 then
 	alias bbdiff="twdiff"

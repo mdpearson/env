@@ -4,6 +4,9 @@
 # at http://pine.barebones.com/manual/BBEdit_10_User_Manual.pdf (p. 308),
 # contents of which are Copyright (c) 1992-2013 Bare Bones Software, Inc.
 #
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
 # $Id$
 # (re)builds a BBEdit-compatible set of ctags within the specified directory
 #
@@ -24,6 +27,7 @@ if len(sys.argv) != 2:
 	sys.exit(1)
 
 proj_path = sys.argv[1]
+# proj_path = os.environ['SRCROOT']
 
 if not os.access(proj_path, os.F_OK):
 	print >> sys.stderr, "error: can't access requested directory %s" % proj_path

@@ -246,18 +246,22 @@ then
 
 	# add a directory $2 to the end of a :-separated pathlist $1
 	append_path() {
-		[ "$1" ] && [ "$2" ] || return
+		[ "$2" ] || return
+		[ "$2" == null_guard ] && return
 		res=`check_path "$2"`
 		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
-		printf "." >&2
+		[ "$res" -eq 1 ] && printf "." >&2
+#		[ "$res" -ne 1 ] && printf " " >&2
 	}
 
 	# add a directory $2 to the start of a :-separated pathlist $1
 	prepend_path() {
-		[ "$1" ] && [ "$2" ] || return
+		[ "$2" ] || return
+		[ "$2" == null_guard ] && return
 		res=`check_path $2`
 		[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
-		printf "." >&2
+		[ "$res" -eq 1 ] && printf "." >&2
+#		[ "$res" -ne 1 ] && printf " " >&2
 	}
 
 	#
@@ -267,10 +271,21 @@ then
 	ld_path() {
 		unset arg prepend
 
+		#
+		# I can't remember how many times getopts's reliance on external shell variables
+		# has bitten me. OPTIND must be set to 1 each time getopts is called. "Any other
+		# attempt to invoke getopts multiple times in a single shell execution environment
+		# ... produces unspecified results."
+		# 
+		# http://pubs.opengroup.org/onlinepubs/009696799/utilities/getopts.html
+		#
+		OPTIND=1
 		getopts f arg && prepend=y
 		shift `expr $OPTIND - 1`
 
-		[ "$1" ] && [ "$2" ] || return
+		[ "$2" ] || return
+		[ "$2" == null_guard ] && return
+
 		eval echo \$$1 | grep -sq "$2"
 
 		if [ $? -ne 0 ]
@@ -283,9 +298,16 @@ then
 				res=`check_path $2`
 				[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}$2
 			fi
+			[ "$res" -eq 1 ] && printf "." >&2
+#			[ "$res" -ne 1 ] && printf " " >&2
+		else
+			#
+			# print a colon (a "double period") to indicate that the
+			#  element was already present in the specified path.
+			#
+			printf ":" >&2
 		fi
 		unset arg prepend
-		printf "." >&2
 	}
 
 	# this function trims output to a single line
@@ -341,7 +363,7 @@ then
 	# set up, modify it with user- or installation-specific paths.
 	#
 
-	printf " configuring PATH " >&2
+	printf " configuring \$PATH and friends " >&2
 
 	#
 	# Define basic and X paths, per o/s release --
@@ -448,6 +470,7 @@ then
 	# paths for user-built tools and work-related binaries next.
 	#
 
+	ld_path LD_LIBRARY_PATH /usr/lib
 	ld_path LD_LIBRARY_PATH /usr/lib64
 	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}-${arch}
 	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}
@@ -465,8 +488,6 @@ then
 #	append_path userp ${HOME}/bin/gnu
 	append_path userp ${HOME}/bin
 
-	[ "__G_WORKSPACE__" ] && append_path customp __G_WORKSPACE__/external
-
 	#
 	# additional bin paths from env.conf; null_guard protects
 	# against parse errors if G_BINPATH is undefined
@@ -483,6 +504,10 @@ then
 		done
 	fi
 
+	PATH=`echo ${userp}:${customp}:${PATH} | \
+	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+	export PATH
+
 	#
 	# additional man paths from env.conf; null_guard protects
 	# against parse errors if G_BINPATH is undefined
@@ -496,17 +521,35 @@ then
 		done
 	fi
 
-	PATH=`echo ${userp}:${customp}:${PATH} | \
-	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
-	PATH="../external:$PATH"
 	MANPATH=`echo ${userm}:${customm}:${MANPATH} | \
 	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+	export MANPATH
+
+	#
+	# additional package config paths from env.conf; null_guard protects
+	# against parse errors if G_PKG_CONFIG_PATH is undefined
+	#
+	if [ "__G_PKG_CONFIG_PATH__" ]
+	then
+		for ppath in __G_PKG_CONFIG_PATH__ null_guard
+		do
+			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			ld_path -f PKG_CONFIG_PATH "$ppath_repl"
+		done
+		export PKG_CONFIG_PATH
+	fi
 
 	unset userp customp
 	unset userm customm
+	unset customk
 	unset ppath ppath_repl
 
-	export PATH MANPATH
+	if [ "__G_ACLOCAL_FLAGS__" ]
+	then
+		ACLOCAL_FLAGS="__G_ACLOCAL_FLAGS__"
+		export ACLOCAL_FLAGS
+	fi
+
 	echo " <done>" >&2
 
 	#

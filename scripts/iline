@@ -446,17 +446,8 @@ sunhw() {
 }
 
 osxhw() {
-	sysline=`grep -n "<key>ComputerName</key>" \
-	  /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  sed 's/:.*//'`
-	sysline=`expr $sysline + 1`
-	# note the literal tab + space in this sed expression
-	NAME=`awk "NR==$sysline { print }" \
-	  /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  sed -e 's/^[ 	]*//' -e 's/<[^>]*>//g'`
-	# strike out the " - <user_name> AT syntax the Broad uses
-	NAME=`echo $NAME | sed 's/ - .*//'`
-	NAME=`echo $NAME | sed 's/-[A-Z][a-z][a-z][a-z].*$//'`
+	NAME=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist | \
+	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' | cut -d" " -f 3 | uniq`
 	[ "$NAME" ] || NAME=`hostname`
 
 	freq=`sysctl -n hw.cpufrequency`
@@ -752,15 +743,15 @@ else
 			if [ $USER != __G_USER__ ]
 			then
 				# running as different user
-				pre=`tput smul 2>&-; tput bold 2>&-; tput setaf 1 2>&-`
+				pre=`tput bold 2>&-; tput setaf 1 2>&-; tput smul 2>&-; `
 			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 			then
 				# remote host
-				pre=`tput smul 2>&-; tput bold 2>&-`
+				pre=`tput bold 2>&-; tput setaf 0 2>&-; tput smul 2>&-; `
 			else
 				# local host
-				pre=`tput bold 2>&-`
+				pre=`tput bold 2>&-; tput setaf 0 2>&-`
 			fi
 			post=`tput sgr0`
 			#

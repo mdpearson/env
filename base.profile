@@ -137,19 +137,9 @@ export HOST HOSTNAME USER
 if [ -f /Library/Preferences/SystemConfiguration/preferences.plist ]
 then
 	# set THOST to the AppleTalk (user-chosen) name on Macs
-	sysline=`grep -n "<key>ComputerName</key>" \
-	  /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  sed 's/:.*//'`
-	sysline=`expr $sysline + 1`
-	THOST=`awk "NR==$sysline { print }" \
-	  /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  sed -e 's/<[^>]*>//g' -e 's/^[ 	]*//' ` # note literal space+tab
-	THOST=`echo $THOST | sed 's/[ 	].*$//'`
-	# strike out the " - <user_name>" AT syntax the Broad Institute uses
-	THOST=`echo $THOST | sed 's/ - .*//'`
-	THOST=`echo $THOST | sed 's/-[A-Z][a-z][a-z][a-zA-Z-]*$//'`
+	THOST=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist | \
+	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' | cut -d" " -f 3 | uniq`
 	[ "$THOST" ] && export THOST
-	unset sysline
 fi
 
 COLUMNS=`tput cols`
@@ -276,7 +266,7 @@ then
 		# has bitten me. OPTIND must be set to 1 each time getopts is called. "Any other
 		# attempt to invoke getopts multiple times in a single shell execution environment
 		# ... produces unspecified results."
-		# 
+		#
 		# http://pubs.opengroup.org/onlinepubs/009696799/utilities/getopts.html
 		#
 		OPTIND=1
@@ -371,7 +361,7 @@ then
 	#	blist:	dirs with binaries not named [s]bin
 	#	mlist:	dirs with manpages not named man
 	#
-	# Custom paths should be set in G_BINPATH and G_MANPATH
+	# Custom paths should be set in G_PATH and G_MANPATH
 	# instead, see env.conf for details. Paths in this
 	# section should be specific to a distribution, not to
 	# an installation.
@@ -471,11 +461,17 @@ then
 	#
 
 	ld_path LD_LIBRARY_PATH /usr/lib
+	ld_path DYLD_FALLBACK_LIBRARY_PATH /usr/lib
 	ld_path LD_LIBRARY_PATH /usr/lib64
+	ld_path DYLD_FALLBACK_LIBRARY_PATH /usr/lib64
 	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}-${arch}
+	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib/${ost}-${arch}
 	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}
+	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib/${ost}
 	ld_path LD_LIBRARY_PATH ${HOME}/lib
+	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib
 	export LD_LIBRARY_PATH
+	export DYLD_FALLBACK_LIBRARY_PATH
 
 	append_path userm ${HOME}/man
 	append_path userm ${HOME}/share/man
@@ -490,11 +486,11 @@ then
 
 	#
 	# additional bin paths from env.conf; null_guard protects
-	# against parse errors if G_BINPATH is undefined
+	# against parse errors if G_PATH is undefined
 	#
-	if [ "__G_BINPATH__" ]
+	if [ "__G_PATH__" ]
 	then
-		for ppath in __G_BINPATH__ null_guard
+		for ppath in __G_PATH__ null_guard
 		do
 			if [ $ppath != null_guard ]
 			then
@@ -510,7 +506,7 @@ then
 
 	#
 	# additional man paths from env.conf; null_guard protects
-	# against parse errors if G_BINPATH is undefined
+	# against parse errors if G_MANPATH is undefined
 	#
 	if [ "__G_MANPATH__" ]
 	then
@@ -524,6 +520,20 @@ then
 	MANPATH=`echo ${userm}:${customm}:${MANPATH} | \
 	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
 	export MANPATH
+
+	#
+	# additional dyld paths from env.conf; null_guard protects
+	# against parse errors if G_DYLD_FALLBACK_LIBRARY_PATH is undefined
+	#
+	if [ "__G_DYLD_FALLBACK_LIBRARY_PATH__" ]
+	then
+		for ppath in __G_DYLD_FALLBACK_LIBRARY_PATH__ null_guard
+		do
+			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			ld_path -f DYLD_FALLBACK_LIBRARY_PATH "$ppath_repl"
+		done
+		export DYLD_FALLBACK_LIBRARY_PATH
+	fi
 
 	#
 	# additional package config paths from env.conf; null_guard protects

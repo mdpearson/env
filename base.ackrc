@@ -6,12 +6,12 @@
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
-# commands to GNU dircolors; see also BSD LSCOLORS in .sh_aliases
+# custom commands to ack; see also perldoc Term::ANSIColor
 #
 
---color-filename=bold black
---color-match=bold green
---color-lineno=reset
+--color-filename=bright_cyan
+--color-match=bright_green
+--color-lineno=cyan
 --smart-case
 --sort-files
 

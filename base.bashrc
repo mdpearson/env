@@ -118,12 +118,12 @@ function init_bash_prompt
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
 			uf='30;01'		# bold, black user
-			pf='30;01'		# bold, black prompt
+			pf='34;01'		# bold, blue prompt
 			hf='30;04;01'	# bold, black, underlined hostname
 		else			# local:
 			uf='30;01'		# bold, black user
-			pf='30;01'		# bold, black prompt
-			hf='30;01'		# bold, black, hostname
+			pf='34;01'		# bold, blue prompt
+			hf='30;01'		# bold, black hostname
 		fi
 
 		userstr="\[\e[${uf}m\]\u\[\e[0m\]"

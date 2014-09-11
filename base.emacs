@@ -56,7 +56,7 @@
 (setq column-number-mode t)
 
 (custom-set-faces
- '(default ((t (:foreground "white" :background "black"))))
+; '(default ((t (:foreground "white" :background "black"))))
  '(font-lock-builtin-face ((t (:foreground "lightsteelblue"))))
  '(font-lock-comment-face ((t (:italic t :foreground "orangered"))))
  '(font-lock-keyword-face ((t (:italic t :foreground "lightskyblue"))))

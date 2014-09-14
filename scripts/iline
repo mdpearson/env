@@ -509,6 +509,13 @@ osxhw() {
 		CHIPC=`expr $CHIPC / $fullstr`
 	fi
 
+	# most reliable way to count physical CPU's but doesn't always work
+	if [ -x /usr/sbin/system_profiler ]
+	then
+		trustystr=`system_profiler SPHardwareDataType 2>/dev/null | grep 'Processors'`
+		[ "$trustystr" ] && CHIPC=`echo "$trustystr" | sed 's/^ *//' | cut -d" " -f 4`
+	fi
+
 	#
 	# There is little rhyme or reason to Apple's naming scheme.
 	# The rosetta stone is located at:
@@ -521,6 +528,8 @@ osxhw() {
 			CLASS="iMac" ;;
 		MacBookPro*)
 			CLASS="MacBook Pro" ;;
+		MacBookAir*)
+			CLASS="MacBook Air" ;;
 		MacBook*)
 			CLASS="MacBook" ;;
 		PowerBook6*)
@@ -543,7 +552,7 @@ osxhw() {
 				6)	CLASS="15\" PowerBook G4" ;;
 				7)	CLASS="17\" PowerBook G4" ;;
 				8)	CLASS="15\" PowerBook G4 (hi-res)" ;;
-				9)	CLASS="17\" PowerBook G4 (hi-res)" ;;	
+				9)	CLASS="17\" PowerBook G4 (hi-res)" ;;
 				*)	CLASS="PowerBook G4" ;;
 			esac ;;
 		PowerBook4*)
@@ -739,7 +748,7 @@ else
 		then
 			wholine=`who -m --lookup 2>&-`
 			[ $? -eq 0 ] || wholine=`who -m`
-			
+
 			if [ $USER != __G_USER__ ]
 			then
 				# running as different user

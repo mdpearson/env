@@ -11,13 +11,20 @@
 
 [ -f $HOME/.profile ] && . $HOME/.profile
 
-if [ "__G_REMOTE_WS__" ]
-then
-	CDPATH=.:${HOME}:__G_REMOTE_WS__:__G_WORKSPACE__
-else
-	CDPATH=.:${HOME}:__G_WORKSPACE__
-fi
+#if [ "__G_REMOTE_WS__" ]
+#then
+#	CDPATH=.:${HOME}:__G_REMOTE_WS__:__G_WORKSPACE__
+#else
+#	CDPATH=.:${HOME}:__G_WORKSPACE__
+#fi
 unset MAILCHECK
+
+if [ -d $HOME/.autoenv ]
+then
+	. $HOME/.autoenv/activate.sh
+else
+	alias autoenv_init=
+fi
 
 # internal variable used by update_title and redo
 if [ "$BASH" ]
@@ -89,6 +96,8 @@ redo()
 		xrdb -remove
 		xrdb -load $XENVIRONMENT
 	fi
+
+	autoenv_init
 }
 
 # append the current working directory to the end of the path

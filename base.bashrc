@@ -171,17 +171,6 @@ function prompt_update
 function cd_wrapper
 {
 	thispwd=$PWD
-	
-	if [ $(echo $* | grep -c '^[0-9]\{6,9\}$') -eq 1 ]
-	then
-		# it's a Broad Institute job directory
-		last3=$(echo $* | sed 's/.*\([0-9]\{3,3\}\)$/\1/')
-		first=$(echo $* | sed "s/$last3\$//")
-		dest="/seq/annotation/prod/jobs/$first/$*"
-		eval builtin cd $dest >&-
-	else
-		eval builtin cd "${1+\"$*\"}" >&-
-	fi
 
 	# undo prompt customizations of autoenv scripts when cd'ing away
 	unset OLDPS1

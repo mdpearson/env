@@ -102,10 +102,8 @@ fi
 
 if [ `uname -s` = 'Darwin' ]
 then
-	alias top="TERM=vt100 top -un 20"
 	psargs='-axo user,pid,state,pri,%cpu,command'
 else
-	alias ping="ping -sn"
 	psargs='-eo user,pid,s,pri,pcpu,args'
 fi
 alias psa="ps $psargs"

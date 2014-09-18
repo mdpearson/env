@@ -9,20 +9,6 @@
 # configuration setup for git
 #
 
-[core]
-	editor = emacs
-	pager = cat
-	autocrlf = input
-	safecrlf = true
-[user]
-	name = __G_USER_TRUENAME__
-	email = __G_USER_EMAIL__
-[color]
-	diff = always
-	ui = true
-	pager = false
-	status = auto
-	branch = auto
 [alias]
 	ci = commit
 	co = checkout
@@ -37,14 +23,29 @@
 	changes = diff --name-stats -r
 	diffstat = diff --stat -r
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+[color]
+	diff = always
+	ui = true
+	pager = false
+	status = auto
+	branch = auto
+[core]
+	editor = emacs
+	pager = cat
+	autocrlf = input
+	safecrlf = true
+[diff]
+	tool = "bbdiff"
+[difftool]
+	prompt = false
+[difftool "bbdiff"]
+	cmd = bbdiff --wait --resume "$REMOTE" "$LOCAL"
 [log]
 	decorate = short
 	abbrev-commit = true
-[diff]
-    tool = "bbdiff"
-[difftool]
-    prompt = false
-[difftool "bbdiff"]
-    cmd = bbdiff --wait --resume "$REMOTE" "$LOCAL"
-
+[push]
+	default = simple
+[user]
+	name = __G_USER_TRUENAME__
+	email = __G_USER_EMAIL__
 #EOF __TAGGED__

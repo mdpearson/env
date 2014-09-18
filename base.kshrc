@@ -55,7 +55,7 @@ else
 	pchar='\$'
 fi
 
-export PS1='${HOST}'" ksh|! ${USER} "${pchar}" "
+export PS1='${HOST}'" ksh|! ${USER} (ws:None) "${pchar}" "
 export PS2='> '
 export PS4='+ '
 unset pchar

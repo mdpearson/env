@@ -48,16 +48,27 @@ then
 	{
 		_ppath=$(echo "$PWD" | sed -e 's|\([^/]\)$|\1/|' \
 		  -e 's|.\{1,\}\(\(/[^/]*\)\{4,4\}\)$|...\1|')
+
 		if [ "$THOST" ] && [ "$THOST" != "$HOST" ]
 		then
-			_string=$(printf '%s@%s %s\n' "$USER" \
-			  "${THOST}" "$_ppath")
+			_host="$THOST"
 		else
-			_string=$(printf '%s@%s %s\n' "$USER" \
-			  "${HOST}" "$_ppath")
+			_host="$HOST"
 		fi
-		label "$_string"
-		unset _ppath _string
+
+		if [ "$USER" != "__G_USER__" ]
+		then
+			_string="$USER@$_host"
+		else
+			_string="$_host"
+		fi
+
+		_string="$_string:$_ppath"
+
+		[ "$WSNAME" ] && [ "$WSNAME" != "None" ] && _string="$_string — $WSNAME"
+
+		label $(printf '%s\n' "$_string")
+		unset _host _ppath _string
 	}
 else
 	label() { :; }

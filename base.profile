@@ -171,7 +171,7 @@ then
 		pchar='\$'
 	fi
 
-	PS1="${HOST} sh ${USER} ${pchar} "
+	PS1="${HOST} sh ${USER} (ws:None) ${pchar} "
 	export PS1
 	unset pchar
 fi

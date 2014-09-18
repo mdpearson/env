@@ -123,7 +123,9 @@ function init_bash_prompt
 		hoststr="\[\e[${hf}m\]$nn\[\e[0m\]${dn:+:$dn}"
 		histstr="\[\e[02m\]\!\[\e[0m\]"
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
-		PS1=${hoststr}" "${shellabbr}"|"${histstr}" "${userstr}" "${hashstr}" "
+		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
+		PS1=${hoststr}" "${shellabbr}"|"${histstr}" "${userstr}" (ws:None) "${hashstr}" "
+		PS2=${contstr}" "
 
 		unset pf uf hf userstr hoststr infostr hashstr wholine
 	else
@@ -180,6 +182,12 @@ function cd_wrapper
 	else
 		eval builtin cd "${1+\"$*\"}" >&-
 	fi
+
+	# undo prompt customizations of autoenv scripts when cd'ing away
+	unset OLDPS1
+	WSNAME="None"
+
+	eval builtin cd "${1+\"$*\"}" >&-
 
 	if [ "$thispwd" != "$PWD" ]
 	then

@@ -72,3 +72,5 @@ else:
 
 ctags_dst = os.path.join(proj_path, "tags")
 shutil.copyfile(ctags_tmp.name, ctags_dst)
+
+#EOF __TAGGED__

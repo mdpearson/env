@@ -58,13 +58,6 @@ else
 	HISTFILE=$HOME/.bash_histories/$HOST
 fi
 
-if [ -d $HOME/.autoenv ]
-then
-	. $HOME/.autoenv/activate.sh
-else
-	alias autoenv_init=
-fi
-
 HISTCONTROL=ignoredups
 HISTSIZE=$((64 * 1024 - 1))
 HISTFILESIZE=$((64 * 1024 - 1))
@@ -199,35 +192,6 @@ function cd_wrapper
 }
 alias cd='cd_wrapper'
 
-function list_cdable_dirs
-{
-	local cur=${COMP_WORDS[COMP_CWORD]}
-	local k=${#COMPREPLY[@]}
-
-	for cdd in ${CDPATH//:/$'\t'}
-	do
-		if [ "$(echo $cur | cut -c 1)" = "/" ]
-		then
-			wd=$cur
-		else
-			wd=$cdd/$cur
-		fi
-
-		comps=$(compgen -o nospace -d "$wd")
-		scrambled_comps=${comps// /:}
-
-		for scrambled_comp in $scrambled_comps
-		do
-			unscrambled_comp=${scrambled_comp//:/\\ }
-			trimmed_comp=${unscrambled_comp#${cdd}/}
-			if [ "$trimmed_comp" ]
-			then
-				COMPREPLY[k++]=${trimmed_comp}/
-			fi
-		done
-	done
-}
-
 init_bash_prompt
 PROMPT_COMMAND=prompt_update
 
@@ -252,8 +216,15 @@ shopt -s xpg_echo 2>&-					# use xpg4 semantics for echo
 [ $? -eq 0 ] || alias echo="/bin/echo"	# use /bin/echo if above fails
 
 # command-line completion
-complete -F list_cdable_dirs -o nospace cd pushd
-complete -f -X '*$py.class' bbedit bbdiff diff edit open twedit
+
+. $HOME/.isinstalled
+if [ `isinstalled brew` ]
+then
+	if [ -f $(brew --prefix)/etc/bash_completion ]; then
+		. $(brew --prefix)/etc/bash_completion
+	fi
+fi
+unset isinstalled
 
 if [ "$old_home" ]
 then

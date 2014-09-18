@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Copyright (c) 2014 Matthew Pearson <matthewpearson@gmail.com>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# $Id$
+# this small method is sourced by three dotfiles
+#
+
+isinstalled() {
+	type $* 2>&- >&-
+	[ $? -eq 0 ] && echo 1
+}
+
+#EOF __TAGGED__

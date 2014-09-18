@@ -11,10 +11,7 @@
 
 hash -r
 
-isinstalled() {
-	type $* 2>&- >&-
-	[ $? -eq 0 ] && echo 1
-}
+. $HOME/.isinstalled
 
 unalias cp 2>&-
 unalias ls 2>&-

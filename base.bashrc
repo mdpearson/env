@@ -172,20 +172,19 @@ function cd_wrapper
 {
 	thispwd=$PWD
 
-	# undo prompt customizations of autoenv scripts when cd'ing away
-	unset OLDPS1
-	WSNAME="None"
-
 	eval builtin cd "${1+\"$*\"}" >&-
 
 	if [ "$thispwd" != "$PWD" ]
 	then
+		# undo prompt customizations of autoenv scripts when cd'ing away
+		unset OLDPS1
+		WSNAME="None"
+		autoenv_init
+
 		echo "cd: working directory now $PWD"
 		[ $(truels -C | wc -l) -le 6 ] && ls
-		unset fcnt
-		autoenv_init
 	fi
-	unset dest first last3 thispwd
+	unset thispwd
 }
 alias cd='cd_wrapper'
 

@@ -224,6 +224,13 @@ then
 fi
 unset isinstalled
 
+if [ -e $HOME/.git-completion.bash ]
+then
+	. $HOME/.git-completion.bash
+else
+	echo " (you may want to install git-completion)" >&2
+fi
+
 if [ "$old_home" ]
 then
 	HOME=$old_home

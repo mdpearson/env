@@ -10,42 +10,93 @@
 #
 
 [alias]
-	ci = commit
-	co = checkout
-	oneline = log --pretty=oneline
-	st = status
+	ack = grep --heading -i --perl-regexp --untracked
 	br = branch
-	pdiff = whatchanged -n 1 -p
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
-	lc = log ORIG_HEAD.. --stat --no-merges
 	cancel = reset --soft HEAD^
 	changes = diff --name-stats -r
+	ci = commit
+	co = checkout
 	diffstat = diff --stat -r
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
+	last = log -1 HEAD -p --word-diff=color
+	lc = log ORIG_HEAD.. --stat --no-merges
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+	oneline = log --pretty=oneline --graph --abbrev-commit
+	pdiff = whatchanged -n 1 -p
+	remote = remote -v
+	st = status
+	unstage = reset HEAD
+	wdiff = diff --word-diff=color --minimal
+
+[branch]
+	autosetuprebase = always
 [color]
-	diff = always
 	ui = true
-	pager = false
-	status = auto
-	branch = auto
+[color "branch"]
+	current = blue reverse bold dim
+	local = yellow
+	plain = magenta
+	remote = green
+	upstream = green bold
+[color "diff"]
+	commit = magenta
+	func = black bold
+	frag = black
+	meta = black dim
+	new = blue
+	old = dim
+	plain =
+	whitespace = red reverse
+[color "decorate"]
+	branch = blue reverse bold dim
+	HEAD = bold
+	remoteBranch = dim
+#	stash
+#	tag
+[color "grep"]
+#	context =
+	filename = cyan
+#	function =
+	linenumber = cyan dim
+	match = green ul
+#	selected =
+	separator = cyan
+#[color "interactive"]
+#	error =
+#	header =
+#	help =
+	prompt = blue
+[color "status"]
+	added = blue
+	branch = blue reverse bold dim
+	changed = yellow
+	header =
+	nobranch = red reverse
+	untracked = dim
+	updated = blue
 [core]
+	autocrlf = false
 	editor = emacs
 	pager = cat
-	autocrlf = input
 	safecrlf = true
 [diff]
+	mnemonicprefix = true
 	tool = "bbdiff"
 [difftool]
 	prompt = false
 [difftool "bbdiff"]
 	cmd = bbdiff --wait --resume "$REMOTE" "$LOCAL"
+[grep]
+	lineNumber = true
 [log]
-	decorate = short
 	abbrev-commit = true
+	decorate = short
 [push]
 	default = simple
+[remote]
+	verbose = true
 [user]
-	name = __G_USER_TRUENAME__
 	email = __G_USER_EMAIL__
+	name = __G_USER_TRUENAME__
 #EOF __TAGGED__

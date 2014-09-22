@@ -13,6 +13,8 @@
 echo $- | fgrep -s i > /dev/null
 [ $? -eq 0 ] || return
 
+export DYLD_INSERT_LIBRARIES="${HOME}/opt/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
 # run .bash_logout for all shells, not just login ones
 trap "[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout" EXIT
 

@@ -138,7 +138,7 @@ if [ -f /Library/Preferences/SystemConfiguration/preferences.plist ]
 then
 	# set THOST to the AppleTalk (user-chosen) name on Macs
 	THOST=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' | cut -d" " -f 3 | uniq`
+	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
 	[ "$THOST" ] && export THOST
 fi
 

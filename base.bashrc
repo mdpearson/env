@@ -55,15 +55,15 @@ fi
 [ -d $HOME/.bash_histories ] || mkdir $HOME/.bash_histories
 if [ "$THOST" ]
 then
-	HISTFILE=$HOME/.bash_histories/$THOST
+	HISTFILE=$HOME/.bash_histories/"$THOST"
 else
-	HISTFILE=$HOME/.bash_histories/$HOST
+	HISTFILE=$HOME/.bash_histories/"$HOST"
 fi
 
 HISTCONTROL=ignoredups
 HISTSIZE=$((64 * 1024 - 1))
 HISTFILESIZE=$((64 * 1024 - 1))
-[ -f $HISTFILE ] || touch $HISTFILE
+[ -f "$HISTFILE" ] || touch "$HISTFILE"
 
 TIMEFORMAT="		elapsed: %lR @ %P""%% (u:%lU|s:%lS)"
 

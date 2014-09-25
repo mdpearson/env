@@ -447,7 +447,8 @@ sunhw() {
 
 osxhw() {
 	NAME=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' | cut -d" " -f 3 | uniq`
+	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+
 	[ "$NAME" ] || NAME=`hostname`
 
 	freq=`sysctl -n hw.cpufrequency`

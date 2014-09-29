@@ -42,8 +42,8 @@
 [color "diff"]
 	commit = magenta
 	func = blue bold
-	frag = black
-	meta = black dim
+	frag = yellow
+	meta = yellow dim
 	new = green
 	old = red
 	plain =
@@ -59,9 +59,9 @@
 	filename = cyan
 	function = blue bold
 	linenumber = cyan dim
-	match = green ul
+	match = green bold
 #	selected =
-	separator = cyan
+	separator = cyan dim
 [color "interactive"]
 #	error =
 #	header =

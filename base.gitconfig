@@ -32,24 +32,24 @@
 [branch]
 	autosetuprebase = always
 [color]
-	ui = true
+	ui = auto
 [color "branch"]
-	current = blue reverse bold dim
-	local = yellow
+	current = blue reverse bold
+	local = green
 	plain = magenta
-	remote = green
+	remote = dim
 	upstream = green bold
 [color "diff"]
 	commit = magenta
-	func = black bold
+	func = blue bold
 	frag = black
 	meta = black dim
-	new = blue
-	old = dim
+	new = green
+	old = red
 	plain =
 	whitespace = red reverse
 [color "decorate"]
-	branch = blue reverse bold dim
+	branch = blue reverse bold
 	HEAD = bold
 	remoteBranch = dim
 #	stash
@@ -57,20 +57,20 @@
 [color "grep"]
 #	context =
 	filename = cyan
-#	function =
+	function = blue bold
 	linenumber = cyan dim
 	match = green ul
 #	selected =
 	separator = cyan
-#[color "interactive"]
+[color "interactive"]
 #	error =
 #	header =
 #	help =
 	prompt = blue
 [color "status"]
 	added = blue
-	branch = blue reverse bold dim
-	changed = yellow
+	branch = blue reverse bold
+	changed = green
 	header =
 	nobranch = red reverse
 	untracked = dim

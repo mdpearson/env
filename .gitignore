@@ -2,5 +2,6 @@
 .env
 \#*\#
 *~
+env.conf
 env.tar
 Icon\r

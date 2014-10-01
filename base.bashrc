@@ -145,34 +145,23 @@ function init_bash_prompt
 }
 
 # tasks that should run each time a command completes
+trap '_PREV_COMMAND=$_thiscmd; _thiscmd=$BASH_COMMAND' DEBUG
+
 function prompt_update
 {
-	_val=$?
+	_errno=$1
 	update_title
-	if [ "$_val" ] && [ $_val -ne 0 ]
+	if [ "$_errno" ] && [ $_errno -ne 0 ]
 	then
-		[ "$_pre" ] || _pre=`tput smul 2>&-`
-		[ "$_post" ] || _post=`tput sgr0 2>&-`
+		[ "$_pre_val" ] || _pre_val=`tput bold 2>&-`
+		[ "$_post_val" ] || _post_val=`tput sgr0 2>&-`
 
-		_cno=$(($HISTCMD-1))
-		_cmd=$(history | sed -ne '/^ *'$_cno'/,/.*/p' | \
-			awk 'NR == 1 {
-				sub(" *"$1" *","")
-				line=$0
-			} END {
-				if (NR > 1) {
-					printf("%s ...", line)
-				} else {
-					print line
-				}
-			}' )
-		printf '  %s: %s  %s: %s  %s: %s\n' \
-		  "${_pre}errno${_post}" "${_val}" \
-		  "${_pre}cmdno${_post}" "${_cno}" \
-		  "${_pre}cmd${_post}" "${_cmd}"
-		unset _cno _cmd
+		if [ "$_PREV_COMMAND" != 'prompt_update $?' ]
+		then
+			echo "\`${_PREV_COMMAND}\` returned error code ${_pre_val}${_errno}${_post_val}."
+		fi
 	fi
-	return $_val	# return original $? (error code)
+	return $_errno	# return original $? (error code)
 }
 
 # automatically call ls after cd if the listing is six lines or less
@@ -197,7 +186,7 @@ function cd_wrapper
 alias cd='cd_wrapper'
 
 init_bash_prompt
-PROMPT_COMMAND=prompt_update
+PROMPT_COMMAND='prompt_update $?'
 
 set -b					# immediately notify of terminated processes
 set -C					# i.e., noclobber

@@ -152,8 +152,6 @@ then
 	export XENVIRONMENT
 fi
 
-export ACK_COLOR_FILENAME="bold black"
-
 export GIT_SSL_NO_VERIFY=1
 unset SSH_ASKPASS
 

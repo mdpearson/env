@@ -152,7 +152,6 @@ then
 	export XENVIRONMENT
 fi
 
-export GIT_SSL_NO_VERIFY=1
 unset SSH_ASKPASS
 
 #

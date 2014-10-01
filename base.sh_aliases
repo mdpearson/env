@@ -147,7 +147,7 @@ then
 	alias ctags='ctags -R --totals --excmd=number --Java-kinds=+cei-flmp --Python-kinds=+cfm-iv --exclude=build --exclude=schema --extra=+f-q --fields=k --file-scope=no --languages=Java,Python --links=no'
 fi
 
-if [ `isinstalled edit` ]
+if [ `isinstalled edit` ] && ! [ `isinstalled bbedit` ]
 then
 	alias bbdiff="twdiff"
 	alias bbedit="edit"

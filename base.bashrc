@@ -253,7 +253,7 @@ shopt -s xpg_echo 2>&-					# use xpg4 semantics for echo
 
 # command-line completion
 complete -F list_cdable_dirs -o nospace cd pushd
-complete -f -X '*$py.class' bbedit diff open
+complete -f -X '*$py.class' bbedit bbdiff diff edit open twedit
 
 if [ "$old_home" ]
 then

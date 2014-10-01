@@ -32,48 +32,6 @@
 	autosetuprebase = always
 [color]
 	ui = auto
-[color "branch"]
-	current = yellow reverse bold
-	local = green
-	plain = magenta
-	remote = dim
-	upstream = green bold
-[color "diff"]
-	commit = magenta
-	func = yellow bold
-	frag = yellow
-	meta = yellow dim
-	new = green
-	old = red
-#	plain = dim
-	whitespace = red reverse
-[color "decorate"]
-	branch = yellow reverse bold
-	HEAD = bold
-	remoteBranch = dim
-	stash = red
-	tag = blue
-[color "grep"]
-#	context = dim
-	filename = cyan
-	function = yellow bold
-	linenumber = cyan dim
-	match = green bold
-#	selected = dim
-	separator = cyan dim
-[color "interactive"]
-	error = red
-#	header =
-#	help =
-	prompt = blue
-[color "status"]
-	added = blue
-	branch = yellow reverse bold
-	changed = green
-#	header =
-	nobranch = red bold
-	untracked = dim
-	updated = blue
 [core]
 	autocrlf = false
 	editor = emacs
@@ -100,4 +58,108 @@
 [user]
 	email = __G_USER_EMAIL__
 	name = __G_USER_TRUENAME__
+
+
+#
+# Yellow means local
+#
+
+# currently-selected branch
+[color "branch"]
+	current = yellow reverse bold
+[color "decorate"]
+	HEAD = yellow reverse bold
+[color "status"]
+	branch = yellow reverse bold
+# non-selected local branches
+[color "branch"]
+	local = yellow
+[color "decorate"]
+	branch = yellow
+# local, uncommitted edits
+[color "status"]
+	changed = yellow
+
+#
+# Blue means remote
+#
+
+# upstream branches
+[color "branch"]
+	upstream = blue bold
+# remote branches
+[color "branch"]
+	remote = blue
+[color "decorate"]
+	remoteBranch = blue
+# local, staged editss
+[color "status"]
+	added = blue		# synonymous with 'updated'
+
+#
+# Cyan means metadata
+#
+
+[color "diff"]
+	commit = cyan		# this is also styles sha's in `git log`
+	frag = cyan
+	func = cyan bold
+	meta = cyan dim
+[color "grep"]
+	filename = cyan
+	function = cyan bold
+	linenumber = cyan dim
+	separator = cyan dim
+[color "interactive"]
+	header = cyan
+
+#
+# Green means newly-added or found
+#
+[color "diff"]
+	new = green
+[color "grep"]
+	match = green bold
+
+#
+# Red means removed
+#
+[color "diff"]
+	old = red
+
+#
+# Red reverse means error
+#
+[color "diff"]
+	whitespace = red reverse
+[color "interactive"]
+	error = red reverse bold
+[color "status"]
+	nobranch = red reverse bold
+
+#
+# Magenta means git
+#
+[color "branch"]
+	plain = magenta
+[color "decorate"]
+	stash = magenta
+	tag = magenta
+[color "interactive"]
+	prompt = magenta bold
+
+#
+# Unassigned values inherit from the shell and are here for reference
+#
+[color "diff"]
+	plain =
+[color "grep"]
+	context = dim
+	selected =
+[color "interactive"]
+	help = dim
+[color "status"]
+	header =
+	untracked = dim
+
 #EOF __TAGGED__

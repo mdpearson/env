@@ -28,51 +28,50 @@
 	st = status
 	unstage = reset HEAD
 	wdiff = diff --word-diff=color --minimal
-
 [branch]
 	autosetuprebase = always
 [color]
 	ui = auto
 [color "branch"]
-	current = blue reverse bold
+	current = yellow reverse bold
 	local = green
 	plain = magenta
 	remote = dim
 	upstream = green bold
 [color "diff"]
 	commit = magenta
-	func = blue bold
+	func = yellow bold
 	frag = yellow
 	meta = yellow dim
 	new = green
 	old = red
-	plain =
+#	plain = dim
 	whitespace = red reverse
 [color "decorate"]
-	branch = blue reverse bold
+	branch = yellow reverse bold
 	HEAD = bold
 	remoteBranch = dim
-#	stash
-#	tag
+	stash = red
+	tag = blue
 [color "grep"]
-#	context =
+#	context = dim
 	filename = cyan
-	function = blue bold
+	function = yellow bold
 	linenumber = cyan dim
 	match = green bold
-#	selected =
+#	selected = dim
 	separator = cyan dim
 [color "interactive"]
-#	error =
+	error = red
 #	header =
 #	help =
 	prompt = blue
 [color "status"]
 	added = blue
-	branch = blue reverse bold
+	branch = yellow reverse bold
 	changed = green
-	header =
-	nobranch = red reverse
+#	header =
+	nobranch = red bold
 	untracked = dim
 	updated = blue
 [core]

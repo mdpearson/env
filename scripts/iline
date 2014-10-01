@@ -753,15 +753,15 @@ else
 			if [ $USER != __G_USER__ ]
 			then
 				# running as different user
-				pre=`tput bold 2>&-; tput setaf 1 2>&-; tput smul 2>&-; `
+				pre=`tput bold 2>&-; tput setaf 1 2>&-`
 			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 			then
 				# remote host
-				pre=`tput bold 2>&-; tput setaf 0 2>&-; tput smul 2>&-; `
+				pre=`tput bold 2>&-; tput setaf 3 2>&-`
 			else
 				# local host
-				pre=`tput bold 2>&-; tput setaf 0 2>&-`
+				pre=`tput bold 2>&-; tput setaf 3 2>&-`
 			fi
 			post=`tput sgr0`
 			#

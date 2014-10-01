@@ -606,9 +606,9 @@ then
 		[ -x $HOME/bin/exec/$ost/bat ] && \
 		  trimline `$HOME/bin/exec/$ost/bat`
 
-		# pretty print env. var names if possible
-		pre=`tput smul 2>&-`
-		post=`tput sgr0 2>&-`
+		# pretty print env. var names if desired
+		pre="" # `tput smul 2>&-`
+		post="" # `tput sgr0 2>&-`
 
 		# print tty info
 		printf ' %s; ' "${pre}TTY${post}=`echo $TTY | \

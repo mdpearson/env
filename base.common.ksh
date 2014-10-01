@@ -11,12 +11,7 @@
 
 [ -f $HOME/.profile ] && . $HOME/.profile
 
-#if [ "__G_REMOTE_WS__" ]
-#then
-#	CDPATH=.:${HOME}:__G_REMOTE_WS__:__G_WORKSPACE__
-#else
-#	CDPATH=.:${HOME}:__G_WORKSPACE__
-#fi
+CDPATH=.:${HOME}
 unset MAILCHECK
 
 if [ -d $HOME/.autoenv ]
@@ -89,6 +84,7 @@ redo()
 	hash -r
 	PATH=$PATH
 	PROFILED=false . ${HOME}/.${_shell}rc
+	autoenv_init
 
 	# there are lots of reasons to not call xrdb
 	if [ $USER != 'root' ] && [ -r "$XENVIRONMENT" ] && [ "$DISPLAY" ]
@@ -96,8 +92,6 @@ redo()
 		xrdb -remove
 		xrdb -load $XENVIRONMENT
 	fi
-
-	autoenv_init
 }
 
 # append the current working directory to the end of the path

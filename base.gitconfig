@@ -11,23 +11,15 @@
 
 [alias]
 	ack = grep --heading -i -E --untracked
-	br = branch
 	cancel = reset --soft HEAD^
-	changes = diff --name-stats -r
-	ci = commit
-	co = checkout
-	diffstat = diff --stat -r
-	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	la = log --pretty=\"format:%ad %h (%an): %s\" --date=short
-	last = log -1 HEAD -p --word-diff=color
-	lc = log ORIG_HEAD.. --stat --no-merges
-	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-	oneline = log --pretty=oneline --graph --abbrev-commit
+	diffstat = diff --no-merges --stat -r
+	last = log -1 -p HEAD
+	longline = log --abbrev-commit --graph --topo-order --pretty=tformat:'%C(auto)%h %C(dim)%ad%C(reset) %s %C(dim)(%an)%C(reset)'
+	oneline = log --abbrev-commit --date=short --graph --topo-order --pretty=oneline
 	pdiff = whatchanged -n 1 -p
-	remote = remote -v
-	st = status
 	unstage = reset HEAD
 	wdiff = diff --word-diff=color --minimal
+	whatline = whatchanged --abbrev-commit --date=short --graph --topo-order --pretty=oneline
 [branch]
 	autosetuprebase = always
 [color]
@@ -48,6 +40,7 @@
 	lineNumber = true
 [log]
 	abbrev-commit = true
+	date = short
 	decorate = short
 [push]
 	default = simple

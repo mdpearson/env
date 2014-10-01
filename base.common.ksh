@@ -106,4 +106,6 @@ adddot()
 	export PATH=$(echo $PATH | sed -e 's/:\.//g'):.
 }
 
+export DYLD_INSERT_LIBRARIES="${HOME}/opt/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+
 #EOF __TAGGED__

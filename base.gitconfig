@@ -94,6 +94,8 @@
 	decorate = short
 [push]
 	default = simple
+[rebase]
+	whitespace = fix
 [remote]
 	verbose = true
 [user]

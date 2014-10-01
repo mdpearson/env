@@ -10,7 +10,7 @@
 #
 
 [alias]
-	ack = grep --heading -i --perl-regexp --untracked
+	ack = grep --heading -i -E --untracked
 	br = branch
 	cancel = reset --soft HEAD^
 	changes = diff --name-stats -r

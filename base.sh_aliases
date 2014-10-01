@@ -5,7 +5,7 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
 #
-# $Id: base.sh_aliases,v 1.44 2011/06/26 19:20:59 mdp Exp $
+# $Id$
 # alias definitions and other sh cmds that must be run per tty
 #
 

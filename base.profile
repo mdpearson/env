@@ -5,7 +5,7 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
 #
-# $Id: base.profile,v 1.64 2011/06/26 19:20:59 mdp Exp $
+# $Id$
 # sh-compatible commands executed at login for sh, ksh, bash
 #
 

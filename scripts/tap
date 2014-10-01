@@ -5,7 +5,7 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
 #
-# $Id: tap,v 1.4 2005/06/19 05:22:13 matmone Exp $
+# $Id$
 # [DEPRECATED] connect to a given host using ssh or rlogin
 #
 

@@ -5,7 +5,7 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
 #
-# $Id: iline,v 1.17 2010/02/20 04:28:34 mdp Exp $
+# $Id$
 # print a line of useful hw or sw information about a host
 #
 

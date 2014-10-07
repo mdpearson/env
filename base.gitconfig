@@ -20,6 +20,8 @@
 	unstage = reset HEAD
 	wdiff = diff --word-diff=color --minimal
 	whatline = whatchanged --abbrev-commit --date=short --graph --pretty=oneline
+[blame]
+	date = short
 [branch]
 	autosetuprebase = always
 [color]

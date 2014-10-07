@@ -15,11 +15,11 @@
 	diffstat = diff --no-merges --stat -r
 	last = log -1 -p HEAD
 	longline = log --abbrev-commit --graph --topo-order --pretty=tformat:'%C(auto)%h %C(dim)%ad%C(reset) %s %C(dim)(%an)%C(reset)'
-	oneline = log --abbrev-commit --date=short --graph --topo-order --pretty=oneline
+	oneline = log --abbrev-commit --date=short --graph --pretty=oneline
 	pdiff = whatchanged -n 1 -p
 	unstage = reset HEAD
 	wdiff = diff --word-diff=color --minimal
-	whatline = whatchanged --abbrev-commit --date=short --graph --topo-order --pretty=oneline
+	whatline = whatchanged --abbrev-commit --date=short --graph --pretty=oneline
 [branch]
 	autosetuprebase = always
 [color]

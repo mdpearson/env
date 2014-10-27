@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Copyright (c) 2004-5 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2004-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
 # print out battery statistics extracted from ioreg

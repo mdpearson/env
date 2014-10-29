@@ -13,6 +13,12 @@
 echo $- | fgrep -s i > /dev/null
 [ $? -eq 0 ] || return
 
+if [ -f "${HOME}/.git-prompt.sh" ]
+then
+	. "${HOME}/.git-prompt.sh"
+	GIT_PS1_SHOWUPSTREAM="auto verbose"
+fi
+
 if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
 then
 	if [ ! "$DYLD_INSERT_LIBRARIES" ]
@@ -132,8 +138,11 @@ function init_bash_prompt
 		histstr="\[\e[02m\]\!\[\e[0m\]"
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
-		PS1=${hoststr}" "${shellabbr}"|"${histstr}" "${userstr}" (ws:None) "${hashstr}" "
-		PS2=${contstr}" "
+
+		PS1_FIRST="${hoststr} ${shellabbr}|${histstr}"
+		PS1_SECOND="${userstr} ${hashstr} "
+		PS1="${PS1_FIRST} ${PS1_SECOND}"
+		PS2="${contstr} "
 
 		unset pf uf hf userstr hoststr infostr hashstr wholine
 	else
@@ -161,6 +170,8 @@ function prompt_update
 			echo "\`${_PREV_COMMAND}\` returned error code ${_pre_val}${_errno}${_post_val}."
 		fi
 	fi
+
+	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git(\[\e[02m\]%s\[\e[0m\]) "
 	return $_errno	# return original $? (error code)
 }
 

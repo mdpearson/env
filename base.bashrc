@@ -16,6 +16,7 @@ echo $- | fgrep -s i > /dev/null
 if [ -f "${HOME}/.git-prompt.sh" ]
 then
 	. "${HOME}/.git-prompt.sh"
+	GIT_PS1_SHOWCOLORHINTS=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 fi
 
@@ -156,6 +157,51 @@ function init_bash_prompt
 # tasks that should run each time a command completes
 trap '_PREV_COMMAND=$_thiscmd; _thiscmd=$BASH_COMMAND' DEBUG
 
+if [ "`declare -f __git_ps1`" ]
+then
+	#
+	# __git_ps1 depends on a few global variables which can be overridden here.
+	#
+	# $w -- ??
+	# $i -- ??
+	# $s -- set to "$" when the stash contains something; immediately follows workspace name
+	# $u -- set to "%" when something is unstaged
+	# $c -- set before anything prints
+	# $p -- set to [=<>] or "u-21" to indicate differences with upstream branch
+	#
+	__git_ps1_colorize_gitstring ()
+	{
+		local branch_fmt=`git config --get-color "" dim`
+		local reset_fmt=`git config --get-color "" reset`
+
+		c="$branch_fmt$c"
+		r="$reset_fmt$r"
+
+		if [ -n "$s" ]
+		then
+			stash_fmt=`git config --get-color color.decorate.stash`
+			s="$reset_fmt${stash_fmt}@"
+		fi
+		if [ -n "$u" ]
+		then
+			untracked_fmt=`git config --get-color color.grep.filename`
+			u="${reset_fmt}${untracked_fmt}#"
+		fi
+
+		if [ -n "$p" ]
+		then
+			local pull_delta_fmt=`git config --get-color color.branch.local`
+			local push_delta_fmt=`git config --get-color color.branch.remote`
+			local uptodate_fmt=`git config --get-color "" "green bold"`
+			p=`echo "$p" | sed \
+			  -e 's/u//' \
+			  -e 's/\(\+[0-9]*\)/'"$push_delta_fmt"'\1'"$reset_fmt"'/' \
+			  -e 's/\(-[0-9]*\)/'"$pull_delta_fmt"'\1'"$reset_fmt"'/' \
+			  -e 's/\(=\)/'"$uptodate_fmt"'\1\1'"$reset_fmt"'/'`
+		fi
+	}
+fi
+
 function prompt_update
 {
 	_errno=$1
@@ -171,7 +217,7 @@ function prompt_update
 		fi
 	fi
 
-	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git(\[\e[02m\]%s\[\e[0m\]) "
+	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git(%s) "
 	return $_errno	# return original $? (error code)
 }
 

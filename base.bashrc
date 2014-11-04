@@ -127,7 +127,7 @@ function init_bash_prompt
 		then			# remote host:
 			uf='35;01'		# bold, magenta user
 			pf='34;01'		# bold, blue prompt
-			hf='35;04;01'	# bold, magenta hostname
+			hf='35;04;01'	# bold, magenta, underlined hostname
 		else			# local:
 			uf='33;01'		# bold, yellow user
 			pf='34;01'		# bold, blue prompt
@@ -171,33 +171,34 @@ then
 	#
 	__git_ps1_colorize_gitstring ()
 	{
-		local branch_fmt=`git config --get-color "" dim`
-		local reset_fmt=`git config --get-color "" reset`
+		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# dim branch name
+		__GIT_PS1_RESET_FMT='\[\e[0m\]'
+		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# magenta stash status
+		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# magenta stash status
+		__GIT_PS1_AHEAD_FMT='\[\e[33m\]'		# yellow means local ahead of remote
+		__GIT_PS1_BEHIND_FMT='\[\e[34m\]'		# blue means remote ahead of local
+		__GIT_PS1_UPTODATE_FMT='\[\e[32;01m\]'	# bold green means sync'ed up
 
-		c="$branch_fmt$c"
-		r="$reset_fmt$r"
+		c=$__GIT_PS1_BRANCH_FMT"$c"
+		r=$__GIT_PS1_RESET_FMT"$r"
 
 		if [ -n "$s" ]
 		then
-			stash_fmt=`git config --get-color color.decorate.stash`
-			s="$reset_fmt${stash_fmt}@"
+			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"@"
 		fi
 		if [ -n "$u" ]
 		then
-			untracked_fmt=`git config --get-color color.grep.filename`
-			u="${reset_fmt}${untracked_fmt}#"
+			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"#"
 		fi
-
 		if [ -n "$p" ]
 		then
-			local pull_delta_fmt=`git config --get-color color.branch.local`
-			local push_delta_fmt=`git config --get-color color.branch.remote`
-			local uptodate_fmt=`git config --get-color "" "green bold"`
 			p=`echo "$p" | sed \
+			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
 			  -e 's/u//' \
-			  -e 's/\(\+[0-9]*\)/'"$push_delta_fmt"'\1'"$reset_fmt"'/' \
-			  -e 's/\(-[0-9]*\)/'"$pull_delta_fmt"'\1'"$reset_fmt"'/' \
-			  -e 's/\(=\)/'"$uptodate_fmt"'\1\1'"$reset_fmt"'/'`
+			  -e 's/\(=\)/$__GIT_PS1_UPTODATE_FMT\1\1$__GIT_PS1_RESET_FMT/' \
+			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
+			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/'`	
+			p=`eval echo "$p"`
 		fi
 	}
 fi

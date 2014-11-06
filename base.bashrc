@@ -17,6 +17,8 @@ if [ -f "${HOME}/.git-prompt.sh" ]
 then
 	. "${HOME}/.git-prompt.sh"
 	GIT_PS1_SHOWCOLORHINTS=1
+#	GIT_PS1_SHOWDIRTYSTATE=1
+#	GIT_PS1_SHOWSTASHSTATE=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 fi
 
@@ -140,8 +142,8 @@ function init_bash_prompt
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${hoststr} ${shellabbr}|${histstr}"
-		PS1_SECOND="${userstr} ${hashstr} "
+		PS1_FIRST="${hoststr} ${shellabbr}|${histstr} ${userstr}"
+		PS1_SECOND="${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
 
@@ -174,10 +176,9 @@ then
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# dim branch name
 		__GIT_PS1_RESET_FMT='\[\e[0m\]'
 		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# magenta stash status
-		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# magenta stash status
-		__GIT_PS1_AHEAD_FMT='\[\e[33m\]'		# yellow means local ahead of remote
-		__GIT_PS1_BEHIND_FMT='\[\e[34m\]'		# blue means remote ahead of local
-		__GIT_PS1_UPTODATE_FMT='\[\e[32;01m\]'	# bold green means sync'ed up
+		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# cyan untracked status
+		__GIT_PS1_AHEAD_FMT='\[\e[32m\]'		# green means local ahead of remote
+		__GIT_PS1_BEHIND_FMT='\[\e[31m\]'		# red means remote ahead of local
 
 		c=$__GIT_PS1_BRANCH_FMT"$c"
 		r=$__GIT_PS1_RESET_FMT"$r"
@@ -195,7 +196,7 @@ then
 			p=`echo "$p" | sed \
 			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
 			  -e 's/u//' \
-			  -e 's/\(=\)/$__GIT_PS1_UPTODATE_FMT\1\1$__GIT_PS1_RESET_FMT/' \
+			  -e 's/=//' \
 			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
 			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/'`	
 			p=`eval echo "$p"`
@@ -218,7 +219,7 @@ function prompt_update
 		fi
 	fi
 
-	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git(%s) "
+	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
 	return $_errno	# return original $? (error code)
 }
 

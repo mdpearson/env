@@ -128,12 +128,9 @@ then
 	alias tt="ttsession -p -c"
 fi
 
-if [ `isinstalled edit` ] && ! [ `isinstalled bbedit` ]
-then
-	alias bbdiff="twdiff"
-	alias bbedit="edit"
-	alias bbfind="twfind"
-fi
+[ `isinstalled edit` ] && [ ! `isinstalled bbedit` ] && alias bbedit="edit"
+[ `isinstalled twdiff` ] && [ ! `isinstalled bbdiff` ] && alias bbdiff="twdiff"
+[ `isinstalled twfind` ] && [ ! `isinstalled bbfind` ] && alias bbfind="twfind"
 
 alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'
 if [ `isinstalled bbedit` ] || [ `isinstalled edit` ]

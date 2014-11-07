@@ -137,8 +137,8 @@ export HOST HOSTNAME USER
 if [ -f /Library/Preferences/SystemConfiguration/preferences.plist ]
 then
 	# set THOST to the AppleTalk (user-chosen) name on Macs
-	THOST=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist | \
-	  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+	THOST=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
+	  grep 'LocalHostName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
 	[ "$THOST" ] && export THOST
 fi
 

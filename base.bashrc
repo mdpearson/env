@@ -86,7 +86,7 @@ function init_bash_prompt
 {
 	if [ "$THOST" ] && [ "$THOST" != "$HOST" ]
 	then
-		nn=$THOST
+		nn="$THOST"
 		dn=
 	else
 		nn=$HOST

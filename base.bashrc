@@ -123,26 +123,34 @@ function init_bash_prompt
 		then			# running as different user:
 			uf='31;01'		# bold, red user
 			pf='31;01'		# bold, red prompt
-			hf='31;04;01'	# bold, red, underlined hostname
+			hf='31;01'		# bold, red hostname
+			include_username=1
 		elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
-			uf='35;01'		# bold, magenta user
-			pf='34;01'		# bold, blue prompt
-			hf='35;04;01'	# bold, magenta, underlined hostname
+			uf='33;01'		# bold, yellow user
+			pf='32;01'		# bold, green prompt
+			hf='32;01'		# bold, green hostname
+			include_username=1
 		else			# local:
 			uf='33;01'		# bold, yellow user
 			pf='34;01'		# bold, blue prompt
 			hf='33;01'		# bold, yellow hostname
+			include_username=
 		fi
 
-		userstr="\[\e[${uf}m\]\u\[\e[0m\]"
+		if [ "$include_username" ]
+		then
+			userstr=" \[\e[${uf}m\]\u\[\e[0m\]"
+		else
+			userstr=""
+		fi
 		hoststr="\[\e[${hf}m\]$nn\[\e[0m\]${dn:+:$dn}"
 		histstr="\[\e[02m\]\!\[\e[0m\]"
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${hoststr} ${shellabbr}|${histstr} ${userstr}"
+		PS1_FIRST="${hoststr} ${shellabbr}|${histstr}${userstr}"
 		PS1_SECOND="${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "

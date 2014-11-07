@@ -166,6 +166,7 @@ then
 	#
 	# $w -- ??
 	# $i -- ??
+	# $r -- set to REBASE or other terms when you are doing something complicated
 	# $s -- set to "$" when the stash contains something; immediately follows workspace name
 	# $u -- set to "%" when something is unstaged
 	# $c -- set before anything prints
@@ -173,16 +174,25 @@ then
 	#
 	__git_ps1_colorize_gitstring ()
 	{
+		__GIT_PS1_AHEAD_FMT='\[\e[32m\]'		# green means local ahead of remote
+		__GIT_PS1_BEHIND_FMT='\[\e[31m\]'		# red means remote ahead of local
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# dim branch name
+		__GIT_PS1_REBASE_FMT='\[\e[35m\]'		# magenta rebase status
 		__GIT_PS1_RESET_FMT='\[\e[0m\]'
 		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# magenta stash status
 		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# cyan untracked status
-		__GIT_PS1_AHEAD_FMT='\[\e[32m\]'		# green means local ahead of remote
-		__GIT_PS1_BEHIND_FMT='\[\e[31m\]'		# red means remote ahead of local
 
 		c=$__GIT_PS1_BRANCH_FMT"$c"
-		r=$__GIT_PS1_RESET_FMT"$r"
 
+		if [ -n "$r" ]
+		then
+			r=`echo "$r" | sed \
+			  -e 's/\|//' \
+			  -e 's/\([A-Za-z-]*\)/${__GIT_PS1_REBASE_FMT}\1${__GIT_PS1_RESET_FMT}/'`
+			r=$__GIT_PS1_RESET_FMT'|'`eval echo "$r"`
+		else
+			r=$__GIT_PS1_RESET_FMT"$r"
+		fi
 		if [ -n "$s" ]
 		then
 			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"@"

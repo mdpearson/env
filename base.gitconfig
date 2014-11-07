@@ -11,12 +11,15 @@
 
 [alias]
 	ack = grep --heading -i -E --untracked
+	bbdiff = difftool -y -t bbdiff
 	cancel = reset --soft HEAD^
 	diffstat = diff --no-merges --stat -r
+	ksdiff = difftool -y -t ksdiff
 	last = log -1 -p HEAD
 	longline = log --abbrev-commit --graph --topo-order --pretty=tformat:'%C(auto)%h %C(dim)%ad%C(reset) %s %C(dim)(%an)%C(reset)'
 	oneline = log --abbrev-commit --date=short --graph --pretty=oneline
 	pdiff = whatchanged -n 1 -p
+	twdiff = difftool -y -t twdiff
 	unstage = reset HEAD
 	wdiff = diff --word-diff=color --minimal
 	whatline = whatchanged --abbrev-commit --date=short --graph --pretty=oneline
@@ -33,17 +36,27 @@
 	safecrlf = true
 [diff]
 	mnemonicprefix = true
-	tool = "bbdiff"
+	tool = "ksdiff"
 [difftool]
 	prompt = false
 [difftool "bbdiff"]
 	cmd = bbdiff --wait --resume "$REMOTE" "$LOCAL"
+[difftool "ksdiff"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool "twdiff"]
+	cmd = twdiff --wait --resume "$REMOTE" "$LOCAL"
 [grep]
 	lineNumber = true
 [log]
 	abbrev-commit = true
 	date = short
 	decorate = short
+[merge]
+	tool = "ksdiff"
+[mergetool]
+	prompt = false
+[mergetool "ksdiff"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 [push]
 	default = simple
 [rebase]

@@ -172,28 +172,46 @@ then
 	#
 	# __git_ps1 depends on a few global variables which can be overridden here.
 	#
-	# $w -- ??
+	# $b -- branch name or equivalent (but not accessible here)
+	# $c -- set before anything prints
 	# $i -- ??
-	# $r -- set to REBASE or other terms when you are doing something complicated
+	# $p -- set to [=<>] or "u-21" to indicate differences with upstream branch
+	# $r -- contains "REBASE" or other terms when you are doing something complicated
 	# $s -- set to "$" when the stash contains something; immediately follows workspace name
 	# $u -- set to "%" when something is unstaged
-	# $c -- set before anything prints
-	# $p -- set to [=<>] or "u-21" to indicate differences with upstream branch
+	# $w -- ??
 	#
 	__git_ps1_colorize_gitstring ()
 	{
-		__GIT_PS1_AHEAD_FMT='\[\e[32m\]'		# green means local ahead of remote
-		__GIT_PS1_BEHIND_FMT='\[\e[31m\]'		# red means remote ahead of local
-		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# dim branch name
-		__GIT_PS1_REBASE_FMT='\[\e[35m\]'		# magenta rebase status
-		__GIT_PS1_RESET_FMT='\[\e[0m\]'
-		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# magenta stash status
-		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# cyan untracked status
+		__GIT_PS1_AHEAD_FMT='\[\e[33m\]'		# local ahead of remote
+		__GIT_PS1_BEHIND_FMT='\[\e[34m\]'		# remote ahead of local
+		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
+		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
+		__GIT_PS1_REBASE_FMT='\[\e[35m\]'		# rebase status flag
+		__GIT_PS1_RESET_FMT='\[\e[0m\]'			# reset these crazy colors
+		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# stash status flag
+		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# untracked status flag
 
-		c=$__GIT_PS1_BRANCH_FMT"$c"
-
+		if [ "$detached" = "yes" ]
+		then
+			c=$__GIT_PS1_DETACHED_FMT"$c"
+		else
+			c=$__GIT_PS1_BRANCH_FMT"$c"
+		fi
+		if [ -n "$p" ]
+		then
+			# adjust display of upstream/downstream state
+			p=`echo "$p" | sed \
+			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
+			  -e 's/u//' \
+			  -e 's/=//' \
+			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
+			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/'`
+			p=`eval echo "$p"`
+		fi
 		if [ -n "$r" ]
 		then
+			# adjust how rebase status is displayed
 			r=`echo "$r" | sed \
 			  -e 's/\|//' \
 			  -e 's/\([A-Za-z-]*\)/${__GIT_PS1_REBASE_FMT}\1${__GIT_PS1_RESET_FMT}/'`
@@ -203,21 +221,13 @@ then
 		fi
 		if [ -n "$s" ]
 		then
+			# adjust how stashed files are flagged
 			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"@"
 		fi
 		if [ -n "$u" ]
 		then
+			# adjust how untracked files are flagged
 			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"#"
-		fi
-		if [ -n "$p" ]
-		then
-			p=`echo "$p" | sed \
-			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
-			  -e 's/u//' \
-			  -e 's/=//' \
-			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
-			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/'`	
-			p=`eval echo "$p"`
 		fi
 	}
 fi

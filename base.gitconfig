@@ -10,10 +10,10 @@
 #
 
 [alias]
-	ack = grep --heading -i -E --untracked
+	ack = grep -E -I --break --heading --untracked
 	bbdiff = difftool -y -t bbdiff
 	cancel = reset --soft HEAD^
-	diffstat = diff --no-merges --stat -r
+	diffstat = diff -r --no-merges --stat
 	ksdiff = difftool -y -t ksdiff
 	last = log -1 -p HEAD
 	longline = log --abbrev-commit --graph --topo-order --pretty=tformat:'%C(auto)%h %C(dim)%ad%C(reset) %s %C(dim)(%an)%C(reset)'
@@ -21,7 +21,7 @@
 	pdiff = whatchanged -n 1 -p
 	twdiff = difftool -y -t twdiff
 	unstage = reset HEAD
-	wdiff = diff --word-diff=color --minimal
+	wdiff = diff --minimal --word-diff=color
 	whatline = whatchanged --abbrev-commit --date=short --graph --pretty=oneline
 [blame]
 	date = short

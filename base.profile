@@ -134,14 +134,6 @@ HOST=`hostname | sed 's/\..*//'`	# drop domain name if present
 HOSTNAME=$HOST
 export HOST HOSTNAME USER
 
-if [ -f /Library/Preferences/SystemConfiguration/preferences.plist ]
-then
-	# set THOST to the AppleTalk (user-chosen) name on Macs
-	THOST=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
-	  grep 'LocalHostName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
-	[ "$THOST" ] && export THOST
-fi
-
 COLUMNS=`tput cols`
 ENV=${HOME}/.kshrc
 export COLUMNS ENV
@@ -579,6 +571,9 @@ then
 
 	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
 	export VIRTUALENVWRAPPER_PYTHON
+
+	THOST=`macname`
+	[ "$THOST" ] && export THOST
 
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]

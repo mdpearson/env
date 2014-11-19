@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Copyright (c) 2014 Matthew Pearson <matthewpearson@gmail.com>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# $Id$
+# makes a best guess as to what the name of a Mac is
+#
+
+[ -f /Library/Preferences/SystemConfiguration/preferences.plist ] || exit 1
+
+# set THOST to the AppleTalk (user-chosen) name on Macs
+LocalHostName=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
+  grep 'LocalHostName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+ComputerName=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
+  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+if [ "$LocalHostName" = "$ComputerName" ]
+then
+	THOST="$LocalHostName"
+else
+	# try to handle the "(3)" and "-2" AppleTalk name issues that got worse with Yosemite
+	LocalHostName=`echo $LocalHostName | sed 's/ *-[0-9]*//'`
+	ComputerName=`echo $ComputerName | sed 's/ *([0-9]*)//'`
+	if [ "$LocalHostName" = "$ComputerName" ]
+	then
+		THOST="$LocalHostName"
+	else
+		unset THOST
+	fi
+fi
+
+echo $THOST

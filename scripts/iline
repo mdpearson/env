@@ -9,7 +9,7 @@
 # print a line of useful hw or sw information about a host
 #
 
-PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/sbin
+PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/sbin:$PATH
 
 USAGE="usage: `basename $0` [-abnsvwh] [-l <extra length>]"
 VSAGE="\t-a precede machine type with article (a/an) [not valid with -s] \n\
@@ -446,8 +446,7 @@ sunhw() {
 }
 
 osxhw() {
-	NAME=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
-	  grep 'LocalHostName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+	NAME=`macname`
 
 	[ "$NAME" ] || NAME=`hostname`
 

@@ -572,6 +572,9 @@ then
 	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
 	export VIRTUALENVWRAPPER_PYTHON
 
+	. $HOME/.isinstalled
+	[ `isinstalled launchctl` ] && launchctl setenv MONODEVELOP_SDB_TEST 1
+
 	THOST=`macname`
 	[ "$THOST" ] && export THOST
 

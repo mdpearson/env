@@ -213,13 +213,14 @@ decsw() {
 # Hardware detection routines
 #
 # These functions take no arguments.
-# They should set the following seven variables.
+# They should set the following eight variables.
 #
 #	NAME:	host name of the machine (string)
 #	CLASS:	type of machine (string)
 #	CHIP:	type of microprocessor (string)
 #	CHIPC:	number of procs (integer or string)
 #	CMHZ:	speed of processors (integer plus units string)
+#	COREC:	number of cores (integer or string)
 #	RAM:	installed ram, in megabytes (integer ONLY)
 #	EXTRA:	bus speed, slots count, etc. (string)
 #		(only needed if $verbose is set.)
@@ -467,6 +468,8 @@ osxhw() {
 		bmhz=`round 1 $busfmhz`
 		EXTRA="${bmhz}MHz"
 	fi
+
+	COREC=`sysctl -n machdep.cpu.core_count`
 
 	if [ -x /usr/bin/hostinfo ]
 	then
@@ -800,10 +803,20 @@ else
 		RAM=$RAM" MB"
 	fi
 
+	if [ "$COREC" ]
+	then
+		if [ "$COREC" -eq 1 ]
+		then
+			coremsg="1 core, "
+		else
+			coremsg=`printf '%s cores, ' $COREC`
+		fi
+	fi
+
 	# organize the fields from xxxhw
-	msg=`printf '%s%s with %s %s %s (%s%s)\n' \
+	msg=`printf '%s%s with %s %s %s (%s%s RAM)\n' \
 	  "${prefix:+$prefix }" "$CLASS" "$CHIPC" "$CMHZ" \
-	  "$CHIP" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
+	  "$CHIP" "$coremsg" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
 
 	tmp=`tput cols`
 	termwidth=`expr $tmp - ${limit:-0} + 1 + ${ccharf:-0}`

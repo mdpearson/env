@@ -569,6 +569,8 @@ then
 		fi
 	done
 
+	PYTHONPATH="$HOME/lib/python2.7/site-packages"
+	export PYTHONPATH
 	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
 	export VIRTUALENVWRAPPER_PYTHON
 

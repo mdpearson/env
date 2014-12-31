@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# Copyright (c) 2001-2010 Matthew Pearson.
+# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
-# Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
 # print a line of useful hw or sw information about a host
@@ -521,17 +521,35 @@ osxhw() {
 	# The rosetta stone is located at:
 	# http://developer.apple.com/documentation/Hardware/
 	#
-	major=`sysctl -n hw.model`
-	minor=`echo $major | awk -F, '{print $2}'`
-	case "$major" in
+	total=`sysctl -n hw.model`
+	major=`echo $total | sed 's/^[A-Za-z]*//' | awk -F, '{print $1}'`
+	minor=`echo $total | awk -F, '{print $2}'`
+	case "$total" in
 		iMac*)
 			CLASS="iMac" ;;
 		MacBookPro*)
-			CLASS="MacBook Pro" ;;
+			CLASS="MacBook Pro"
+			if [ "$major" -ge 10 ]
+			then
+				CLASS="MacBook Pro (Retina)"
+			fi ;;
 		MacBookAir*)
-			CLASS="MacBook Air" ;;
+			# see http://support.apple.com/kb/ht3255
+			CLASS="MacBook Air"
+			# all MBA's (major release 3+) mark screen size in minor field
+			case "$minor" in
+				1)	CLASS="11\" MacBook Air" ;;
+				2)	CLASS="13\" MacBook Air" ;;
+			esac
+			# all MBA's prior to major release 3 had 13" screens
+			case "$major" in
+				1)	CLASS="13\" MacBook Air" ;;
+				2)	CLASS="13\" MacBook Air" ;;
+			esac ;;
 		MacBook*)
 			CLASS="MacBook" ;;
+		Macmini*)
+			CLASS="Mac Mini" ;;
 		PowerBook6*)
 			case "$minor" in
 				1)	CLASS="12\" PowerBook G4" ;;
@@ -740,6 +758,7 @@ else
 	[ "$article" ] && case "$CLASS" in
 		[aAeEiIoOuU8x]*) prefix="an" ;;
 		F-*) prefix="an" ;;
+		11\"*) prefix="an" ;;
 		*) prefix="a" ;;
 	esac
 	if [ "$hostn" ]

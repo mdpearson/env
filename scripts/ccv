@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2003-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2003-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -40,12 +40,14 @@ else
 	makever='[ make not found ]'
 fi
 
+javaver='[ java not found ]'
 type java 2>&- >&-
 if [ $? -eq 0 ]
 then
-	javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
-else
-	javaver='[ java not found ]'
+	if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
+	then
+		javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
+	fi
 fi
 
 echo "$javaver / $gccver / $makever"

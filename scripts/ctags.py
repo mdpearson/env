@@ -4,6 +4,8 @@
 # at http://pine.barebones.com/manual/BBEdit_10_User_Manual.pdf (p. 308),
 # contents of which are Copyright (c) 1992-2013 Bare Bones Software, Inc.
 #
+# Copyright (c) 2014-2015 Matthew Pearson <matthewpearson@gmail.com>.
+#
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #

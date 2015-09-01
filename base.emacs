@@ -1,5 +1,5 @@
 ;
-; Copyright (c) 1998-2014 Matthew Pearson <matthewpearson@gmail.com>.
+; Copyright (c) 1998-2015 Matthew Pearson <matthewpearson@gmail.com>.
 ; Based on software (c) 1997 Dartmouth Computer Science Department.
 ; Based on software (c) 2000 employees of Sun Microsystems.
 ;
@@ -62,7 +62,7 @@
  '(font-lock-keyword-face ((t (:italic t :foreground "lightskyblue"))))
  '(font-lock-string-face ((t (:foreground "darksalmon"))))
  '(font-lock-variable-name-face ((t (:italic t :foreground "peachpuff"))))
- '(modeline ((t (:foreground "white" :background "#550055"))))
+ '(mode-line ((t (:foreground "white" :background "#550055"))))
  '(scroll-bar ((t (:background "#484048" :foreground "white"))))
 
  '(show-paren-match-face ((t
@@ -77,8 +77,8 @@
 	(:foreground "black" :background "lightyellow"))))
 )
 
-(set-face-foreground 'modeline "#550055")
-(set-face-background 'modeline "white")
+(set-face-foreground 'mode-line "#550055")
+(set-face-background 'mode-line "white")
 
 (global-set-key "\M-g"	'goto-line)
 (global-set-key "\C-xg"	'goto-line)

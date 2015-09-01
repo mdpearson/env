@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -11,12 +11,17 @@
 
 #
 # bash, on linux, sometimes masquerades as /bin/sh. In that case it
-# behaves like ksh (?) and sources ENV, ending up here. Redirect to
-# .bashrc where it belongs.
+# behaves like ksh (?) and sources ENV, ending up here. When first
+# written, this block explicitly sourced .bashrc, but on the most
+# recent bits I've tested this code on (Ubuntu 14.04.2 LTS and bash
+# 4.3.11) that workaround is no longer needed.
 #
 if [ "$BASH" ]
 then
-	. $HOME/.bashrc
+	if [ "$BASH_VERSINFO" -lt 4 ]
+	then
+		. $HOME/.bashrc
+	fi
 	return
 fi
 

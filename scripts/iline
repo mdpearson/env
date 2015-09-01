@@ -646,13 +646,14 @@ linuxhw() {
 	eval `nawk '
 		/model name|cpu[ \t]*:/ {
 			if ($NF ~ /[0-9.]+[KMGkmg]?Hz/) {
-				printf("%s=\"%s\"\n","CMHZ",$NF)
+				printf("%s=\"%s\"\n","RELIABLE_CMHZ",$NF)
 				sub($NF,"")
 			}
 			sub(".*: *","")
 			gsub("[(][^)]*[)]","")
 			sub(" *CPU *","")
 			sub(" *Processor","")
+			sub(" @ ", "")
 			sub("Core","core")
 			sub("One","1")
 			sub("Two","2")
@@ -662,14 +663,19 @@ linuxhw() {
 			printf("%s=\"%s\"\n","CHIP",$0)
 		}
 		/clock/ {
-			printf("%s=\"%s\"\n","CMHZ",$NF)
+			printf("%s=\"%s\"\n","UNRELIABLE_CMHZ",$NF)
 		}
 		/cpu MHz/ {
-			printf("%s=\"%s\"\n","CMHZ",$NF)
+			printf("%s=\"%s\"\n","UNRELIABLE_CMHZ",$NF)
 		}' /proc/cpuinfo`
 
-	# change MHz to GHz, allowing for weird linux reporting of chip speeds
-	CMHZ=`echo 'scale=1; a='$CMHZ'; if (a > 1000) print a / 999, " GHz" else print a, " MHz"' | bc`
+	if [ "$RELIABLE_CMHZ" ]
+	then
+		CMHZ="$RELIABLE_CMHZ"
+	else
+		# change MHz to GHz, allowing for weird linux reporting of chip speeds
+		CMHZ=`echo 'scale=1; a='$UNRELIABLE_CMHZ'; if (a > 1000) print a / 999, " GHz" else print a, " MHz"' | bc`
+	fi
 
 	EXTRA=""
 }

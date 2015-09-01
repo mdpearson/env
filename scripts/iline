@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -773,15 +773,15 @@ else
 
 			if [ $USER != __G_USER__ ]
 			then
-				# running as different user
+				# running as different user - red text
 				pre=`tput bold 2>&-; tput setaf 1 2>&-`
 			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 			then
-				# remote host
-				pre=`tput bold 2>&-; tput setaf 3 2>&-`
+				# remote host - blue text
+				pre=`tput bold 2>&-; tput setaf 4 2>&-`
 			else
-				# local host
+				# local host - yellow text
 				pre=`tput bold 2>&-; tput setaf 3 2>&-`
 			fi
 			post=`tput sgr0`

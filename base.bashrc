@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -121,20 +121,20 @@ function init_bash_prompt
 
 		if [ $USER != __G_USER__ ]
 		then			# running as different user:
-			uf='31;01'		# bold, red user
+			uf='31'			# red user
 			pf='31;01'		# bold, red prompt
 			hf='31;01'		# bold, red hostname
 			include_username=1
 		elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
-			uf='33;01'		# bold, yellow user
+			uf='34'			# blue user
 			pf='32;01'		# bold, green prompt
-			hf='32;01'		# bold, green hostname
+			hf='34;01'		# bold, blue hostname
 			include_username=1
 		else			# local:
-			uf='33;01'		# bold, yellow user
-			pf='34;01'		# bold, blue prompt
+			uf='33'			# yellow user
+			pf='32;01'		# bold, green prompt
 			hf='33;01'		# bold, yellow hostname
 			include_username=
 		fi

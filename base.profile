@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2014 Matthew Pearson.
+# Copyright (c) 2000-2015 Matthew Pearson.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -577,7 +577,7 @@ then
 	. $HOME/.isinstalled
 	[ `isinstalled launchctl` ] && launchctl setenv MONODEVELOP_SDB_TEST 1
 
-	THOST=`macname`
+	[ `isinstalled macname` ] && THOST=`macname`
 	[ "$THOST" ] && export THOST
 
 	# display a welcome message introducing the host and OS

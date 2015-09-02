@@ -556,28 +556,30 @@ then
 	#
 	# configure virtual environments for Python
 	#
-	for vew_home in /usr/local/bin/ /seq/a2e0/tools/util/python/bin/2.7.3/bin \
-	  /Library/Frameworks/Python.framework/Versions/2.7/bin
-	do
-		if [ `check_path $vew_home` -eq 1 ]
-		then
-			if [ -f $vew_home/virtualenvwrapper.sh ]
+	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
+	then
+		for vew_home in /usr/local/bin/ /Library/Frameworks/Python.framework/Versions/2.7/bin
+		do
+			if [ `check_path $vew_home` -eq 1 ]
 			then
-				unalias cd 2>&-
-				. $vew_home/virtualenvwrapper.sh
-				alias workoff="deactivate"
-				break
+				if [ -f $vew_home/virtualenvwrapper.sh ]
+				then
+					VIRTUALENVWRAPPER_SCRIPT=$vew_home/virtualenvwrapper.sh
+					export VIRTUALENVWRAPPER_SCRIPT
+					break
+				fi
 			fi
-		fi
-	done
+		done
+	fi
 
-	PYTHONPATH="$HOME/lib/python2.7/site-packages"
-	export PYTHONPATH
-	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
-	export VIRTUALENVWRAPPER_PYTHON
-
-	# . $HOME/.isinstalled
-	# [ `isinstalled launchctl` ] && launchctl setenv MONODEVELOP_SDB_TEST 1
+	if [ "$VIRTUALENVWRAPPER_SCRIPT" ]
+	then
+		WORKON_HOME=venv
+		export WORKON_HOME
+		unalias cd 2>&-
+		. $VIRTUALENVWRAPPER_SCRIPT
+		alias workoff="deactivate"
+	fi
 
 	[ `isinstalled macname` ] && THOST=`macname`
 	[ "$THOST" ] && export THOST

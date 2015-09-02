@@ -30,6 +30,14 @@ then
 	fi
 fi
 
+if [ -f "${HOME}/opt/stderred/build/libstderred.so" ]
+then
+	if [ ! "$LD_PRELOAD" ]
+	then
+		export LD_PRELOAD="${HOME}/opt/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+	fi
+fi
+
 # run .bash_logout for all shells, not just login ones
 trap "[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout" EXIT
 

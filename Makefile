@@ -1,6 +1,6 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2014 Matthew Pearson.
+# Copyright (c) 2000-2015 Matthew Pearson.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -21,7 +21,7 @@ include $(CONF)
 
 DOTFILES = .ackrc .common.ksh .cvsrc .dbxrc .dircolors .emacs .gitconfig .hgrc \
   .inputrc .isinstalled .kshrc .profile .profile_custom .sh_aliases .tcshrc \
-  .MacOSX/environment.plist
+  .MacOSX/environment.plist venv/postactivate venv/postdeactivate
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 
@@ -86,13 +86,21 @@ $(HOME)/.MacOSX/environment.plist: \
 	$(SHELL) $< $(CONF) schemes/$(G_SCHEME).cs $(TSRC) > $@
 	chmod $(TMODE) $@
 
-# rule for files in unusual locations
+# rule for files in .dt subdirectory
 $(HOME)/.dt/sessionetc: base.sessionetc
 $(HOME)/.dt/sessions/dtperf: base.dtperf
 $(HOME)/.dt/%: filter.sh $(CONF)
 	-$(SHELL) -c $(PREPARE)
 	$(SHELL) $< $(CONF) base.$(@F) > $@
 	chmod 544 $@
+
+# rule for files in virtualenv subdirectory
+$(G_WORKON_HOME)/postactivate: base.postactivate
+$(G_WORKON_HOME)/postdeactivate: base.postdeactivate
+$(G_WORKON_HOME)/%: filter.sh $(CONF)
+	-$(SHELL) -c $(PREPARE)
+	$(SHELL) $< $(CONF) base.$(@F) > $@
+	chmod 444 $@
 
 # general dotfiles: prefixed with ".my"
 $(HOME)/.my.%: filter.sh $(CONF) base.%

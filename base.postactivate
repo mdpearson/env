@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Copyright (c) 2015 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# $Id$
+# sh-compatible commands sourced after every virtualenv is activated
+#
+
+if [ ! "$_ORIGINAL_PS1" ]
+then
+	_ORIGINAL_PS1="$PS1"
+	export _ORIGINAL_PS1
+fi
+
+if [ ! "$_ORIGINAL_PS1_SECOND" ]
+then
+	_ORIGINAL_PS1_SECOND="$PS1_SECOND"
+	export _ORIGINAL_PS1_SECOND
+fi
+
+venvnam=`basename $VIRTUAL_ENV`
+
+# assume that the trailing block of non-space character(s) is the prompt
+PS1=`echo "$_ORIGINAL_PS1" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv:'"$venvnam"' \2/'`
+PS1_SECOND=`echo "$_ORIGINAL_PS1_SECOND" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv:'"$venvnam"' \2/'`
+
+unset venvnam
+
+#EOF __TAGGED__

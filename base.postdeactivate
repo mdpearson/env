@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Copyright (c) 2015 Matthew Pearson.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# $Id$
+# sh-compatible commands sourced after every virtualenv is deactivated
+#
+
+if [ "$_ORIGINAL_PS1" ]
+then
+	PS1="$_ORIGINAL_PS1"
+	unset _ORIGINAL_PS1
+fi
+
+if [ "$_ORIGINAL_PS1_SECOND" ]
+then
+	PS1_SECOND="$_ORIGINAL_PS1_SECOND"
+	unset _ORIGINAL_PS1_SECOND
+fi
+
+#EOF __TAGGED__

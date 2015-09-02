@@ -551,6 +551,8 @@ then
 
 	echo " <done>" >&2
 
+	. $HOME/.isinstalled
+
 	#
 	# configure virtual environments for Python
 	#
@@ -574,11 +576,13 @@ then
 	VIRTUALENVWRAPPER_PYTHON=`type python | cut -d" " -f3`
 	export VIRTUALENVWRAPPER_PYTHON
 
-	. $HOME/.isinstalled
-	[ `isinstalled launchctl` ] && launchctl setenv MONODEVELOP_SDB_TEST 1
+	# . $HOME/.isinstalled
+	# [ `isinstalled launchctl` ] && launchctl setenv MONODEVELOP_SDB_TEST 1
 
 	[ `isinstalled macname` ] && THOST=`macname`
 	[ "$THOST" ] && export THOST
+
+	unset isinstalled
 
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]

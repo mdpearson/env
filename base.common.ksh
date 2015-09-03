@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -81,6 +81,7 @@ update_title
 
 redo()
 {
+	deactivate 2>&-
 	hash -r
 	PATH=$PATH
 	PROFILED=false . ${HOME}/.${_shell}rc

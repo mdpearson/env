@@ -17,8 +17,9 @@ if [ -f "${HOME}/.git-prompt.sh" ]
 then
 	. "${HOME}/.git-prompt.sh"
 	GIT_PS1_SHOWCOLORHINTS=1
-#	GIT_PS1_SHOWDIRTYSTATE=1
-#	GIT_PS1_SHOWSTASHSTATE=1
+	GIT_PS1_SHOWDIRTYSTATE=1
+	GIT_PS1_SHOWSTASHSTATE=1
+	GIT_PS1_SHOWUNTRACKEDFILES=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
 	echo " (you may want to install git-prompt)" >&2
@@ -147,12 +148,12 @@ function init_bash_prompt
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
 			uf='34'			# blue user
-			pf='32;01'		# bold, green prompt
+			pf='01'			# bold, colorless prompt
 			hf='34;01'		# bold, blue hostname
 			include_username=1
 		else			# local:
 			uf='33'			# yellow user
-			pf='32;01'		# bold, green prompt
+			pf='01'			# bold, colorless prompt
 			hf='33;01'		# bold, yellow hostname
 			include_username=
 		fi
@@ -192,12 +193,12 @@ then
 	#
 	# $b -- branch name or equivalent (but not accessible here)
 	# $c -- set before anything prints
-	# $i -- ??
+	# $i -- set to "+" when something is staged
 	# $p -- set to [=<>] or "u-21" to indicate differences with upstream branch
 	# $r -- contains "REBASE" or other terms when you are doing something complicated
 	# $s -- set to "$" when the stash contains something; immediately follows workspace name
 	# $u -- set to "%" when something is unstaged
-	# $w -- ??
+	# $w -- set to "*" when something has been modified in the repository
 	#
 	__git_ps1_colorize_gitstring ()
 	{
@@ -205,16 +206,23 @@ then
 		__GIT_PS1_BEHIND_FMT='\[\e[34m\]'		# remote ahead of local
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
-		__GIT_PS1_REBASE_FMT='\[\e[35m\]'		# rebase status flag
-		__GIT_PS1_RESET_FMT='\[\e[0m\]'			# reset these crazy colors
-		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# stash status flag
-		__GIT_PS1_UNTRACKED_FMT='\[\e[36m\]'	# untracked status flag
+		__GIT_PS1_MODIFIED_FMT='\[\e[35;01m\]'	# flag that modified, unstaged files exist
+		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
+		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
+		__GIT_PS1_STAGED_FMT='\[\e[36;01m\]'	# flag that modified, staged files exist
+		__GIT_PS1_STASH_FMT='\[\e[36;02m\]'		# flag that stashed files exist
+		__GIT_PS1_UNTRACKED_FMT='\[\e[35;02m\]'	# flag that untracked files exist
 
 		if [ "$detached" = "yes" ]
 		then
 			c=$__GIT_PS1_DETACHED_FMT"$c"
 		else
 			c=$__GIT_PS1_BRANCH_FMT"$c"
+		fi
+		if [ -n "$i" ]
+		then
+			# adjust how modified, staged files are flagged
+			i=$__GIT_PS1_RESET_FMT$__GIT_PS1_STAGED_FMT"*"
 		fi
 		if [ -n "$p" ]
 		then
@@ -240,12 +248,17 @@ then
 		if [ -n "$s" ]
 		then
 			# adjust how stashed files are flagged
-			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"@"
+			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"?"
 		fi
 		if [ -n "$u" ]
 		then
 			# adjust how untracked files are flagged
-			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"#"
+			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"?"
+		fi
+		if [ -n "$w" ]
+		then
+			# adjust how modified files are flagged
+			w=$__GIT_PS1_RESET_FMT$__GIT_PS1_MODIFIED_FMT"$w"
 		fi
 	}
 fi

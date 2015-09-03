@@ -10,8 +10,13 @@
 #
 
 isinstalled() {
-	type $* 2>&- >&-
-	[ $? -eq 0 ] && echo 1
+	if command -v $* >/dev/null 2>&1
+	then
+		echo 1
+	elif type $* >/dev/null 2>&1
+	then
+		echo 1
+	fi
 }
 
 #EOF __TAGGED__

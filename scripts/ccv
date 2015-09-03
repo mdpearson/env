@@ -18,7 +18,7 @@ if [ `isinstalled gcc` ]
 then
 	gccver=`gcc -V 2>&1 | awk '/ C / {print}' | \
 	    sed -e 's/cc: //' -e 's/ *on.*//'`
-	[ "$gccver" ] || gccver=`gcc -v 2>&1 | grep version`
+	[ "$gccver" ] || gccver=`gcc -v 2>&1 | grep '\bversion'`
 	[ "$gccver" ] || gccver='unknown gcc'
 	gccver=`echo $gccver | sed 's/version //'`
 else

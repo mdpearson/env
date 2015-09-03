@@ -287,7 +287,7 @@ function prompt_update
 # automatically call ls after cd if the listing is six lines or less
 function cd_wrapper
 {
-	thispwd=$PWD
+	thispwd="$PWD"
 
 	eval builtin cd "${1+\"$*\"}" >/dev/null
 

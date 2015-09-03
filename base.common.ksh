@@ -39,7 +39,7 @@ then
 	#
 	# printf '\e]2;%s\a'		# bash only
 	# printf '\033]2;%s\033'	# darwin only
-	# printf ']2;%s'"			# SunOS only
+	# printf ']2;%s'"		# SunOS only
 	#
 	label()
 	{

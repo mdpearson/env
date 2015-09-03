@@ -20,6 +20,16 @@ then
 #	GIT_PS1_SHOWDIRTYSTATE=1
 #	GIT_PS1_SHOWSTASHSTATE=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
+else
+	echo " (you may want to install git-prompt)" >&2
+fi
+
+if [ -f "${HOME}/.git-completion.bash" ]
+then
+	. "$HOME/.git-completion.bash"
+elif [ -f "${HOME}/.git-prompt.sh" ]
+then
+	echo " (you may want to install git-completion)" >&2
 fi
 
 if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
@@ -313,13 +323,6 @@ then
 	fi
 fi
 unset isinstalled
-
-if [ -e $HOME/.git-completion.bash ]
-then
-	. $HOME/.git-completion.bash
-else
-	echo " (you may want to install git-completion)" >&2
-fi
 
 if [ "$old_home" ]
 then

@@ -25,7 +25,7 @@ VSAGE="\t-a precede machine type with article (a/an) [not valid with -s] \n\
        \tvariety of command line options to format the output. \n"
 
 # on some systems there is no nawk
-awk 1 /dev/null 2>&- >&-
+awk 1 /dev/null >/dev/null 2>&1
 [ $? -eq 0 ] && alias nawk=awk
 
 round() {	# round float $2 to the int $1th place - slow
@@ -67,7 +67,7 @@ sunsw() {
 		mode='32-bit'
 		if [ -x /bin/optisa ]
 		then
-			/bin/optisa sparcv9 2>&-
+			/bin/optisa sparcv9 2>/dev/null
 			[ $? = 0 ] && mode='64-bit'
 		fi
 	fi
@@ -244,7 +244,7 @@ sunhw() {
 		# three seconds or so; if it is still running after
 		# that, kill it, give up and run prtconf instead.
 		#
-		while [ `ps -p $! >&-; echo $?` -eq 0 ]
+		while [ `ps -p $! >/dev/null; echo $?` -eq 0 ]
 		do
 			seconds=`date | sed -e 's/.*://' -e 's/ .*//'`
 			elapsed=`expr \( $seconds - $baseline \) \% 60`
@@ -252,7 +252,7 @@ sunhw() {
 
 			if [ $elapsed -gt 3 ]
 			then
-				kill $! 2>&-
+				kill $! 2>/dev/null
 				#
 				# We only need the first few lines of
 				# prtdiag's output. Before giving up,
@@ -387,7 +387,7 @@ sunhw() {
 	  RAM=`prtconf -p | awk '/size/ { print $3; exit }' | \
 	  sed 's/[[:alpha:]]*//g'`
 	# convert gb to mb if needed
-	[ "`echo $rawram | fgrep -ci gb 2>&-`" -eq 1 ] && \
+	[ "`echo $rawram | fgrep -ci gb 2>/dev/null`" -eq 1 ] && \
 	  RAM=`echo "1024*$RAM" | bc | sed 's/\.0*$//'`
 
 	if [ "$verbose" ]
@@ -637,7 +637,7 @@ linuxhw() {
 		s/^.*\///
 		s/[kK].*$//
 		p
-	}' /var/log/dmesg 2>&-`
+	}' /var/log/dmesg 2>/dev/null`
 
 	[ "$rawram" ] || rawram=`awk '/MemTotal/ {print $2}' /proc/meminfo`
 
@@ -774,21 +774,21 @@ else
 	then
 		if [ "$usebold" ]
 		then
-			wholine=`who -m --lookup 2>&-`
+			wholine=`who -m --lookup 2>/dev/null`
 			[ $? -eq 0 ] || wholine=`who -m`
 
 			if [ $USER != __G_USER__ ]
 			then
 				# running as different user - red text
-				pre=`tput bold 2>&-; tput setaf 1 2>&-`
+				pre=`tput bold 2>/dev/null; tput setaf 1 2>/dev/null`
 			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 			then
 				# remote host - blue text
-				pre=`tput bold 2>&-; tput setaf 4 2>&-`
+				pre=`tput bold 2>/dev/null; tput setaf 4 2>/dev/null`
 			else
 				# local host - yellow text
-				pre=`tput bold 2>&-; tput setaf 3 2>&-`
+				pre=`tput bold 2>/dev/null; tput setaf 3 2>/dev/null`
 			fi
 			post=`tput sgr0`
 			#

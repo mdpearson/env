@@ -62,10 +62,10 @@ if [ ! "$HOME" ] || [ "$(basename $HOME)" != __G_USER__ ]
 then
 	old_home=$HOME				# cache old HOME
 	# first, check NIS for the proper passwd entry
-	passl=$(ypcat passwd 2>&- | grep "^__G_USER__:")
+	passl=$(ypcat passwd 2>/dev/null | grep "^__G_USER__:")
 	# check local passwd file if nis lookup fails
-	[ "$passl" ] || passl=$(grep "^__G_USER__:" /etc/passwd 2>&-)
-	HOME=$(echo "$passl" | awk -F: '{print $6}' 2>&-)
+	[ "$passl" ] || passl=$(grep "^__G_USER__:" /etc/passwd 2>/dev/null)
+	HOME=$(echo "$passl" | awk -F: '{print $6}' 2>/dev/null)
 
 	# unreliable: last resort
 	if [ ! "$HOME" ]
@@ -135,7 +135,7 @@ function init_bash_prompt
 		# separate multiple codes with semicolons.
 		#
 
-		wholine=`who -m --lookup 2>&-`
+		wholine=`who -m --lookup 2>/dev/null`
 		[ $? -eq 0 ] || wholine=`who -m`
 
 		if [ $USER != __G_USER__ ]
@@ -271,8 +271,8 @@ function prompt_update
 	update_title
 	if [ "$_errno" ] && [ $_errno -ne 0 ]
 	then
-		[ "$_pre_val" ] || _pre_val=`tput bold 2>&-`
-		[ "$_post_val" ] || _post_val=`tput sgr0 2>&-`
+		[ "$_pre_val" ] || _pre_val=`tput bold 2>/dev/null`
+		[ "$_post_val" ] || _post_val=`tput sgr0 2>/dev/null`
 
 		if [ "$_PREV_COMMAND" != 'prompt_update $?' ]
 		then
@@ -289,7 +289,7 @@ function cd_wrapper
 {
 	thispwd=$PWD
 
-	eval builtin cd "${1+\"$*\"}" >&-
+	eval builtin cd "${1+\"$*\"}" >/dev/null
 
 	if [ "$thispwd" != "$PWD" ]
 	then
@@ -324,9 +324,9 @@ shopt -s lithist		# save multiline commands with newlines
 shopt -u sourcepath		# don't use PATH for `.' commands
 
 # the following shopts work only for 2.05 or greater
-shopt -s no_empty_cmd_completion 2>&-	# don't freeze on an accidental tab
-shopt -s xpg_echo 2>&-					# use xpg4 semantics for echo
-[ $? -eq 0 ] || alias echo="/bin/echo"	# use /bin/echo if above fails
+shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
+shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
+[ $? -eq 0 ] || alias echo="/bin/echo"			# use /bin/echo if above fails
 
 # command-line completion
 

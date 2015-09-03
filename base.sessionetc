@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -15,9 +15,9 @@ PATH=/usr/openwin/bin:/usr/bin:/bin
 
 if [ $USER != "root" ] && [ "$DISPLAY" = ":0.0" ]
 then
-	xhost + nis:${USER}@ 1>&-
-	xhost + nis:root@ 1>&-
-	xhost + local: 1>&-
+	xhost + nis:${USER}@ >/dev/null
+	xhost + nis:root@ >/dev/null
+	xhost + local: >/dev/null
 fi
 
 #EOF __TAGGED__

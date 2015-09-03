@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -35,9 +35,9 @@ else
 
 	stime=`date | sed -e 's/.*://' -e 's/ .*//'`
 
-	$xrdb_path -n -nocpp -query >&- 2>/tmp/check.$$ &
+	$xrdb_path -n -nocpp -query >/dev/null 2>/tmp/check.$$ &
 
-	while [ `ps -p $! >&-; echo $?` -eq 0 ]
+	while [ `ps -p $! >/dev/null; echo $?` -eq 0 ]
 	do
 		ctime=`date | sed -e 's/.*://' -e 's/ .*//'`
 		rtime=`expr \( $ctime - $stime \) \% 60`
@@ -45,7 +45,7 @@ else
 
 		if [ $rtime -gt 1 ]
 		then
-			kill $! 2>&- >&-
+			kill $! >/dev/null 2>&1
 			echo "$sname: timeout contacting display $DISPLAY."
 			res=1
 			break

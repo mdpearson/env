@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2001-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -18,7 +18,7 @@ VSAGE="\t-c don't check console logins\n\
        \t-h print this message\n"
 
 # on some systems there is no nawk
-awk 1 /dev/null 2>&- >&-
+awk 1 /dev/null >/dev/null 2>&1
 [ $? -eq 0 ] && alias nawk=awk
 
 while getopts cqsh arg
@@ -36,7 +36,7 @@ do
 done
 
 # get a list of users other than yourself
-#wholines=`who --lookup 2>&-`
+#wholines=`who --lookup 2>/dev/null`
 #[ $? -eq 0 ] || wholines=`who`
 wholines=`who`
 wholist=`echo "$wholines" | sort | fgrep -v __G_USER__`

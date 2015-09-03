@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -43,9 +43,9 @@ shift `expr $OPTIND - 1`
 
 if [ "$1" ]
 then
-	img=`ls $HOME/desktops/$RES/${1}* 2>&-`
-	[ "$img" ] || img=`ls $HOME/desktops/*/${1}* 2>&-`
-	[ "$img" ] || img=`ls $HOME/desktops/${1}* 2>&-`
+	img=`ls $HOME/desktops/$RES/${1}* 2>/dev/null`
+	[ "$img" ] || img=`ls $HOME/desktops/*/${1}* 2>/dev/null`
+	[ "$img" ] || img=`ls $HOME/desktops/${1}* 2>/dev/null`
 else
 	[ -d $HOME/desktops/$RES ] || \
 	    serror 'no files exist at current resolution' $RES

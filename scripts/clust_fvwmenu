@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2004-5 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2004-2015 Matthew Pearson <mdp@matmo.net>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
@@ -67,7 +67,7 @@ rsh_wrap () {
 
 	if [ "$(jobs)" ]
 	then
-		kill %% 2>&-
+		kill %% 2>/dev/null
 		print "unreachable"
 		rm $tfile
 		return 1
@@ -79,7 +79,7 @@ rsh_wrap () {
 	fi
 
 	rm $tfile
-	infostring=$(rsh -n $* 2>&-)
+	infostring=$(rsh -n $* 2>/dev/null)
 	print "${infostring:-unknown}"
 
 	return 0

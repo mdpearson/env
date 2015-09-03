@@ -57,7 +57,7 @@ PREPARE = "mkdir -p $(@D); \
 	fi"
 
 # simple rule for .profile_custom is only run if basefile exists
-ifeq (base,$(findstring base,$(shell ls base.profile_custom 2>&-)))
+ifeq (base,$(findstring base,$(shell ls base.profile_custom 2>/dev/null)))
 $(HOME)/.profile_custom: \
 $(HOME)/.%: base.%
 	cp $< $@
@@ -120,7 +120,7 @@ $(HOME)/bin/exec/stub: Makefile $(CONF)
 	-rm -f $@
 	echo "#!/bin/sh" > $@
 	echo "cd $(G_BASE)" >> $@
-	echo "type gmake 2>&- >&-" >> $@
+	echo "type gmake >/dev/null 2>&1" >> $@
 	echo '[ $$? -eq 0 ] && prefix=g' >> $@
 	echo '$${prefix}make' >> $@
 	chmod 544 $@
@@ -139,7 +139,7 @@ ident:
 	@ident $(MOSTFILES) | fgrep 'Id'
 
 status:
-	@cvs status 2>&- | grep Status | fgrep -v "Up-to"
+	@cvs status 2>/dev/null | grep Status | fgrep -v "Up-to"
 
 wc: linecount
 linecount:

@@ -34,8 +34,8 @@ then
 	b=`git config --get-color "" "dim"`
 	e=`git config --get-color "" "reset"`
 else
-	b=`tput dim 2>&-`
-	e=`tput sgr0 2>&-`
+	b=`tput dim 2>/dev/null`
+	e=`tput sgr0 2>/dev/null`
 fi
 
 venvnam=`basename $VIRTUAL_ENV`

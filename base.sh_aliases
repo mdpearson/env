@@ -13,9 +13,9 @@ hash -r
 
 . $HOME/.isinstalled
 
-unalias cp 2>&-
-unalias ls 2>&-
-unalias rm 2>&-
+unalias cp 2>/dev/null
+unalias ls 2>/dev/null
+unalias rm 2>/dev/null
 tcp=`type cp | awk '{print $NF; exit}'`
 tls=`type ls | awk '{print $NF; exit}'`
 trm=`type rm | awk '{print $NF; exit}'`
@@ -111,8 +111,8 @@ alias psam="ps $psargs | grep __G_USER__"
 alias findp="psa | grep -v grep | grep -i"
 unset psargs
 
-unalias less 2>&-
-lessl=`(type less 2>&-) | awk '{print $NF}'`
+unalias less 2>/dev/null
+lessl=`(type less 2>/dev/null) | awk '{print $NF}'`
 if [ -x "$lessl" ]
 then
 	PAGER="$lessl"
@@ -128,7 +128,7 @@ then
 	alias tt="ttsession -p -c"
 fi
 
-unalias bbedit bbdiff bbfind 2>&-
+unalias bbedit bbdiff bbfind 2>/dev/null
 if [ `isinstalled edit` ]
 then
 	[ `isinstalled bbedit` ] || alias bbedit="edit"
@@ -186,7 +186,7 @@ set_colors()
 	if
 	[ -x "$dirc" ]
 	then
-		eval "`$dirc -b $HOME/.dircolors` 2>&-"
+		eval "`$dirc -b $HOME/.dircolors` 2>/dev/null"
 		export LS_COLORS
 	fi
 	unset dirc

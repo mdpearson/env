@@ -12,8 +12,9 @@
 # inherit path from environment
 PATH=$PATH:/usr/bin:/bin
 
-type gcc 2>&- >&-
-if [ $? -eq 0 ]
+. "$HOME/.isinstalled"
+
+if [ `isinstalled gcc` ]
 then
 	gccver=`gcc -V 2>&1 | awk '/ C / {print}' | \
 	    sed -e 's/cc: //' -e 's/ *on.*//'`
@@ -24,10 +25,9 @@ else
 	[ "$gccver" ] || gccver='[ gcc not found ]'
 fi
 
-type make 2>&- >&-
-if [ $? -eq 0 ]
+if [ `isinstalled make` ]
 then
-	make --version 2>&- >&-
+	make --version >/dev/null 2>&1
 	if [ $? -eq 0 ]
 	then
 		makever='GNU make '`make --version | \
@@ -41,8 +41,7 @@ else
 fi
 
 javaver='[ java not found ]'
-type java 2>&- >&-
-if [ $? -eq 0 ]
+if [ `isinstalled java` ]
 then
 	if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
 	then

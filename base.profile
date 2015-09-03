@@ -213,7 +213,7 @@ then
 			# The filesystem mount may be hosed.
 			#
 			printf "\n > unable to stat $1\n > killing hung job $pid\n " >&2
-			kill $pid >&- 2>&-
+			kill $pid >/dev/null 2>&1
 			res=0
 		else
 			res=`test -d "$1" && echo 1 || echo 0`
@@ -317,7 +317,7 @@ then
 		plat=`uname -i`
 	fi
 
-	mesg n 2>&-
+	mesg n 2>/dev/null
 	MAILCHECK=0
 	TTY=`tty`
 	VISUAL=emacs
@@ -576,7 +576,7 @@ then
 	then
 		WORKON_HOME=venv
 		export WORKON_HOME
-		unalias cd 2>&-
+		unalias cd 2>/dev/null
 		. $VIRTUALENVWRAPPER_SCRIPT
 		alias workoff="deactivate"
 	fi
@@ -610,8 +610,8 @@ then
 		  trimline `$HOME/bin/exec/$ost/bat`
 
 		# pretty print env. var names if desired
-		pre="" # `tput smul 2>&-`
-		post="" # `tput sgr0 2>&-`
+		pre="" # `tput smul 2>/dev/null`
+		post="" # `tput sgr0 2>/dev/null`
 
 		# print tty info
 		printf ' %s; ' "${pre}TTY${post}=`echo $TTY | \
@@ -626,7 +626,7 @@ then
 	  [ $TTY != '/dev/console' ] && [ `echo $TTY | cut -c1-5` = '/dev/' ]
 	then
 		# find out name of host on controlling side of terminal
-		wholine=`who -m --lookup 2>&-`
+		wholine=`who -m --lookup 2>/dev/null`
 		[ $? -eq 0 ] || wholine=`who -m`
 
 		lhost=`echo "$wholine" | awk '{ print $6 }' | \
@@ -641,7 +641,7 @@ then
 		# if possible, do a quick test to see if DISPLAY is sane
 		if [ -x $HOME/bin/exec/xping ]
 		then
-			$HOME/bin/exec/xping 2>&- >&-
+			$HOME/bin/exec/xping >/dev/null 2>&1
 			[ $? -ne 0 ] && unset DISPLAY
 		fi
 
@@ -662,7 +662,7 @@ then
 		# print a list of users
 		if [ -x $HOME/bin/exec/lwho ]
 		then
-			users=`lwho -csq 2>&-`
+			users=`lwho -csq 2>/dev/null`
 			[ "$users" ] && \
 			  trimline `echo "$users" | sed -e 's/^\([0-9]*\)/\1 other /'`
 			unset users
@@ -683,7 +683,7 @@ then
 	#
 	if [ ! "$DT" ] && [ ! "$BASH" ]
 	then
-		type bash 2>&- >&-
+		type bash >/dev/null 2>&1
 		[ $? -eq 0 ] && exec bash
 	fi
 

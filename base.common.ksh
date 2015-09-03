@@ -81,7 +81,7 @@ update_title
 
 redo()
 {
-	deactivate 2>&-
+	deactivate 2>/dev/null
 	hash -r
 	PATH=$PATH
 	PROFILED=false . ${HOME}/.${_shell}rc

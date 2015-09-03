@@ -9,10 +9,18 @@
 # sh-compatible commands sourced after every virtualenv is activated
 #
 
+[ "$VIRTUAL_ENV" ] || return
+
 if [ ! "$_ORIGINAL_PS1" ]
 then
 	_ORIGINAL_PS1="$PS1"
 	export _ORIGINAL_PS1
+fi
+
+if [ ! "$_ORIGINAL_PS1_FIRST" ]
+then
+	_ORIGINAL_PS1_FIRST="$PS1_FIRST"
+	export _ORIGINAL_PS1_FIRST
 fi
 
 if [ ! "$_ORIGINAL_PS1_SECOND" ]
@@ -21,12 +29,28 @@ then
 	export _ORIGINAL_PS1_SECOND
 fi
 
+if command -v git >/dev/null 2>&1
+then
+	b=`git config --get-color "" "dim"`
+	e=`git config --get-color "" "reset"`
+else
+	b=`tput dim 2>&-`
+	e=`tput sgr0 2>&-`
+fi
+
 venvnam=`basename $VIRTUAL_ENV`
 
-# assume that the trailing block of non-space character(s) is the prompt
-PS1=`echo "$_ORIGINAL_PS1" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv:'"$venvnam"' \2/'`
-PS1_SECOND=`echo "$_ORIGINAL_PS1_SECOND" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv:'"$venvnam"' \2/'`
+if echo $PS1 | grep '\\!' >/dev/null 2>&1
+then
+	# if the prompt contains a \! for command history, put the env name immediately after that
+	PS1=`echo "$_ORIGINAL_PS1" | sed 's/\([^ ]*\\![^ ]*\)/\1 venv|'"$b$venvnam$e"'/'`
+	PS1_FIRST=`echo "$_ORIGINAL_PS1_FIRST" | sed 's/\([^ ]*\\![^ ]*\)/\1 venv|'"$b$venvnam$e"'/'`
+else
+	# otherwise, assume the final block of character(s) is the prompt and put the env name before it
+	PS1=`echo "$_ORIGINAL_PS1" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv|'"$b$venvnam$e"' \2/'`
+	PS1_SECOND=`echo "$_ORIGINAL_PS1_SECOND" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1venv|'"$b$venvnam$e"' \2/'`
+fi
 
-unset venvnam
+unset b e venvnam
 
 #EOF __TAGGED__

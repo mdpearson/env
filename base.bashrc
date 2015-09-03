@@ -140,19 +140,19 @@ function init_bash_prompt
 
 		if [ $USER != __G_USER__ ]
 		then			# running as different user:
-			uf='31'			# red user
+			uf='31;02'		# dim, red user
 			pf='31;01'		# bold, red prompt
 			hf='31;01'		# bold, red hostname
 			include_username=1
 		elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
-			uf='34'			# blue user
+			uf='34;02'		# dim, blue user
 			pf='01'			# bold, colorless prompt
 			hf='34;01'		# bold, blue hostname
 			include_username=1
 		else			# local:
-			uf='33'			# yellow user
+			uf='33;02'		# dim, yellow user
 			pf='01'			# bold, colorless prompt
 			hf='33;01'		# bold, yellow hostname
 			include_username=
@@ -160,7 +160,7 @@ function init_bash_prompt
 
 		if [ "$include_username" ]
 		then
-			userstr=" \[\e[${uf}m\]\u\[\e[0m\]"
+			userstr="|\[\e[${uf}m\]\u\[\e[0m\]"
 		else
 			userstr=""
 		fi
@@ -169,18 +169,20 @@ function init_bash_prompt
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${hoststr} ${shellabbr}|${histstr}${userstr}"
+		PS1_FIRST="${hoststr}${userstr} ${shellabbr}|${histstr}"
 		PS1_SECOND="${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
 
 		unset pf uf hf userstr hoststr infostr hashstr wholine
 	else
-		PS1="$nn${dn:+:$dn} "${shellabbr}"|\! \u $pchar "
+		PS1_FIRST="$nn${dn:+:$dn}|\u "${shellabbr}"|\!"
+		PS1_SECOND="$pchar "
+		PS1="${PS1_FIRST} ${PS1_SECOND}"
 	fi
 
 	export PS1
-	unset nn dn shellabbr pchar timestamp
+	unset nn dn shellabbr pchar
 }
 
 # tasks that should run each time a command completes

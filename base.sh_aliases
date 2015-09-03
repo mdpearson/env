@@ -93,13 +93,6 @@ then
 	alias publish="$HOME/Sites/util/publish $HOME/Sites"
 fi
 
-# this should probably go in base.profile, but isinstalled() is only defined here
-if [ `isinstalled sysctl` ]
-then
-	MAKEFLAGS="-j`sysctl -n hw.ncpu`"
-	export MAKEFLAGS
-fi
-
 if [ `uname -s` = 'Darwin' ]
 then
 	psargs='-axo user,pid,state,pri,%cpu,command'

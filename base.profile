@@ -584,6 +584,12 @@ then
 	[ `isinstalled macname` ] && THOST=`macname`
 	[ "$THOST" ] && export THOST
 
+	if [ `isinstalled sysctl` ] && sysctl -n hw.ncpu >/dev/null 2>&1
+	then
+		MAKEFLAGS="-j`sysctl -n hw.ncpu`"
+		export MAKEFLAGS
+	fi
+
 	unset isinstalled
 
 	# display a welcome message introducing the host and OS

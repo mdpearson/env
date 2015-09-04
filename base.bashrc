@@ -148,12 +148,12 @@ function init_bash_prompt
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
 			uf='34;02'		# dim, blue user
-			pf='01'			# bold, colorless prompt
+			pf='34;01'		# bold, blue prompt
 			hf='34;01'		# bold, blue hostname
 			include_username=1
 		else			# local:
 			uf='33;02'		# dim, yellow user
-			pf='01'			# bold, colorless prompt
+			pf='33;01'		# bold, yellow prompt
 			hf='33;01'		# bold, yellow hostname
 			include_username=
 		fi
@@ -204,8 +204,8 @@ then
 	#
 	__git_ps1_colorize_gitstring ()
 	{
-		__GIT_PS1_AHEAD_FMT='\[\e[33m\]'		# local ahead of remote
-		__GIT_PS1_BEHIND_FMT='\[\e[34m\]'		# remote ahead of local
+		__GIT_PS1_AHEAD_FMT='\[\e[33;02m\]'		# local ahead of remote
+		__GIT_PS1_BEHIND_FMT='\[\e[34;02m\]'	# remote ahead of local
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
 		__GIT_PS1_MODIFIED_FMT='\[\e[35;01m\]'	# flag that modified, unstaged files exist

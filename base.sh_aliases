@@ -48,6 +48,7 @@ alias ll="ls -lh"$long_lsflags
 alias lla="ls -Alh"$long_lsflags
 alias lld="ls -Alhd"$long_lsflags
 alias lll="ls -Alh"$verylong_lsflags
+alias lt='ll -rt | tail'
 
 unset long_lsflags
 unset verylong_lsflags
@@ -160,13 +161,6 @@ cerr()
 
 alias cvs='cvs -q'
 alias cvsmods='cvs -q -n update 2>/dev/null | grep "^[AM]"'
-alias lt='ll -rt | tail'
-alias devjython='rlwrap -A -t dumb devjython'
-alias jython4calhoun='rlwrap -A -t dumb jython4calhoun'
-
-# use ssh protocol 1 for portability
-[ `isinstalled ssh1` ] && alias ssh='ssh1'
-#[ `ssh -V 2>&1 | grep -c "OpenSSH"` -gt 0 ] && alias ssh='ssh -1'
 
 set_colors()
 {

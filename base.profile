@@ -146,6 +146,12 @@ fi
 
 unset SSH_ASKPASS
 
+if [ -f /etc/ssl/certs/ca-certificates.crt ]
+then
+	REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+	export REQUESTS_CA_BUNDLE
+fi
+
 #
 # Set/override prompt for true bourne shells.
 # (bash and ksh use control chars bourne cannot parse.)

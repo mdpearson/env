@@ -598,6 +598,12 @@ then
 
 	unset isinstalled
 
+	if [ `date +%Z` = "UTC" ]
+	then
+		TZ='America/Los_Angeles'
+		export TZ
+	fi
+
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]
 	then
@@ -666,7 +672,17 @@ then
 
 	if [ ! "$DT" ]
 	then
-		printf '%s%s\n' "${pre}DISPLAY${post}=" ${DISPLAY:-"unset"} >&2
+		# print out display information
+		printf '%s%s; ' "${pre}DISPLAY${post}=" ${DISPLAY:-"unset"} >&2
+
+		# print out time zone information
+		if [ "$TZ" ]
+		then
+			tzmsg="`date '+%z %Z'` (localized from machine's UTC)"
+		else
+			tzmsg=`date '+%z %Z'`
+		fi
+		echo "${pre}timezone${post}=$tzmsg" >&2
 
 		# print uptime
 		trimline `uptime | sed -e 's/  */ /g' -e 's/^ */ /'`

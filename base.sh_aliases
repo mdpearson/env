@@ -68,6 +68,8 @@ alias grepn="grep -Hn"
 alias nfilt="grep -v \
   '\(SCCS\|Bin\|depend\/\|deleted\|TAGS\|pkg\|\.svn\|RCS\|CVS\)'"
 
+alias ipython='label "iPython" && ipython'
+
 rgrep()
 {
 	grep -r "$*" * | nfilt

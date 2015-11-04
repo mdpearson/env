@@ -13,8 +13,17 @@
 --color-match=bright_green
 --color-lineno=cyan
 --ignore-dir=bower_components
---ignore-file=ext:min.js,json,map
+--ignore-dir=build
+--ignore-file=ext:min.js,map
 --smart-case
 --sort-files
-
+--type-set=svg=.svg
+--type-set=txt=.txt
+--nocss
+--nohtml
+--nojs
+--nojson
+--noless
+--nosvg
+--notxt
 #EOF __TAGGED__

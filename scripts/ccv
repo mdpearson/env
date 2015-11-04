@@ -43,12 +43,16 @@ fi
 javaver='[ java not found ]'
 if [ `isinstalled java` ]
 then
-	if [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
+    grep JavaInstallOnDemand "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/version.plist" > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+        javaver='no java'
+	elif [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
 	then
 		javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
 	fi
 fi
 
-echo "$javaver / $gccver / $makever"
+echo "$gccver / $makever / $javaver"
 
 #EOF __TAGGED__

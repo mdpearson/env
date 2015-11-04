@@ -13,6 +13,10 @@
 BIN_SH=xpg4
 export BIN_SH
 
+# make ls use standard POSIX sort semantics
+LC_COLLATE=POSIX
+export LC_COLLATE
+
 # set up a simple path if this file has not been sourced before
 [ "$PROFILED" = 'true' ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
 

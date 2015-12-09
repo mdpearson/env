@@ -206,23 +206,24 @@ then
 		fi
 
 		test -d "$1" &
+        check_pid=$!
 
 		# busy-wait with an incremental backoff
 		cnt=0
 		while [ $cnt -lt 10 ]
 		do
-			if [ "`jobs`" ]
+			if [ `jobs -lp | grep $check_pid` ]
 			then
 				arg="0.0"${cnt}"s"
 				sleep $arg
 			else
+			    unset check_pid
 				break
 			fi
 			cnt=`expr $cnt + 1`
 		done
 
-		pid=`jobs -lp`
-		if [ "$pid" ]
+		if [ "$check_pid" ]
 		then
 			#
 			# It shouldn't take this long to stat a dir.

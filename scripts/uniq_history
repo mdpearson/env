@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2009 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2009-2015 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
@@ -9,28 +9,46 @@
 # removes duplicate entries from a history file while preserving order
 #
 
+import argparse
+import contextlib
 import os
+import shutil
 import sys
+import tempfile
 
-assert len(sys.argv) == 3, "usage: uniq_history <src> <dst>"
+parser = argparse.ArgumentParser(description="Remove duplicate records from a history file.")
+parser.add_argument("-i", "--in-place", default=False, action="store_true",
+                    help="Update history file in-place")
+parser.add_argument('history_file', help='The history file to deduplicate')
+args = parser.parse_args()
 
-src = open(sys.argv[1], "r")
-dst = open(sys.argv[2], "w")
+def dedup_history_file(old_histfile, new_histfd=sys.stdout):
 
-history = []
-histSet = set()
-newHist = []
+    with open(old_histfile, "r") as src:
 
-history.extend(src.readlines())
+        seen_records = set()
+        old_history = src.readlines()
+        new_history = []
 
-while len(history) > 0:
-	last = history.pop()
-	if last in histSet:
-		continue
-	newHist.append(last)
-	histSet.add(last)
+        while old_history:
+            most_recent_record = old_history.pop().strip()
+            if most_recent_record not in seen_records:
+                seen_records.add(most_recent_record)
+                new_history.append(most_recent_record)
 
-newHist.reverse()
-dst.writelines(newHist)
+        new_history.reverse()
+        new_histfd.write("\n".join(new_history))
+        new_histfd.write("\n")
+
+if __name__ == "__main__":
+    if args.in_place:
+        tmpfile = tempfile.TemporaryFile()
+        dedup_history_file(args.history_file, tmpfile)
+        tmpfile.seek(0)
+        with contextlib.closing(tmpfile) as src_fd, \
+             open(args.history_file, "w") as dst_fd:
+            shutil.copyfileobj(src_fd, dst_fd)
+    else:
+        dedup_history_file(args.history_file)
 
 #EOF __TAGGED__

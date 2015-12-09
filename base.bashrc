@@ -144,7 +144,8 @@ function init_bash_prompt
 			pf='31;01'		# bold, red prompt
 			hf='31;01'		# bold, red hostname
 			include_username=1
-		elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
+		elif [ ! "$wholine" ] || \
+		  [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
 			uf='34;02'		# dim, blue user

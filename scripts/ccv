@@ -17,7 +17,7 @@ PATH=$PATH:/usr/bin:/bin
 if [ `isinstalled gcc` ]
 then
 	gccver=`gcc -V 2>&1 | awk '/ C / {print}' | \
-	    sed -e 's/cc: //' -e 's/ *on.*//'`
+	  sed -e 's/cc: //' -e 's/ *on.*//'`
 	[ "$gccver" ] || gccver=`gcc -v 2>&1 | grep '\bversion'`
 	[ "$gccver" ] || gccver='unknown gcc'
 	gccver=`echo $gccver | sed 's/version //'`
@@ -31,8 +31,8 @@ then
 	if [ $? -eq 0 ]
 	then
 		makever='GNU make '`make --version | \
-		    make --version | awk 'NR == 1 {print}' | \
-		    sed -e 's/^[^0-9]*//' -e 's/[^0-9]*$//'`
+		  make --version | awk 'NR == 1 {print}' | \
+		  sed -e 's/^[^0-9]*//' -e 's/[^0-9]*$//'`
 	else
 		makever='unix make'
 	fi

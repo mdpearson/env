@@ -105,7 +105,8 @@ fi
 alias psa="ps $psargs"
 alias psaw="ps -ww $psargs"
 alias psam="psaw | grep __G_USER__"
-alias findp="psaw | grep -v grep | grep -i"
+alias findp="psam | grep -v grep | grep -i"
+alias findpa="psaw | grep -v grep | grep -i"
 unset psargs
 
 unalias less 2>/dev/null

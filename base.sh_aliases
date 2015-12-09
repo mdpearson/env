@@ -103,8 +103,9 @@ else
 	psargs='-eo user,pid,s,pri,pcpu,args'
 fi
 alias psa="ps $psargs"
-alias psam="ps $psargs | grep __G_USER__"
-alias findp="psa | grep -v grep | grep -i"
+alias psaw="ps -ww $psargs"
+alias psam="psaw | grep __G_USER__"
+alias findp="psaw | grep -v grep | grep -i"
 unset psargs
 
 unalias less 2>/dev/null

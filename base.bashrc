@@ -306,6 +306,26 @@ function cd_wrapper
 }
 alias cd='cd_wrapper'
 
+# update history on disk with current commands, then reload from disk
+function history_update
+{
+	[ -f "$HISTFILE" ] || return
+
+    history -a
+
+    . "$HOME/.isinstalled"
+    if [ `isinstalled python` ]
+    then
+	    uniq_history -i $HISTFILE
+    else
+	    cat $HISTFILE | sort -u >| $HISTFILE.tmp.$$
+	    mv -f $HISTFILE.tmp.$$ $HISTFILE
+    fi
+
+    history -c
+    history -r
+}
+
 init_bash_prompt
 PROMPT_COMMAND='prompt_update $?'
 
@@ -321,7 +341,7 @@ shopt -s histappend		# save history across sessions
 shopt -s histreedit		# edit failed history changes
 shopt -s histverify		# print changed cmd before running
 shopt -u huponexit		# don't send SIGHUP to children on exit
-shopt -s lithist		# save multiline commands with newlines
+shopt -u lithist		# save multiline commands with ';' delimiters not newlines
 shopt -u sourcepath		# don't use PATH for `.' commands
 
 # the following shopts work only for 2.05 or greater
@@ -330,11 +350,11 @@ shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
 [ $? -eq 0 ] || alias echo="/bin/echo"			# use /bin/echo if above fails
 
 # command-line completion
-
 . $HOME/.isinstalled
 if [ `isinstalled brew` ]
 then
-	if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	if [ -f $(brew --prefix)/etc/bash_completion ]
+	then
 		. $(brew --prefix)/etc/bash_completion
 	fi
 fi

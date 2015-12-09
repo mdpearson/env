@@ -9,17 +9,6 @@
 # sort and remove duplicates from history file on shell exit
 #
 
-[ -f "$HISTFILE" ] || return
-
-. "$HOME/.isinstalled"
-
-if [ `isinstalled python` ]
-then
-	uniq_history $HISTFILE $HISTFILE.tmp.$$
-else
-	cat $HISTFILE | sort -u >| $HISTFILE.tmp.$$
-fi
-
-mv -f $HISTFILE.tmp.$$ $HISTFILE
+history_update
 
 #EOF __TAGGED__

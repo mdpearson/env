@@ -43,13 +43,22 @@ fi
 javaver='[ java not found ]'
 if [ `isinstalled java` ]
 then
-    grep JavaInstallOnDemand "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/version.plist" > /dev/null 2>&1
-    if [ $? -eq 0 ]
+    bundle_version=`defaults read "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Info.plist" \
+      CFBundleShortVersionString 2>/dev/null`
+    if [ "$bundle_version" ]
     then
-        javaver='no java'
-	elif [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
-	then
-		javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
+        javaver=`echo "$bundle_version" | tr '[A-Z]' '[a-z]'`
+    else
+        grep JavaInstallOnDemand \
+          "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/version.plist" > \
+          /dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            javaver='java not installed'
+	    elif [ -d "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/" ] || [ `uname` != "Darwin" ]
+	    then
+		    javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
+	    fi
 	fi
 fi
 

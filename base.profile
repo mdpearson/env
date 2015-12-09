@@ -50,10 +50,16 @@ set noglob
 while :
 do
 	eval `SHELL=sh tset -s -e ^H -IQ \
-	  -m 'dtterm:dtterm' -m 'vt100:vt100' -m 'xterm:xterm' \
-	  -m 'xterm-color:xterm-color' -m 'nxterm:xterm' \
+	  -m 'dtterm:dtterm' \
+	  -m 'linux:xterm-color' \
+	  -m 'nxterm:xterm' \
+	  -m 'sun:?sun' \
+	  -m 'vt100:vt100' \
+	  -m 'xnuppc:?xnuppc' \
+	  -m 'xterm:xterm' \
 	  -m 'xterm-256color:xterm-color' \
-	  -m 'sun:?sun' -m 'xnuppc:?xnuppc' -m ':?xterm'`
+	  -m 'xterm-color:xterm-color' \
+	  -m ':?xterm'`
 	export TERM				# Darwin tset forgets to do this
 
 	[ "$PROFILED" = 'true' ] && break	# terminal already set up

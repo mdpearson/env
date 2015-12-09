@@ -574,7 +574,7 @@ then
 	#
 	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
 	then
-		for vew_home in /usr/local/bin/ /Library/Frameworks/Python.framework/Versions/2.7/bin
+		for vew_home in $HOME/.local/bin /usr/local/bin /Library/Frameworks/Python.framework/Versions/2.7/bin
 		do
 			if [ `check_path $vew_home` -eq 1 ]
 			then

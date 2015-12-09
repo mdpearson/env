@@ -85,14 +85,24 @@ fi
 [ -f $HOME/.common.ksh ] && . $HOME/.common.ksh
 [ -f $HOME/.inputrc ] && export INPUTRC=$HOME/.inputrc
 
+get_histfile_name()
+{
+    case "$1" in
+        adenine)    echo "login-hosts" ;;
+        cytosine)   echo "login-hosts" ;;
+        guanine)    echo "login-hosts" ;;
+        thymine)    echo "login-hosts" ;;
+        pipeline-*) echo "qlogin-hosts" ;;
+        *)          echo "$1" ;;
+    esac
+}
+
 # create a unique history file for each host
 [ -d $HOME/.bash_histories ] || mkdir $HOME/.bash_histories
-if [ "$THOST" ]
-then
-	HISTFILE=$HOME/.bash_histories/"$THOST"
-else
-	HISTFILE=$HOME/.bash_histories/"$HOST"
-fi
+histfile_name=`get_histfile_name "$THOST"`
+[ "$histfile_name" ] || histfile_name=`get_histfile_name "$HOST"`
+
+HISTFILE=$HOME/.bash_histories/$histfile_name
 
 HISTCONTROL=ignoredups
 HISTSIZE=$((64 * 1024 - 1))

@@ -252,7 +252,7 @@ then
 		then
 			# adjust how rebase status is displayed
 			r=`echo "$r" | sed \
-			  -e 's/\|//' \
+			  -e 's/|//' \
 			  -e 's/\([A-Za-z-]*\)/${__GIT_PS1_REBASE_FMT}\1${__GIT_PS1_RESET_FMT}/'`
 			r=$__GIT_PS1_RESET_FMT'|'`eval echo "$r"`
 		else

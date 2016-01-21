@@ -79,6 +79,7 @@ rgrep()
 [ `isinstalled cstyle` ] && alias cstyle="cstyle -chpvP"
 [ `isinstalled dbx` ] && alias rdbx="dbx -s $HOME/.dbxrc"
 [ `isinstalled node` ] && alias clonejs="node ~/bin/clone.js"
+[ `isinstalled python` ] && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
 
 [ `isinstalled bsub` ] && [ `isinstalled bsub_wrapper` ] && \
   alias bsub="bsub_wrapper"

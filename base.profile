@@ -701,7 +701,7 @@ then
 		# print out time zone information
 		if [ "$TZ" ]
 		then
-			tzmsg="`date '+%z %Z'` (localized from machine's UTC)"
+			tzmsg="`date '+%z %Z'` (localized from machine's native UTC)"
 		else
 			tzmsg=`date '+%z %Z'`
 		fi

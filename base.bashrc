@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2016 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.

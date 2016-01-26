@@ -17,8 +17,8 @@ export BIN_SH
 LC_COLLATE=POSIX
 export LC_COLLATE
 
-# set up a simple path if this file has not been sourced before
-[ "$PROFILED" = 'true' ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
+# set up a simple path if this file has not yet been sourced by this user
+[ "$_ENV_PROFILED" = $USER ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
 
 #
 # First thing to do is make sure the terminal is set up correctly.
@@ -36,9 +36,10 @@ export LC_COLLATE
 # terminal that appears in both termcap (tset) and terminfo (tput).
 #
 # tput init is a expensive op and only should be done on as part of a
-# login. If PROFILED is set then it is not run. Note that redo() unsets
-# this value when it does a heavyweight terminal reinitialization. When
-# bash shells are launched in X, the call to tput is skipped.
+# login. If _ENV_PROFILED is set to the current user then it is not run.
+# Note that redo() unsets this value when it does a heavyweight terminal
+# reinitialization. When  bash shells are launched in X, the call to
+# tput is skipped.
 #
 # For testing: ztx is in termcap only, xtermm is in terminfo only.
 #
@@ -62,7 +63,7 @@ do
 	  -m ':?xterm'`
 	export TERM				# Darwin tset forgets to do this
 
-	[ "$PROFILED" = 'true' ] && break	# terminal already set up
+	[ "$_ENV_PROFILED" = $USER ] && break	# terminal already set up
 
 	tput init # heavyweight
 
@@ -190,10 +191,11 @@ fi
 # The rest of this file sets environment variables and prints out
 # information useful to a user at login. It need not be run each time
 # a terminal is opened but rather once per session. If the env var
-# PROFILED is true, then this has already happened: skip to the end.
+# _ENV_PROFILED is set to the current user, then this has already
+# happened: skip to the end.
 #
 
-if [ "$PROFILED" != 'true' ]
+if [ "$_ENV_PROFILED" != $USER ]
 then
 	# define some handy path-manipulation functions
 
@@ -726,8 +728,8 @@ then
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
-	PROFILED=true
-	export PROFILED
+	_ENV_PROFILED=$USER
+	export _ENV_PROFILED
 
 	#
 	# if not under DT Xsession control, switch to bash.
@@ -741,7 +743,7 @@ then
 
 	# NO CODE HERE
 
-else	# if [ "$PROFILED" = 'true' ]
+else	# if [ "$_ENV_PROFILED" = $USER ]
 
 	# if we're here, this file has been sourced already.
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases

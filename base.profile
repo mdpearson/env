@@ -271,10 +271,11 @@ then
 		unset arg prepend
 
 		#
-		# I can't remember how many times getopts's reliance on external shell variables
-		# has bitten me. OPTIND must be set to 1 each time getopts is called. "Any other
-		# attempt to invoke getopts multiple times in a single shell execution environment
-		# ... produces unspecified results."
+		# I can't remember how many times getopts's reliance on external
+		# shell variables has bitten me. OPTIND must be set to 1 each
+		# time getopts is called. "Any other attempt to invoke getopts
+		# multiple times in a single shell execution environment ...
+		# produces unspecified results."
 		#
 		# http://pubs.opengroup.org/onlinepubs/009696799/utilities/getopts.html
 		#
@@ -579,7 +580,8 @@ then
 	#
 	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
 	then
-		for vew_home in $HOME/.local/bin /usr/local/bin /Library/Frameworks/Python.framework/Versions/2.7/bin
+		for vew_home in $HOME/.local/bin /usr/local/bin \
+		  /Library/Frameworks/Python.framework/Versions/2.7/bin
 		do
 			if [ `check_path $vew_home` -eq 1 ]
 			then

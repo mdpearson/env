@@ -103,6 +103,7 @@ histfile_name=`get_histfile_name "$THOST"`
 [ "$histfile_name" ] || histfile_name=`get_histfile_name "$HOST"`
 
 HISTFILE=$HOME/.bash_histories/$histfile_name
+unset histfile_name
 
 HISTCONTROL=ignoredups
 HISTSIZE=$((64 * 1024 - 1))
@@ -185,7 +186,9 @@ function init_bash_prompt
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
 
-		unset pf uf hf userstr hoststr infostr hashstr wholine
+        unset contstr hashstr histstr hoststr infostr userstr
+		unset hf pf uf
+		unset include_username wholine
 	else
 		PS1_FIRST="$nn${dn:+:$dn}|\u "${shellabbr}"|\!"
 		PS1_SECOND="$pchar "

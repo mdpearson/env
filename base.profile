@@ -206,7 +206,7 @@ then
 		fi
 
 		test -d "$1" &
-        check_pid=$!
+		check_pid=$!
 
 		# busy-wait with an incremental backoff
 		cnt=0
@@ -217,7 +217,7 @@ then
 				arg="0.0"${cnt}"s"
 				sleep $arg
 			else
-			    unset check_pid
+				unset check_pid
 				break
 			fi
 			cnt=`expr $cnt + 1`
@@ -237,6 +237,7 @@ then
 		fi
 
 		echo "$res"
+		unset res
 		return
 	}
 
@@ -248,6 +249,7 @@ then
 		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
 		[ "$res" -eq 1 ] && printf "." >&2
 #		[ "$res" -ne 1 ] && printf " " >&2
+		unset res
 	}
 
 	# add a directory $2 to the start of a :-separated pathlist $1
@@ -258,6 +260,7 @@ then
 		[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
 		[ "$res" -eq 1 ] && printf "." >&2
 #		[ "$res" -ne 1 ] && printf " " >&2
+		unset res
 	}
 
 	#
@@ -296,6 +299,7 @@ then
 			fi
 			[ "$res" -eq 1 ] && printf "." >&2
 #			[ "$res" -ne 1 ] && printf " " >&2
+			unset res
 		else
 			#
 			# print a colon (a "double period") to indicate that the
@@ -303,7 +307,7 @@ then
 			#
 			printf ":" >&2
 		fi
-		unset arg prepend
+		unset arg prepend res
 	}
 
 	# this function trims output to a single line
@@ -587,6 +591,7 @@ then
 				fi
 			fi
 		done
+		unset vew_home
 	fi
 
 	if [ "$VIRTUALENVWRAPPER_SCRIPT" ]
@@ -707,6 +712,7 @@ then
 			unset users
 		fi
 
+		unset tzmsg
 		unset pre post
 	fi
 

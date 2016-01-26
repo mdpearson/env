@@ -162,6 +162,11 @@ then
 	export REQUESTS_CA_BUNDLE
 fi
 
+if [ -f /hpc/settings.sh ]
+then
+	. /hpc/settings.sh
+fi
+
 #
 # Set/override prompt for true bourne shells.
 # (bash and ksh use control chars bourne cannot parse.)

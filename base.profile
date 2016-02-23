@@ -18,7 +18,7 @@ LC_COLLATE=POSIX
 export LC_COLLATE
 
 # set up a simple path if this file has not yet been sourced by this user
-[ "$_ENV_PROFILED" = $USER ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
+[ "$_ENV_PROFILED" = "$USER" ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
 
 #
 # First thing to do is make sure the terminal is set up correctly.
@@ -63,7 +63,7 @@ do
 	  -m ':?xterm'`
 	export TERM				# Darwin tset forgets to do this
 
-	[ "$_ENV_PROFILED" = $USER ] && break	# terminal already set up
+	[ "$_ENV_PROFILED" = "$USER" ] && break	# terminal already set up
 
 	tput init # heavyweight
 
@@ -170,7 +170,7 @@ fi
 
 if [ `echo "$SHELL" | grep -c '\/sh$'` -eq 1 ] && [ ! "$BASH" ]
 then
-	if [ $USER = 'root' ]
+	if [ "$USER" = 'root' ]
 	then
 		pchar='#'
 	else
@@ -190,7 +190,7 @@ fi
 # happened: skip to the end.
 #
 
-if [ "$_ENV_PROFILED" != $USER ]
+if [ "$_ENV_PROFILED" != "$USER" ]
 then
 	# define some handy path-manipulation functions
 
@@ -728,7 +728,7 @@ then
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
-	_ENV_PROFILED=$USER
+	_ENV_PROFILED="$USER"
 	export _ENV_PROFILED
 
 	#

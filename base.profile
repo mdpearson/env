@@ -170,7 +170,7 @@ fi
 
 if [ `echo "$SHELL" | grep -c '\/sh$'` -eq 1 ] && [ ! "$BASH" ]
 then
-	if [ "$USER" = 'root' ]
+	if [ "$USER" = "root" ]
 	then
 		pchar='#'
 	else
@@ -573,10 +573,10 @@ then
 		export ACLOCAL_FLAGS
 	fi
 
-    if [ -f /hpc/settings.sh ]
-    then
-        . /hpc/settings.sh
-    fi
+	if [ -f /hpc/settings.sh ]
+	then
+		. /hpc/settings.sh
+	fi
 
 	echo " <done>" >&2
 
@@ -743,7 +743,7 @@ then
 
 	# NO CODE HERE
 
-else	# if [ "$_ENV_PROFILED" = $USER ]
+else	# if [ "$_ENV_PROFILED" = "$USER" ]
 
 	# if we're here, this file has been sourced already.
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases

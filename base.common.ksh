@@ -58,7 +58,7 @@ then
 			_host="$HOST"
 		fi
 
-		if [ "$USER" != "__G_USER__" ] || [ "$USER" = "admin" ]
+		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then
 			_string="$USER@$_host"
 		else
@@ -88,7 +88,7 @@ redo()
 	autoenv_init
 
 	# there are lots of reasons to not call xrdb
-	if [ $USER != 'root' ] && [ -r "$XENVIRONMENT" ] && [ "$DISPLAY" ]
+	if [ "$USER" != "root" ] && [ -r "$XENVIRONMENT" ] && [ "$DISPLAY" ]
 	then
 		xrdb -remove
 		xrdb -load $XENVIRONMENT

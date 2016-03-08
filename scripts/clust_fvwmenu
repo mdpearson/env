@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2004-2015 Matthew Pearson <mdp@matmo.net>.
+# Copyright (c) 2004-2016 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/GPL/2.0/ for more details.
@@ -168,9 +168,9 @@ do
 		title="$node"
 	fi
 
-	printf "+ \"%s\t \"\tNewShell %s %s\n" "$title" $node $USER
-	printf "+ \"... as root\t \"\tRootShell %s\n" $node
-	printf "+ \"... on console\t \"\tConsoleShell %s\n" $node
+	printf "+ \"%s\t \"\tNewShell %s %s\n" "$title" "$node" "$USER"
+	printf "+ \"... as root\t \"\tRootShell %s\n" "$node"
+	printf "+ \"... on console\t \"\tConsoleShell %s\n" "$node"
 done
 
 # add in the generated submenu titles once their entries are set up

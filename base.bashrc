@@ -125,7 +125,7 @@ function init_bash_prompt
 
 	shellabbr=`basename $SHELL`
 	[ "$BASH" ] && shellabbr='bash'
-	if [ $USER = 'root' ]
+	if [ "$USER" = "root" ]
 	then
 		pchar='#'
 	else
@@ -149,7 +149,7 @@ function init_bash_prompt
 		wholine=`who -m --lookup 2>/dev/null`
 		[ $? -eq 0 ] || wholine=`who -m`
 
-		if [ $USER != __G_USER__ ] || [ $USER = 'admin' ]
+		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
 			uf='31;02'		# dim, red user
 			pf='31;01'		# bold, red prompt

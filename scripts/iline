@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2016 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -777,7 +777,7 @@ else
 			wholine=`who -m --lookup 2>/dev/null`
 			[ $? -eq 0 ] || wholine=`who -m`
 
-			if [ $USER != __G_USER__ ] || [ $USER = "admin" ]
+			if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 			then
 				# running as different user - red text
 				pre=`tput bold 2>/dev/null; tput setaf 1 2>/dev/null`

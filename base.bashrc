@@ -306,7 +306,12 @@ function prompt_update
 				;;
 		esac
 
-		[ "$use_git_prompt" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
+		if [ "$use_git_prompt" ]
+		then
+			__git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
+		else
+			PS1="${PS1_FIRST} ${PS1_SECOND}"
+		fi
 	fi
 	return $_errno	# return original $? (error code)
 }

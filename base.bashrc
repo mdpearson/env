@@ -300,8 +300,10 @@ function prompt_update
 		case $PWD in
 			/Volumes/*)
 				unset use_git_prompt
+				;;
 			/locus/*)
 				[ `uname` = "Darwin" ] && unset use_git_prompt
+				;;
 		esac
 
 		[ "$use_git_prompt" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "

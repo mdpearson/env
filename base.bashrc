@@ -87,14 +87,14 @@ fi
 
 get_histfile_name()
 {
-    case "$1" in
-        adenine)    echo "login-hosts" ;;
-        cytosine)   echo "login-hosts" ;;
-        guanine)    echo "login-hosts" ;;
-        thymine)    echo "login-hosts" ;;
-        pipeline-*) echo "qlogin-hosts" ;;
-        *)          echo "$1" ;;
-    esac
+	case "$1" in
+		adenine)	echo "login-hosts" ;;
+		cytosine)   echo "login-hosts" ;;
+		guanine)	echo "login-hosts" ;;
+		thymine)	echo "login-hosts" ;;
+		pipeline-*) echo "qlogin-hosts" ;;
+		*)			echo "$1" ;;
+	esac
 }
 
 # create a unique history file for each host
@@ -186,7 +186,7 @@ function init_bash_prompt
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
 
-        unset contstr hashstr histstr hoststr infostr userstr
+		unset contstr hashstr histstr hoststr infostr userstr
 		unset hf pf uf
 		unset include_username wholine
 	else
@@ -294,7 +294,18 @@ function prompt_update
 		fi
 	fi
 
-	[ "`declare -f __git_ps1`" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
+	if [ "`declare -f __git_ps1`" ]
+	then
+		use_git_prompt=1
+		case $PWD in
+			/Volumes/*)
+				unset use_git_prompt
+			/locus/*)
+				[ `uname` = "Darwin" ] && unset use_git_prompt
+		esac
+
+		[ "$use_git_prompt" ] && __git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
+	fi
 	return $_errno	# return original $? (error code)
 }
 
@@ -324,19 +335,19 @@ function history_update
 {
 	[ -f "$HISTFILE" ] || return
 
-    history -a
+	history -a
 
-    . "$HOME/.isinstalled"
-    if [ `isinstalled python` ]
-    then
-	    uniq_history -i $HISTFILE
-    else
-	    cat $HISTFILE | sort -u >| $HISTFILE.tmp.$$
-	    mv -f $HISTFILE.tmp.$$ $HISTFILE
-    fi
+	. "$HOME/.isinstalled"
+	if [ `isinstalled python` ]
+	then
+		uniq_history -i $HISTFILE
+	else
+		cat $HISTFILE | sort -u >| $HISTFILE.tmp.$$
+		mv -f $HISTFILE.tmp.$$ $HISTFILE
+	fi
 
-    history -c
-    history -r
+	history -c
+	history -r
 }
 
 init_bash_prompt

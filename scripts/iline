@@ -777,7 +777,7 @@ else
 			wholine=`who -m --lookup 2>/dev/null`
 			[ $? -eq 0 ] || wholine=`who -m`
 
-			if [ $USER != __G_USER__ ]
+			if [ $USER != __G_USER__ ] || [ $USER = "admin" ]
 			then
 				# running as different user - red text
 				pre=`tput bold 2>/dev/null; tput setaf 1 2>/dev/null`

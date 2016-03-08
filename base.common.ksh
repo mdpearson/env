@@ -58,7 +58,7 @@ then
 			_host="$HOST"
 		fi
 
-		if [ "$USER" != "__G_USER__" ]
+		if [ "$USER" != "__G_USER__" ] || [ "$USER" = "admin" ]
 		then
 			_string="$USER@$_host"
 		else

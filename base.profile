@@ -246,7 +246,7 @@ then
 	# add a directory $2 to the end of a :-separated pathlist $1
 	append_path() {
 		[ "$2" ] || return
-		[ "$2" == null_guard ] && return
+		[ "$2" = null_guard ] && return
 		res=`check_path "$2"`
 		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
 		[ "$res" -eq 1 ] && printf "." >&2
@@ -257,7 +257,7 @@ then
 	# add a directory $2 to the start of a :-separated pathlist $1
 	prepend_path() {
 		[ "$2" ] || return
-		[ "$2" == null_guard ] && return
+		[ "$2" = null_guard ] && return
 		res=`check_path $2`
 		[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
 		[ "$res" -eq 1 ] && printf "." >&2
@@ -286,7 +286,7 @@ then
 		shift `expr $OPTIND - 1`
 
 		[ "$2" ] || return
-		[ "$2" == null_guard ] && return
+		[ "$2" = null_guard ] && return
 
 		eval echo \$$1 | grep -sq "$2"
 

@@ -297,14 +297,20 @@ function prompt_update
 	if [ "`declare -f __git_ps1`" ]
 	then
 		use_git_prompt=1
-		case $PWD in
-			/Volumes/*)
-				unset use_git_prompt
-				;;
-			/locus/*)
-				[ `uname` = "Darwin" ] && unset use_git_prompt
-				;;
-		esac
+
+		if [ "$NO_GIT_PROMPT" ]
+		then
+		    unset use_git_prompt
+		else
+            case $PWD in
+                /Volumes/*)
+                    unset use_git_prompt
+                    ;;
+                /locus/*)
+                    [ `uname` = "Darwin" ] && unset use_git_prompt
+                    ;;
+            esac
+        fi
 
 		if [ "$use_git_prompt" ]
 		then

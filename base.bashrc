@@ -17,9 +17,10 @@ if [ -f "${HOME}/.git-prompt.sh" ]
 then
 	. "${HOME}/.git-prompt.sh"
 	GIT_PS1_SHOWCOLORHINTS=1
-	GIT_PS1_SHOWDIRTYSTATE=1
+	# GIT_PS1_SHOWDIRTYSTATE=1
 	GIT_PS1_SHOWSTASHSTATE=1
-	GIT_PS1_SHOWUNTRACKEDFILES=1
+	# GIT_PS1_SHOWUNTRACKEDFILES=1
+	# GIT_PS1_DISABLEPROMPT=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
 	echo " (you may want to install git-prompt)" >&2
@@ -298,7 +299,7 @@ function prompt_update
 	then
 		use_git_prompt=1
 
-		if [ "$NO_GIT_PROMPT" ]
+		if [ "$GIT_PS1_DISABLEPROMPT" ]
 		then
 		    unset use_git_prompt
 		else

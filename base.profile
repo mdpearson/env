@@ -75,6 +75,8 @@ do
 done
 unset noglob
 
+stty -ixon					# disable START/STOP output control
+
 #
 # Make sure the SHELL environment variable is set properly. There are
 # a few cases where it will not be. The most common is when bash

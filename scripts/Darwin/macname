@@ -27,7 +27,7 @@ else
 	then
 		THOST="$LocalHostName"
 	else
-		unset THOST
+		THOST="${LocalHostName} (${ComputerName})"
 	fi
 fi
 

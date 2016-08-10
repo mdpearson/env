@@ -103,7 +103,7 @@ get_histfile_name()
 histfile_name=`get_histfile_name "$THOST"`
 [ "$histfile_name" ] || histfile_name=`get_histfile_name "$HOST"`
 
-HISTFILE=$HOME/.bash_histories/$histfile_name
+HISTFILE="$HOME/.bash_histories/$histfile_name"
 unset histfile_name
 
 HISTCONTROL=ignoredups
@@ -354,10 +354,10 @@ function history_update
 	. "$HOME/.isinstalled"
 	if [ `isinstalled python` ]
 	then
-		uniq_history -i $HISTFILE
+		uniq_history -i "$HISTFILE"
 	else
-		cat $HISTFILE | sort -u >| $HISTFILE.tmp.$$
-		mv -f $HISTFILE.tmp.$$ $HISTFILE
+		cat "$HISTFILE" | sort -u >| "$HISTFILE.tmp.$$"
+		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
 	fi
 
 	history -c

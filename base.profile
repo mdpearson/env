@@ -48,7 +48,7 @@ export LC_COLLATE
 [ `uname -s` = 'Darwin' ] && [ `tty` = '/dev/console' ] && TERM=xnuppc
 
 set noglob
-while :
+while [ -t 1 ]
 do
 	eval `SHELL=sh tset -s -e ^H -IQ \
 	  -m 'dtterm:dtterm' \
@@ -75,7 +75,7 @@ do
 done
 unset noglob
 
-stty -ixon					# disable START/STOP output control
+[ -t 1 ] && stty -ixon		# disable START/STOP output control
 
 #
 # Make sure the SHELL environment variable is set properly. There are

@@ -19,9 +19,9 @@ SHELL = /bin/bash
 
 include $(CONF)
 
-DOTFILES = .ackrc .common.ksh .cvsrc .dbxrc .dircolors .emacs .gitconfig .hgrc \
-  .inputrc .isinstalled .kshrc .profile .profile_custom .sh_aliases .tcshrc \
-  .MacOSX/environment.plist venv/postactivate venv/postdeactivate
+DOTFILES = .ackrc .bash_profile .common.ksh .cvsrc .dbxrc .dircolors .emacs \
+  .gitconfig .hgrc .inputrc .isinstalled .kshrc .profile .profile_custom \
+  .sh_aliases .tcshrc .MacOSX/environment.plist venv/postactivate venv/postdeactivate
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 

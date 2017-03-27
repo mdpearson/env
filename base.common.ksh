@@ -84,7 +84,7 @@ redo()
 	deactivate 2>/dev/null
 	hash -r
 	PATH=$PATH
-	_ENV_PROFILED= . ${HOME}/.${_shell}rc
+	_ENV_PROFILED="" . ${HOME}/.${_shell}rc
 	autoenv_init
 
 	# there are lots of reasons to not call xrdb

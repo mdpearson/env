@@ -18,7 +18,7 @@ LC_COLLATE=POSIX
 export LC_COLLATE
 
 # set up a simple path if this file has not yet been sourced by this user
-[ "$_ENV_PROFILED" = "$USER" ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
+[ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
 
 #
 # First thing to do is make sure the terminal is set up correctly.
@@ -36,10 +36,10 @@ export LC_COLLATE
 # terminal that appears in both termcap (tset) and terminfo (tput).
 #
 # tput init is a expensive op and only should be done on as part of a
-# login. If _ENV_PROFILED is set to the current user then it is not run.
-# Note that redo() unsets this value when it does a heavyweight terminal
-# reinitialization. When bash shells are launched in X, the call to
-# tput is skipped.
+# login. If _ENV_PROFILED is set to the current tty/user/ppid then it
+# is not run. Note that redo() unsets this value when it does a heavy-
+# weight terminal reinitialization. When bash shells are launched in X,
+# the call to tput is skipped.
 #
 # For testing: ztx is in termcap only, xtermm is in terminfo only.
 #
@@ -63,7 +63,7 @@ do
 	  -m ':?xterm'`
 	export TERM				# Darwin tset forgets to do this
 
-	[ "$_ENV_PROFILED" = "$USER" ] && break	# terminal already set up
+	[ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ] && break	# terminal already set up
 
 	tput init # heavyweight
 
@@ -188,11 +188,11 @@ fi
 # The rest of this file sets environment variables and prints out
 # information useful to a user at login. It need not be run each time
 # a terminal is opened but rather once per session. If the env var
-# _ENV_PROFILED is set to the current user, then this has already
-# happened: skip to the end.
+# _ENV_PROFILED is set to the current tty/user/ppid, then this has
+# already happened: skip to the end.
 #
 
-if [ "$_ENV_PROFILED" != "$USER" ]
+if [ "$_ENV_PROFILED" != "$TTY.$USER.$PPID" ]
 then
 	# define some handy path-manipulation functions
 
@@ -731,7 +731,7 @@ then
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
-	_ENV_PROFILED="$USER"
+	_ENV_PROFILED="$TTY.$USER.$PPID"
 	export _ENV_PROFILED
 
 	#
@@ -746,7 +746,7 @@ then
 
 	# NO CODE HERE
 
-else	# if [ "$_ENV_PROFILED" = "$USER" ]
+else	# if [ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ]
 
 	# if we're here, this file has been sourced already.
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases

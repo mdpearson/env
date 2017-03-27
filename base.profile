@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2017 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -216,7 +216,8 @@ then
 		cnt=0
 		while [ $cnt -lt 10 ]
 		do
-			if [ `jobs -lp | grep $check_pid` ]
+		    pidinfo=`jobs -l 2>&1 | grep "$check_pid" | egrep -v "Done|Exit"`
+			if [ "$pidinfo" ]
 			then
 				arg="0.0"${cnt}"s"
 				sleep $arg

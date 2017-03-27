@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python2.7
 #
 # Code derives from demo code in the BBEdit User Manual 10.5.5, available
 # at http://pine.barebones.com/manual/BBEdit_10_User_Manual.pdf (p. 308),
 # contents of which are Copyright (c) 1992-2013 Bare Bones Software, Inc.
 #
-# Copyright (c) 2014-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2014-2017 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.

@@ -38,7 +38,7 @@ export LC_COLLATE
 # tput init is a expensive op and only should be done on as part of a
 # login. If _ENV_PROFILED is set to the current user then it is not run.
 # Note that redo() unsets this value when it does a heavyweight terminal
-# reinitialization. When  bash shells are launched in X, the call to
+# reinitialization. When bash shells are launched in X, the call to
 # tput is skipped.
 #
 # For testing: ztx is in termcap only, xtermm is in terminfo only.
@@ -308,7 +308,7 @@ then
 		else
 			#
 			# print a colon (a "double period") to indicate that the
-			#  element was already present in the specified path.
+			# element was already present in the specified path.
 			#
 			printf ":" >&2
 		fi
@@ -712,7 +712,7 @@ then
 		echo "${pre}timezone${post}=$tzmsg" >&2
 
 		# print uptime
-		trimline `uptime | sed -e 's/  */ /g' -e 's/^ */ /'`
+		trimline `uptime | sed -e 's/	 */ /g' -e 's/^ */ /'`
 
 		# print a list of users
 		if [ -x $HOME/bin/exec/lwho ]

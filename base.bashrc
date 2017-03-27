@@ -90,10 +90,10 @@ get_histfile_name()
 {
 	case "$1" in
 		adenine)	echo "login-hosts" ;;
-		cytosine)   echo "login-hosts" ;;
+		cytosine)	echo "login-hosts" ;;
 		guanine)	echo "login-hosts" ;;
 		thymine)	echo "login-hosts" ;;
-		pipeline-*) echo "qlogin-hosts" ;;
+		pipeline-*)	echo "qlogin-hosts" ;;
 		*)			echo "$1" ;;
 	esac
 }
@@ -301,17 +301,17 @@ function prompt_update
 
 		if [ "$GIT_PS1_DISABLEPROMPT" ]
 		then
-		    unset use_git_prompt
+			unset use_git_prompt
 		else
-            case $PWD in
-                /Volumes/*)
-                    unset use_git_prompt
-                    ;;
-                /locus/*)
-                    [ `uname` = "Darwin" ] && unset use_git_prompt
-                    ;;
-            esac
-        fi
+			case $PWD in
+				/Volumes/*)
+					unset use_git_prompt
+					;;
+				/locus/*)
+					[ `uname` = "Darwin" ] && unset use_git_prompt
+					;;
+			esac
+		fi
 
 		if [ "$use_git_prompt" ]
 		then

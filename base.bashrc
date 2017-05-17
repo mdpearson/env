@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2017 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -152,28 +152,28 @@ function init_bash_prompt
 
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
-			uf='31;02'		# dim, red user
+			uf='31;01'		# bold, red user
 			pf='31;01'		# bold, red prompt
-			hf='31;01'		# bold, red hostname
+			hf='31'			# red hostname
 			include_username=1
 		elif [ ! "$wholine" ] || \
 		  [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
 		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
 		then			# remote host:
-			uf='34;02'		# dim, blue user
+			uf='34;01'		# bold, blue user
 			pf='34;01'		# bold, blue prompt
-			hf='34;01'		# bold, blue hostname
-			include_username=1
+			hf='34'			# blue hostname
+			include_username=
 		else			# local:
-			uf='33;02'		# dim, yellow user
-			pf='33;01'		# bold, yellow prompt
-			hf='33;01'		# bold, yellow hostname
+			uf='36;01'		# bold, cyan user
+			pf='36;01'		# bold, cyan prompt
+			hf='36'			# cyan hostname
 			include_username=
 		fi
 
 		if [ "$include_username" ]
 		then
-			userstr="|\[\e[${uf}m\]\u\[\e[0m\]"
+			userstr="\[\e[${uf}m\]\u\[\e[0m\]@"
 		else
 			userstr=""
 		fi
@@ -182,7 +182,7 @@ function init_bash_prompt
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${hoststr}${userstr} ${shellabbr}|${histstr}"
+		PS1_FIRST="${userstr}${hoststr} ${shellabbr}|${histstr}"
 		PS1_SECOND="${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "

@@ -24,6 +24,7 @@ then
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
 	echo " (you may want to install git-prompt)" >&2
+	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
 fi
 
 if [ -f "${HOME}/.git-completion.bash" ]
@@ -32,6 +33,7 @@ then
 elif [ -f "${HOME}/.git-prompt.sh" ]
 then
 	echo " (you may want to install git-completion)" >&2
+	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
 fi
 
 if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]

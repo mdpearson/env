@@ -167,9 +167,9 @@ function init_bash_prompt
 			hf='34'			# blue hostname
 			include_username=
 		else			# local:
-			uf='36;01'		# bold, cyan user
-			pf='36;01'		# bold, cyan prompt
-			hf='36'			# cyan hostname
+			uf='33;03'		# bold, yellow user
+			pf='33;01'		# bold, yellow prompt
+			hf='33'			# yellow hostname
 			include_username=
 		fi
 

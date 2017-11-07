@@ -787,8 +787,8 @@ else
 				# remote host - blue text
 				pre=`tput setaf 4 2>/dev/null`
 			else
-				# local host - cyan text
-				pre=`tput setaf 6 2>/dev/null`
+				# local host - yellow text
+				pre=`tput setaf 3 2>/dev/null`
 			fi
 			post=`tput sgr0`
 			#

@@ -148,19 +148,13 @@ function init_bash_prompt
 		#  30=blk 31=red 32=grn 33=yel 34=blu 35=mag 36=cyn 37=wht
 		# separate multiple codes with semicolons.
 		#
-
-		wholine=`who -m --lookup 2>/dev/null`
-		[ $? -eq 0 ] || wholine=`who -m`
-
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
 			uf='31;01'		# bold, red user
 			pf='31;01'		# bold, red prompt
 			hf='31'			# red hostname
 			include_username=1
-		elif [ ! "$wholine" ] || \
-		  [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
-		  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
+		elif [ `is_remote_tty` ]
 		then			# remote host:
 			uf='34;01'		# bold, blue user
 			pf='34;01'		# bold, blue prompt
@@ -285,7 +279,7 @@ fi
 function prompt_update
 {
 	_errno=$1
-	update_title
+	update_titles
 	if [ "$_errno" ] && [ $_errno -ne 0 ]
 	then
 		[ "$_pre_val" ] || _pre_val=`tput bold 2>/dev/null`

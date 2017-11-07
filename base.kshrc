@@ -41,11 +41,11 @@ unset cda pwda
 stamp=$(echo ${RANDOM}_${SECONDS} | sed 's/\.//')
 eval function __cd_${stamp} '{
 	command cd $*
-	update_title
+	update_titles
 }'
 eval function __pwd_${stamp} '{
 	command pwd $*
-	update_title
+	update_titles
 }'
 
 alias cd=__cd_${stamp}

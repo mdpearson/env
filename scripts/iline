@@ -47,6 +47,15 @@ tomhz() {	# blindly add a decimal point at the 6th place
 	echo "$*" | sed 's/\([0-9]\{6,6\}\)$/\.\1/'
 }
 
+is_remote_tty()
+{
+	wholine=`who -m --lookup 2>/dev/null`
+	[ $? -eq 0 ] || wholine=`who -m`
+	[ ! "$wholine" ] || \
+	[ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
+	  sed -e 's/[:0.)]//g' -e 's/unix//')" ] && echo 1 || echo ""
+}
+
 #
 # Software detection routines
 #
@@ -774,15 +783,11 @@ else
 	then
 		if [ "$usebold" ]
 		then
-			wholine=`who -m --lookup 2>/dev/null`
-			[ $? -eq 0 ] || wholine=`who -m`
-
 			if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 			then
 				# running as different user - red text
 				pre=`tput setaf 1 2>/dev/null`
-			elif [ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
-			  sed -e 's/[:0.)]//g' -e 's/unix//')" ]
+			elif [ `is_remote_tty` ]
 			then
 				# remote host - blue text
 				pre=`tput setaf 4 2>/dev/null`

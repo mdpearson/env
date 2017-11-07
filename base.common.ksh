@@ -29,6 +29,15 @@ else
 	_shell=$(basename $SHELL)
 fi
 
+is_remote_tty()
+{
+	wholine=`who -m --lookup 2>/dev/null`
+	[ $? -eq 0 ] || wholine=`who -m`
+	[ ! "$wholine" ] || \
+	[ "$(echo \"$wholine\" | cut -sd\( -f 2 | \
+	  sed -e 's/[:0.)]//g' -e 's/unix//')" ] && echo 1 || echo ""
+}
+
 if [[ $TTY != *console ]] &&
   [ "$TERM" ] && [ -f $HOME/.dircolors ] && \
   [ $(grep -c "[^-a-z]$TERM$" $HOME/.dircolors) -eq 1 ]
@@ -41,12 +50,17 @@ then
 	# printf '\033]2;%s\033'	# darwin only
 	# printf ']2;%s'"		# SunOS only
 	#
-	label()
+	set_terminal_title()
 	{
 		printf '\033]2;%s\007' "$*"	# works on most systems
 	}
 
-	update_title()
+	set_tab_title()
+	{
+		printf '\033]1;%s\007' "$*"	# works on iterm2
+	}
+
+	update_titles()
 	{
 		_ppath=$(echo "$PWD" | sed -e 's|\([^/]\)$|\1/|' \
 		  -e 's|.\{1,\}\(\(/[^/]*\)\{4,4\}\)$|...\1|')
@@ -69,15 +83,25 @@ then
 
 		[ "$WSNAME" ] && [ "$WSNAME" != "None" ] && _string="$_string — $WSNAME"
 
-		label $(printf '%s\n' "$_string")
+		# XXX update this to be more informative
+		if [ `is_remote_tty` ]
+		then
+			set_tab_title $(printf "$_host") `basename $PWD`
+		else
+			set_tab_title "localhost" `basename $PWD`
+		fi
+
+		set_terminal_title $(printf '%s\n' "$_string")
+
 		unset _host _ppath _string
 	}
 else
-	label() { :; }
-	update_title() { :; }
+	set_terminal_title() { :; }
+	set_tab_title() { :; }
+	update_titles() { :; }
 fi
 
-update_title
+update_titles
 
 redo()
 {

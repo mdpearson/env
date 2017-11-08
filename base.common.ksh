@@ -38,6 +38,19 @@ is_remote_tty()
 	  sed -e 's/[:0.)]//g' -e 's/unix//')" ] && echo 1 || echo ""
 }
 
+# see https://gist.github.com/bamanzi/5875262
+git_repo_name()
+{
+    top_dir=`git rev-parse --git-dir 2>/dev/null`
+    if [ "$top_dir" == ".git" ]
+    then
+        echo `basename $(pwd)`
+    elif [ "$top_dir" ]
+    then
+        echo `dirname $top_dir | xargs basename`
+    fi
+}
+
 if [[ $TTY != *console ]] &&
   [ "$TERM" ] && [ -f $HOME/.dircolors ] && \
   [ $(grep -c "[^-a-z]$TERM$" $HOME/.dircolors) -eq 1 ]
@@ -62,7 +75,7 @@ then
 
 	update_titles()
 	{
-		_ppath=$(echo "$PWD" | sed -e 's|\([^/]\)$|\1/|' \
+		_ppath=$(dirs +0 | sed -e 's|\([^/]\)$|\1/|' \
 		  -e 's|.\{1,\}\(\(/[^/]*\)\{4,4\}\)$|...\1|')
 
 		if [ "$THOST" ] && [ "$THOST" != "$HOST" ]
@@ -83,14 +96,17 @@ then
 
 		[ "$WSNAME" ] && [ "$WSNAME" != "None" ] && _string="$_string — $WSNAME"
 
-		# XXX update this to be more informative
 		if [ `is_remote_tty` ]
 		then
-			set_tab_title $(printf "$_host") `basename $PWD`
+			tab1="$_host"
 		else
-			set_tab_title "localhost" `basename $PWD`
+			tab1="localhost"
 		fi
 
+		tab2="["`git_repo_name`"]"
+		[ "$tab2" == "[]" ] && tab2=$(basename `dirs +0`)
+
+		set_tab_title "tab1" "$tab2"
 		set_terminal_title $(printf '%s\n' "$_string")
 
 		unset _host _ppath _string

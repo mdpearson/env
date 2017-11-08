@@ -146,28 +146,29 @@ function init_bash_prompt
 		#  30=blk 31=red 32=grn 33=yel 34=blu 35=mag 36=cyn 37=wht
 		# separate multiple codes with semicolons.
 		#
+		af='02'
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
-			uf='31;01'		# bold, red user
+			uf='31'			# red user
 			pf='31;01'		# bold, red prompt
-			hf='31'			# red hostname
+			hf='31;03'		# italic, red hostname
 			include_username=1
 		elif [ `is_remote_tty` ]
 		then			# remote host:
-			uf='34;01'		# bold, blue user
-			pf='32;01'		# bold, green prompt
-			hf='34'			# blue hostname
-			include_username=
+			uf='34'			# blue user
+			pf='34;01'		# bold, blue prompt
+			hf='34;03'		# italic, blue hostname
+			include_username=1
 		else			# local:
-			uf='33;03'		# bold, yellow user
-			pf='32;01'		# bold, green prompt
-			hf='33'			# yellow hostname
-			include_username=
+			uf='33'			# yellow user
+			pf='33;01'		# bold, yellow prompt
+			hf='33;03'		# italic, yellow hostname
+			include_username=1
 		fi
 
 		if [ "$include_username" ]
 		then
-			userstr="\[\e[${uf}m\]\u\[\e[0m\]@"
+			userstr="\[\e[${uf}m\]\u\[\e[0m\]\[\e[${af}m\]@\[\e[0m\]"
 		else
 			userstr=""
 		fi
@@ -176,8 +177,8 @@ function init_bash_prompt
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${userstr}${hoststr}|${histstr}"
-		PS1_SECOND="${hashstr} "
+		PS1_FIRST="${userstr}${hoststr}"
+		PS1_SECOND="${histstr} ${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
 
@@ -185,8 +186,8 @@ function init_bash_prompt
 		unset hf pf uf
 		unset include_username wholine
 	else
-		PS1_FIRST="$nn${dn:+:$dn}|\u|\!"
-		PS1_SECOND="$pchar "
+		PS1_FIRST="\u@$nn${dn:+:$dn}"
+		PS1_SECOND="\! $pchar "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 	fi
 

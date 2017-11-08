@@ -76,9 +76,12 @@ then
 	update_titles()
 	{
 		_ppath=$(dirs +0 | sed -e 's|\([^/]\)$|\1/|' \
-		  -e 's|.\{1,\}\(\(/[^/]*\)\{4,4\}\)$|...\1|')
+		  -e 's|.\{1,\}\(\(/[^/]*\)\{6,6\}\)$|...\1|')
 
-		if [ "$THOST" ] && [ "$THOST" != "$HOST" ]
+		if [ ! `is_remote_tty` ]
+		then
+			_host="localhost"
+		elif [ "$THOST" ] && [ "$THOST" != "$HOST" ]
 		then
 			_host="$THOST"
 		else
@@ -92,21 +95,14 @@ then
 			_string="$_host"
 		fi
 
-		_string="$_string:$_ppath"
+		_string="$_string $_ppath"
 
 		[ "$WSNAME" ] && [ "$WSNAME" != "None" ] && _string="$_string — $WSNAME"
-
-		if [ `is_remote_tty` ]
-		then
-			tab1="$_host"
-		else
-			tab1="localhost"
-		fi
 
 		tab2="["`git_repo_name`"]"
 		[ "$tab2" == "[]" ] && tab2=$(basename `dirs +0`)
 
-		set_tab_title "$tab1" "$tab2"
+		set_tab_title "$_host" "$tab2"
 		set_terminal_title $(printf '%s\n' "$_string")
 
 		unset _host _ppath _string

@@ -126,8 +126,6 @@ function init_bash_prompt
 		dn=
 	fi
 
-	shellabbr=`basename $SHELL`
-	[ "$BASH" ] && shellabbr='bash'
 	if [ "$USER" = "root" ]
 	then
 		pchar='#'
@@ -143,7 +141,7 @@ function init_bash_prompt
 	then
 		#
 		# attribute codes:
-		#  00=none 01=bold 02=dim 04=u-line 05=blink 07=rev 08=hidden
+		#  00=none 01=bold 02=dim 03=italic 04=u-line 05=blink 07=rev 08=hidden
 		# text color codes [add 10 for background color]:
 		#  30=blk 31=red 32=grn 33=yel 34=blu 35=mag 36=cyn 37=wht
 		# separate multiple codes with semicolons.
@@ -178,7 +176,7 @@ function init_bash_prompt
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 
-		PS1_FIRST="${userstr}${hoststr} ${shellabbr}|${histstr}"
+		PS1_FIRST="${userstr}${hoststr}|${histstr}"
 		PS1_SECOND="${hashstr} "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 		PS2="${contstr} "
@@ -187,7 +185,7 @@ function init_bash_prompt
 		unset hf pf uf
 		unset include_username wholine
 	else
-		PS1_FIRST="$nn${dn:+:$dn}|\u "${shellabbr}"|\!"
+		PS1_FIRST="$nn${dn:+:$dn}|\u|\!"
 		PS1_SECOND="$pchar "
 		PS1="${PS1_FIRST} ${PS1_SECOND}"
 	fi
@@ -361,6 +359,7 @@ function history_update
 }
 
 init_bash_prompt
+
 PROMPT_COMMAND='prompt_update $?'
 
 set -b					# immediately notify of terminated processes

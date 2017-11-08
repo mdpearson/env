@@ -260,7 +260,7 @@ then
 		if [ -n "$s" ]
 		then
 			# adjust how stashed files are flagged
-			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"*"
+			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"+"
 		fi
 		if [ -n "$u" ]
 		then

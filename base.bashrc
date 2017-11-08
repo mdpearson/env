@@ -215,16 +215,16 @@ then
 	#
 	__git_ps1_colorize_gitstring ()
 	{
-		__GIT_PS1_AHEAD_FMT='\[\e[33;02m\]'		# local ahead of remote
-		__GIT_PS1_BEHIND_FMT='\[\e[34;02m\]'	# remote ahead of local
+		__GIT_PS1_AHEAD_FMT='\[\e[33;03m\]'		# local ahead of remote - yellow
+		__GIT_PS1_BEHIND_FMT='\[\e[34;03m\]'	# remote ahead of local - blue
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
-		__GIT_PS1_MODIFIED_FMT='\[\e[35;01m\]'	# flag that modified, unstaged files exist
+		__GIT_PS1_MODIFIED_FMT='\[\e[33m\]'		# flag that modified, unstaged files exist - yellow
 		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
-		__GIT_PS1_STAGED_FMT='\[\e[36;01m\]'	# flag that modified, staged files exist
-		__GIT_PS1_STASH_FMT='\[\e[36;02m\]'		# flag that stashed files exist
-		__GIT_PS1_UNTRACKED_FMT='\[\e[35;02m\]'	# flag that untracked files exist
+		__GIT_PS1_STAGED_FMT='\[\e[34m\]'		# flag that staged files exist - blue
+		__GIT_PS1_STASH_FMT='\[\e[35\]'			# flag that stashed files exist - magenta
+		__GIT_PS1_UNTRACKED_FMT='\[\e[02m\]'	# flag that untracked files exist - dim
 
 		if [ "$detached" = "yes" ]
 		then
@@ -235,7 +235,7 @@ then
 		if [ -n "$i" ]
 		then
 			# adjust how modified, staged files are flagged
-			i=$__GIT_PS1_RESET_FMT$__GIT_PS1_STAGED_FMT"*"
+			i=$__GIT_PS1_RESET_FMT$__GIT_PS1_STAGED_FMT"^"
 		fi
 		if [ -n "$p" ]
 		then
@@ -261,17 +261,17 @@ then
 		if [ -n "$s" ]
 		then
 			# adjust how stashed files are flagged
-			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"?"
+			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"~"
 		fi
 		if [ -n "$u" ]
 		then
 			# adjust how untracked files are flagged
-			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"?"
+			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"o"
 		fi
 		if [ -n "$w" ]
 		then
 			# adjust how modified files are flagged
-			w=$__GIT_PS1_RESET_FMT$__GIT_PS1_MODIFIED_FMT"$w"
+			w=$__GIT_PS1_RESET_FMT$__GIT_PS1_MODIFIED_FMT"v"
 		fi
 	}
 fi

@@ -194,9 +194,6 @@ function init_bash_prompt
 	unset nn dn shellabbr pchar
 }
 
-# tasks that should run each time a command completes
-trap '_PREV_COMMAND=$_thiscmd; _thiscmd=$BASH_COMMAND' DEBUG
-
 if [ "`declare -f __git_ps1`" ]
 then
 	#
@@ -276,18 +273,7 @@ fi
 
 function prompt_update
 {
-	_errno=$1
 	update_titles
-	if [ "$_errno" ] && [ $_errno -ne 0 ]
-	then
-		[ "$_pre_val" ] || _pre_val=`tput bold 2>/dev/null`
-		[ "$_post_val" ] || _post_val=`tput sgr0 2>/dev/null`
-
-		if [ "$_PREV_COMMAND" != 'prompt_update $?' ]
-		then
-			echo "\`${_PREV_COMMAND}\` returned error code ${_pre_val}${_errno}${_post_val}."
-		fi
-	fi
 
 	if [ "`declare -f __git_ps1`" ]
 	then
@@ -314,8 +300,23 @@ function prompt_update
 			PS1="${PS1_FIRST} ${PS1_SECOND}"
 		fi
 	fi
-	return $_errno	# return original $? (error code)
 }
+
+function log_error
+{
+	_errno=$?
+	_cmd=$1
+
+	if [ "$_errno" ] && [ $_errno -ne 0 ]
+	then
+		[ "$_pre_val" ] || _pre_val=`(tput setaf 1; tput bold) 2>/dev/null`
+		[ "$_post_val" ] || _post_val=`tput sgr0 2>/dev/null`
+		echo "${_pre_val}\`$_cmd\` returned error code ${_pre_val}${_errno}.${_post_val}"
+	fi
+	unset _errno _cmd
+}
+
+trap 'log_error $BASH_COMMAND' ERR
 
 # automatically call ls after cd if the listing is six lines or less
 function cd_wrapper

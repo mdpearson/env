@@ -271,6 +271,19 @@ then
 	}
 fi
 
+# see https://gist.github.com/bamanzi/5875262
+function _git_repo_name
+{
+    top_dir=`git rev-parse --git-dir 2>/dev/null`
+    if [ "$top_dir" == ".git" ]
+    then
+        echo `basename $(pwd)`
+    elif [ "$top_dir" ]
+    then
+        echo `dirname $top_dir | xargs basename`
+    fi
+}
+
 function prompt_update
 {
 	update_titles
@@ -295,7 +308,7 @@ function prompt_update
 
 		if [ "$use_git_prompt" ]
 		then
-			__git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "git|%s "
+			__git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" `_git_repo_name`"|%s "
 		else
 			PS1="${PS1_FIRST} ${PS1_SECOND}"
 		fi

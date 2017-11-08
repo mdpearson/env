@@ -146,7 +146,6 @@ function init_bash_prompt
 		#  30=blk 31=red 32=grn 33=yel 34=blu 35=mag 36=cyn 37=wht
 		# separate multiple codes with semicolons.
 		#
-		af='02'
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
 			uf='31'			# red user
@@ -167,6 +166,9 @@ function init_bash_prompt
 			nn="localhost"	# override hostname
 		fi
 
+		af='02'		# dim coloring for at-sign
+		if='32'		# green coloring for history count
+
 		if [ "$include_username" ]
 		then
 			userstr="\[\e[${uf}m\]\u\[\e[0m\]\[\e[${af}m\]@\[\e[0m\]"
@@ -174,7 +176,7 @@ function init_bash_prompt
 			userstr=""
 		fi
 		hoststr="\[\e[${hf}m\]$nn\[\e[0m\]${dn:+:$dn}"
-		histstr="\[\e[02m\]\!\[\e[0m\]"
+		histstr="\[\e[${if}m\]\!\[\e[0m\]"
 		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
 		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
 

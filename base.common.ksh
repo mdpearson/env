@@ -106,7 +106,7 @@ then
 		tab2="["`git_repo_name`"]"
 		[ "$tab2" == "[]" ] && tab2=$(basename `dirs +0`)
 
-		set_tab_title "tab1" "$tab2"
+		set_tab_title "$tab1" "$tab2"
 		set_terminal_title $(printf '%s\n' "$_string")
 
 		unset _host _ppath _string

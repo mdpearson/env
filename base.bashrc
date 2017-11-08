@@ -164,6 +164,7 @@ function init_bash_prompt
 			pf='33;01'		# bold, yellow prompt
 			hf='33;03'		# italic, yellow hostname
 			include_username=1
+			nn="localhost"	# override hostname
 		fi
 
 		if [ "$include_username" ]

@@ -155,12 +155,12 @@ function init_bash_prompt
 		elif [ `is_remote_tty` ]
 		then			# remote host:
 			uf='34;01'		# bold, blue user
-			pf='34;01'		# bold, blue prompt
+			pf='32;01'		# bold, green prompt
 			hf='34'			# blue hostname
 			include_username=
 		else			# local:
 			uf='33;03'		# bold, yellow user
-			pf='33;01'		# bold, yellow prompt
+			pf='32;01'		# bold, green prompt
 			hf='33'			# yellow hostname
 			include_username=
 		fi

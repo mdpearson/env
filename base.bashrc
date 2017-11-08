@@ -221,7 +221,7 @@ then
 		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
 		__GIT_PS1_STAGED_FMT='\[\e[34m\]'		# flag that staged files exist - blue
-		__GIT_PS1_STASH_FMT='\[\e[35\]'			# flag that stashed files exist - magenta
+		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# flag that stashed files exist - magenta
 		__GIT_PS1_UNTRACKED_FMT='\[\e[02m\]'	# flag that untracked files exist - dim
 
 		if [ "$detached" = "yes" ]
@@ -259,7 +259,7 @@ then
 		if [ -n "$s" ]
 		then
 			# adjust how stashed files are flagged
-			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"~"
+			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"*"
 		fi
 		if [ -n "$u" ]
 		then

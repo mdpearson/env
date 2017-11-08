@@ -30,17 +30,7 @@ then
 fi
 
 venvnam=`basename $VIRTUAL_ENV`
-
-if echo $PS1 | grep '\\!' >/dev/null 2>&1
-then
-	# if the prompt contains a \! for command history, put the env name immediately after that
-	PS1=`echo "$_ORIGINAL_PS1" | sed 's/\([^ ]*\\![^ ]*\)/\1 ['"$venvnam"']/'`
-	PS1_FIRST=`echo "$_ORIGINAL_PS1_FIRST" | sed 's/\([^ ]*\\![^ ]*\)/\1 ['"$venvnam"']/'`
-else
-	# otherwise, assume the final block of character(s) is the prompt and put the env name before it
-	PS1=`echo "$_ORIGINAL_PS1" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1['"$venvnam"'] \2/'`
-	PS1_SECOND=`echo "$_ORIGINAL_PS1_SECOND" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1['"$venvnam"'] \2/'`
-fi
+PS1_SECOND="[$venvnam] $_ORIGINAL_PS1_SECOND"
 
 echo " (updated prompt to reflect $VIRTUAL_ENV virtual environment)" >&2
 

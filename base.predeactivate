@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# Copyright (c) 2015-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2015-2017 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
-# sh-compatible commands sourced after every virtualenv is deactivated
+# sh-compatible commands sourced before every virtualenv is deactivated
 #
 
 if [ "$_ORIGINAL_PS1" ]
@@ -26,5 +26,7 @@ then
 	PS1_SECOND="$_ORIGINAL_PS1_SECOND"
 	unset _ORIGINAL_PS1_SECOND
 fi
+
+echo " (removed $VIRTUAL_ENV from prompt)" >&2
 
 #EOF __TAGGED__

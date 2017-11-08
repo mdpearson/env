@@ -21,7 +21,7 @@ include $(CONF)
 
 DOTFILES = .ackrc .bash_profile .common.ksh .cvsrc .dbxrc .dircolors .emacs \
   .gitconfig .hgrc .inputrc .isinstalled .kshrc .profile .profile_custom \
-  .sh_aliases .tcshrc .MacOSX/environment.plist venv/postactivate venv/postdeactivate
+  .sh_aliases .tcshrc .MacOSX/environment.plist venv/postactivate venv/predeactivate
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 
@@ -96,7 +96,7 @@ $(HOME)/.dt/%: filter.sh $(CONF)
 
 # rule for files in virtualenv subdirectory
 $(G_WORKON_HOME)/postactivate: base.postactivate
-$(G_WORKON_HOME)/postdeactivate: base.postdeactivate
+$(G_WORKON_HOME)/predeactivate: base.predeactivate
 $(G_WORKON_HOME)/%: filter.sh $(CONF)
 	-$(SHELL) -c $(PREPARE)
 	$(SHELL) $< $(CONF) base.$(@F) > $@

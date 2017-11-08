@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2015-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2015-2017 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -41,6 +41,8 @@ else
 	PS1=`echo "$_ORIGINAL_PS1" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1['"$venvnam"'] \2/'`
 	PS1_SECOND=`echo "$_ORIGINAL_PS1_SECOND" | sed 's/\( *\)\([^ ][^ ]* *\)$/\1['"$venvnam"'] \2/'`
 fi
+
+echo " (updated prompt to reflect $VIRTUAL_ENV virtual environment)" >&2
 
 unset venvnam
 

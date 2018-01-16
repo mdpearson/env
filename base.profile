@@ -519,6 +519,12 @@ then
 
 	PATH=`echo ${userp}:${customp}:${PATH} | \
 	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+
+	if [ "$SGE_O_PATH" ]
+	then
+		echo "Updating PATH with contents of SGE_O_PATH..." 1>&2
+		PATH=$SGE_O_PATH:$PATH
+	fi
 	export PATH
 
 	#

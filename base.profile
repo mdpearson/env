@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2017 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2018 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -148,6 +148,7 @@ HOSTNAME=$HOST
 export HOST HOSTNAME USER
 
 COLUMNS=`tput cols`
+[ "$COLUMNS" ] || COLUMNS=80
 ENV=${HOME}/.kshrc
 export COLUMNS ENV
 

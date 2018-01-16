@@ -1,13 +1,17 @@
 #!/not/executable
 #
-# Copyright (c) 2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2014-8 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # $Id$
-# additional command-line customizations for bash
+# additional command-line customizations for mercurial
 #
+
+[extensions]
+hgext.bookmarks =
+hggit =
 
 [ui]
 username = __G_USER_TRUENAME__ <__G_USER_EMAIL__>
@@ -16,13 +20,13 @@ username = __G_USER_TRUENAME__ <__G_USER_EMAIL__>
 keyword =
 
 [keyword]
-* = 
+* =
 
 [keywordset]
 svn = True
 
 [keywordmaps]
-Id = {file|basename},v {date|svnutcdate} {author|user} {node|short} 
+Id = {file|basename},v {date|svnutcdate} {author|user} {node|short}
 Author = {author|user}
 Date = {date|svnisodate}
 LastChangedBy = {author|user}

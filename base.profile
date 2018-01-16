@@ -522,7 +522,7 @@ then
 
 	if [ "$SGE_O_PATH" ]
 	then
-		echo "Updating PATH with contents of SGE_O_PATH..." 1>&2
+		printf " (Updating PATH with SGE_O_PATH...)" >&2
 		PATH=$SGE_O_PATH:$PATH
 	fi
 	export PATH
@@ -613,7 +613,7 @@ then
 		unset vew_home
 	fi
 
-	if [ "$VIRTUALENVWRAPPER_SCRIPT" ]
+	if [ "$VIRTUALENVWRAPPER_SCRIPT" ] && [ ! "$SGE_O_PATH" ]
 	then
 		WORKON_HOME=venv
 		export WORKON_HOME

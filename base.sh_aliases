@@ -184,6 +184,8 @@ set_colors()
 	unset dirc
 }
 
+alias gdiff='git diff --word-diff --no-index --'
+
 set_colors
 
 GREP_COLOR='1;3;35'

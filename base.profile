@@ -522,8 +522,8 @@ then
 
 	if [ "$SGE_O_PATH" ]
 	then
-		printf " (Updating PATH with SGE_O_PATH...)" >&2
-		PATH=$SGE_O_PATH:$PATH
+		printf " (Overriding PATH with SGE_O_PATH...)" >&2
+		PATH=$SGE_O_PATH
 	fi
 	export PATH
 

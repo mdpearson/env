@@ -18,6 +18,7 @@
 --ignore-dir=.eggs
 --ignore-dir=.tox
 --ignore-dir=.vscode
+--ignore-dir=ext:egg-info
 --ignore-file=is:.coverage
 --ignore-file=ext:min.js,map
 --smart-case

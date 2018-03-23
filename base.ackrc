@@ -15,7 +15,10 @@
 --ignore-dir=bower_components
 --ignore-dir=build
 --ignore-dir=ve
+--ignore-dir=.eggs
 --ignore-dir=.tox
+--ignore-dir=.vscode
+--ignore-file=is:.coverage
 --ignore-file=ext:min.js,map
 --smart-case
 --sort-files

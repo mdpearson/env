@@ -27,6 +27,8 @@ unset tcp tls trm
 alias cp="cp -i"
 alias cpf="truecp -f"
 
+alias emacs="emacs -nw"
+
 checkls=`ls --color=auto -ah 2>&1 > /dev/null`
 if [ $? -ne 0 ] || [ "$checkls" ]
 then
@@ -191,6 +193,11 @@ set_colors
 GREP_COLOR='1;3;35'
 GREP_OPTIONS="--color=auto"
 export GREP_COLOR GREP_OPTIONS
+
+EDITOR="emacs -nw"
+GIT_EDITOR="emacs -nw"
+VISUAL="emacs -nw"
+export EDITOR GIT_EDITOR VISUAL
 
 unset isinstalled
 

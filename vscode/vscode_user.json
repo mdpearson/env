@@ -112,6 +112,7 @@
     "editor.suggest.statusBar.visible": true,
     "editor.suggestFontSize": 10,
     "editor.suggestLineHeight": 18,
+    "editor.suggestSelection": "first",
     "editor.tabSize": 4,
 
     "editor.tokenColorCustomizations": {
@@ -633,9 +634,10 @@
     "terminal.integrated.lineHeight": 1.1,
     "terminal.integrated.fontFamily": "Input Mono Narrow",
     "terminal.integrated.fontWeight": "400",
-    "window.nativeTabs": true,
 
-    // "window.reopenFolders": "all",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+    "window.nativeTabs": true,
 
     "window.title": "${appName}${separator}${activeEditorMedium}${separator}${rootName}",
     "window.zoomLevel": 0,
@@ -663,7 +665,7 @@
         "editorOverviewRuler.findMatchForeground": "#2aa19866",
 
         "editorCursor.background": "#fff",
-        "editorCursor.foreground": "#cb4b16",  // solarized $orange
+        "editorCursor.foreground": "#000",
 
         "editorGroupHeader.tabsBorder": "#fff",
 
@@ -675,9 +677,11 @@
         "editorOverviewRuler.modifiedForeground": "#93a1a141",
 
         /* selection matches are various shades of Solarized $base2 */
+        "editor.hoverHighlightBackground": "#eee8d599",
         "editor.selectionBackground": "#eee8d5",
         // "editor.inactiveSelectionBackground": "#600", // if unset, auto-computed
         "editor.selectionHighlightBackground": "#eee8d599",
+        "editor.symbolHighlightBackground": "#eee8d599",
         "editor.wordHighlightBackground": "#eee8d599",
         "editor.wordHighlightStrongBackground": "#eee8d599",  // symbol definition?
         "editorOverviewRuler.rangeHighlightForeground": "#eee8d5",
@@ -754,212 +758,3 @@
     "zenMode.fullScreen": false,
     "zenMode.hideLineNumbers": false,
 }
-
-/*
- * spare parts from previous config files follow
- * ---------------------------------------------
- */
-
-/*
-11 22 33 44 55 66 77
-88 99 AA BB CC DD EE
-
-
-    //     // Apple "blue" highlight color
-    //     "editor.findMatchBackground": "#b2d7fe66",
-    //     "editor.findMatchHighlightBackground": "#b2d7fe33",
-    //     "editor.findRangeHighlightBackground": "#b2d7fe22",
-    //     "editorOverviewRuler.findMatchForeground": "#0069d9",
-
-    //     "editor.selectionBackground": "#ffefb0",
-
-    //     "editor.hoverHighlightBackground": "#ffefb099",
-    //     "editor.selectionHighlightBackground": "#ffefb099",
-
-    //     "editor.selectionForeground": "#000",
-    //     "editorCursor.background": "#000",
-
-    //     "editorCursor.foreground": "#ffd200",
-    //     "editorOverviewRuler.selectionHighlightForeground": "#ffd200",
-
-    //     // Apple "pink" highlight color
-    //     "editorBracketMatch.background": "#ffbfd2cc",
-    //     "editorBracketMatch.border": "#ff2968cc",
-
-    //     // error - Apple "red" highlight colors
-    //     "editorError.border": "#ff3b3122",
-    //     "editorError.foreground": "#ff3b31",
-    //     "editorOverviewRuler.errorForeground": "#ff3b31",
-
-    //     // warning - Apple "orange" highlight colors
-    //     "editorWarning.border": "#ff950044",
-    //     "editorWarning.foreground": "#ff9500",
-    //     "editorOverviewRuler.warningForeground": "#ff950099",
-
-    //     // info - Apple "purple" highlight colors
-    //     "editorInfo.border": "#ca124322",
-    //     "editorInfo.foreground": "#ca124399",
-    //     "editorOverviewRuler.infoForeground": "#ca124366",
-
-    //     // add/remove -- terminal "yellow" and "blue"
-    //     "editorGutter.addedBackground": "#eab700",
-    //     "editorOverviewRuler.addedForeground": "#eab700",
-    //     // deleted doesn't seem to actually trigger anything
-    //     "editorGutter.deletedBackground": "#4271ae",
-    //     "editorOverviewRuler.deletedForeground": "#4271ae",
-    //     "editorGutter.modifiedBackground": "#4271ae",
-    //     "editorOverviewRuler.modifiedForeground": "#4271ae",
-
-    //     "editorIndentGuide.background": "#B1A79922",
-    //     "editorRuler.foreground": "#B1A79922",
-    //     "editorWidget.border": "#B1A79922",
-    //     "list.hoverBackground": "#B1A79922",
-    //     "scrollbarSlider.background": "#B1A79922",
-    //     "editor.lineHighlightBackground": "#B1A79922",
-
-    //     "editorLineNumber.foreground": "#B1A79955",
-    //     "editorWhitespace.foreground": "#B1A79955",
-    //     "list.inactiveSelectionBackground": "#B1A79955",
-    //     "scrollbarSlider.hoverBackground": "#B1A79955",
-    //     "scrollbarSlider.activeBackground": "#B1A79955",
-    //     "statusBar.background": "#716E6A",
-
-    //     "activityBar.background": "#B1A79977",
-    //     "list.activeSelectionBackground": "#B1A79977",
-
-    //     "activityBar.foreground": "#0007",
-    //     "list.activeSelectionForeground": "#0007",
-    //     "sideBarTitle.foreground": "#0007",
-    //     "statusBar.foreground": "#FFFB", // "#D5D0C8",
-    //     //"terminal.foreground": "#ddb8b877",
-
-    //     "tab.activeForeground": "#000C",
-
-    //     "editor.background": "#FFF",
-    //     "editorWidget.background": "#FFF",
-    //     "scrollbar.shadow": "#FFF"
-    // },
-
-
-        "[Nord Wave]": {
-            // Nord-specific color overrides
-            "textMateRules": [
-                {
-                    "name": "Comments",
-                    "scope": [
-                        "comment",
-                        "keyword.codetag.notation.python",
-                        "punctuation.definition.comment",
-                        "string.quoted.docstring.multi.python",
-                    ],
-                    "settings": {
-                        "foreground": "#d08770bb",
-                    }
-                },
-                {
-                    "name": "Comment Delimiters",
-                    "scope": "string.quoted.docstring.multi.python punctuation.definition.string",
-                    "settings": {
-                        "foreground": "#d0877066",
-                    }
-                },
-                {
-                    "name": "Comment Highlight",
-                    "scope": "keyword.codetag.notation.python",
-                    "settings": {
-                        "foreground": "#d08770",
-                    }
-                },
-                {
-                "name": "Constants (capitalized)",
-                "scope": "constant.other.caps.python",
-                "settings": {
-                    "foreground": "#ebcb8bff"
-                }
-                },
-                {
-                    "name": "Constants (numeric)",
-                    "scope": "constant.numeric",
-                    "settings": {
-                        "foreground": "#b48eadff",
-                    }
-                },
-                {
-                    "name": "Exceptions",
-                    "scope": "support.type.exception.python",
-                    "settings": {
-                        "foreground": "#ebcb8bff",
-                    }
-                },
-                {
-                    "name": "Function Calls",
-                    "scope": [
-                        "source.python meta.function-call",
-                        "source.python meta.function-call.generic"
-                    ],
-                    "settings": {
-                        "foreground": "#d8dee9"
-                    }
-                },
-                {
-                    "name": "Function Arguments",
-                    "scope": "meta.function-call.arguments",
-                    "settings": {
-                        "foreground": "#d8dee999"
-                    }
-                },
-                {
-                    "name": "Function Calls (Nested 1-2x)",
-                    "scope": [
-                        "source.python meta.function-call.arguments meta.function-call",
-                        "source.python meta.function-call.arguments meta.function-call.generic",
-                        "source.python meta.function-call.arguments meta.function-call.arguments meta.function-call",
-                        "source.python meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
-                    ],
-                    "settings": {
-                        "foreground": "#d8dee999"
-                    }
-                },
-                {
-                    "name": "Function Definitions",
-                    "scope": [
-                        "entity.name.function",
-                        "support.function.magic.python",
-                    ],
-                    "settings": {
-                        "foreground": "#b48eadff"
-                    }
-                },
-                {
-                    "name": "String Delimiters",
-                    "scope": [
-                        "meta.function-call string.quoted punctuation.definition",
-                        "string.quoted punctuation.definition",
-                    ],
-                    "settings": {
-                        "foreground": "#A3BE8C99",
-                    }
-                },
-                {
-                    "name": "String Regular Expressions",
-                    "scope": "string.regexp",
-                    "settings": {
-                        "foreground": "#A3BE8C",
-                    }
-                },
-                {
-                    "name": "String Regular Expression Escapes",
-                    "scope": "support.other.escape.special.regexp",
-                    "settings": {
-                        "foreground": "#ebcb8b",
-                    }
-                },
-                {
-                    "name": "String Storage",
-                    "scope": "storage.type.string.python",
-                    "settings": {
-                        "foreground": "#ebcb8bff",
-                    }
-                }
-            ],
-*/

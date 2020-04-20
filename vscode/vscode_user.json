@@ -1,0 +1,965 @@
+
+/*
+ * "#dc322f",  // solarized $red
+ * "#cb4b16",  // solarized $orange
+ * "#b58900",  // solarized $yellow
+ * "#e6ac00",  // solarized $yellow, brighter
+ * "#806f40",  // Solarized $yellow, dim
+ * "#859900",  // solarized $green
+ * "#9bb300",  // solarized $green, brighter
+ * "#647300",  // Solarized $green, dim
+ * "#2aa198",  // solarized $cyan
+ * "#268bd2",  // solarized $blue
+ * "#6c71c4",  // solarized $violet
+ * "#d33682",  // solarized $magenta
+ */
+
+{
+    "breadcrumbs.enabled": false,
+    "breadcrumbs.filePath": "last",
+    "breadcrumbs.icons": false,
+
+    "bracket-pair-colorizer-2.activeScopeCSS": [
+        "backgroundColor: {color}",
+        "borderColor: {color}",
+        "borderStyle: solid",
+        "borderWidth: 3px",
+        "opacity: 0.2"
+    ],
+    "bracket-pair-colorizer-2.colors": [
+        "#268bd2",  // Solarized $blue
+        "#9bb300",  // Solarized $green, brighter
+        "#e6ac00",  // Solarized $yellow, brighter
+    ],
+
+    "bracket-pair-colorizer-2.forceIterationColorCycle": false,
+    "bracket-pair-colorizer-2.highlightActiveScope": true,
+    "bracket-pair-colorizer-2.rulerPosition": "Center",
+    "bracket-pair-colorizer-2.showBracketsInGutter": true,
+    "bracket-pair-colorizer-2.showBracketsInRuler": false,
+    "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
+    "bracket-pair-colorizer-2.showVerticalScopeLine": false,
+    "bracket-pair-colorizer-2.unmatchedScopeColor": "#dc322f", // solarized red
+
+    "customizeUI.fontSizeMap": {
+        "13px": "11px",
+        "12px": "11px",
+        "window-title": "12px", // Window title font when using custom titlebar
+        "tab-title": "12px",    // Used for editor tab titles
+        "monospace": "10px",    // Used for monospace fonts in user interface
+        "menu": "13px",         // Used for menu items (windows only)
+    },
+
+    "customizeUI.listRowHeight": 20, // shrink rows to match XCode
+    "customizeUI.stylesheet": {
+        // https://github.com/microsoft/vscode/issues/46403#issuecomment-523286973
+        ".editor-actions": "display: none !important;",
+        // https://stackoverflow.com/questions/55193637/is-there-a-way-to-make-vscode-line-number-field-larger
+        ".monaco-editor .margin": "padding-left: 3px",
+        // https://github.com/microsoft/monaco-editor/issues/200#issuecomment-538356026
+        ".monaco-editor .lines-content": "padding-left: 2px",
+    },
+    "window.titleBarStyle": "native",   // needed for inline customizeUI
+    "customizeUI.titleBar": "inline",
+
+
+    "debug.console.fontSize": 10,
+    "debug.showBreakpointsInOverviewRuler": true,
+    "debug.toolBarLocation": "hidden",
+
+    "editor.autoClosingBrackets": "languageDefined",
+    "editor.autoClosingQuotes": "languageDefined",
+    "editor.autoIndent": "full",
+    "editor.codeLens": true,
+    "editor.colorDecorators": false,
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": false,  // makes the cursor zip across the screen
+    "editor.cursorStyle": "block",
+    "editor.detectIndentation": true,
+    "editor.glyphMargin": false,                 // whether to show a gutter
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.folding": false,                     // waste space with code folding arrows
+    "editor.fontFamily": "IBM Plex Mono RS",
+    "editor.fontLigatures": false,
+    "editor.fontSize": 10,
+    "editor.fontWeight": "400",
+    "editor.formatOnPaste": false,
+    "editor.hideCursorInOverviewRuler": false,
+    "editor.highlightActiveIndentGuide": true,
+    "editor.hover.sticky": true,
+    "editor.lineHeight": 13,
+    "editor.lineNumbers": "interval",
+    "editor.lineNumbersMinChars": 6,
+    "editor.matchBrackets": "always",
+    "editor.minimap.enabled": false,
+    "editor.minimap.maxColumn": 80,
+    "editor.minimap.renderCharacters": true,
+    "editor.minimap.side": "right",
+    "editor.occurrencesHighlight": true,        // auto highlight tokens, even if unselected
+    "editor.overviewRulerBorder": false,
+    "editor.renderControlCharacters": true,
+    "editor.renderIndentGuides": false,
+    "editor.renderLineHighlight": "none",
+    "editor.renderWhitespace": "none",
+    "editor.roundedSelection": false,
+    "editor.rulers": [80],
+    "editor.scrollBeyondLastLine": false,
+    "editor.selectionHighlight": true,          // auto highlight other selections, when selected
+    "editor.showFoldingControls": "always",
+    "editor.showUnused": true,
+    "editor.suggest.localityBonus": true,
+    "editor.suggest.statusBar.visible": true,
+    "editor.suggestFontSize": 10,
+    "editor.suggestLineHeight": 18,
+    "editor.tabSize": 4,
+
+    "editor.tokenColorCustomizations": {
+        // Use >Developer: Inspect TM Scopes to get at these minutiae
+        "textMateRules": [
+            {
+                "name": "Generic text",
+                "scope": [
+                    "entity.name.tag",
+                    "meta.function-call.arguments",
+                    "source",
+                    "string",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#000"        // black text
+                }
+            },
+
+            {
+                "name": "Reset scheme styling",
+                "scope": [
+                    "keyword.operator",
+                    "meta.function-call.arguments",
+                    "meta.function-call punctuation",
+                    "meta.function-call string.quoted punctuation.definition",
+                    "punctuation.definition.inheritance.begin.python",
+                    "punctuation.definition.inheritance.end.python",
+                    "punctuation.separator",
+                    "punctuation.separator.key-value"
+                ],
+                "settings": {
+                    "fontStyle": ""
+                },
+            },
+
+            {
+                "name": "Operators, mostly symbols",
+                "scope": [
+                    "keyword.operator.arithmetic",
+                    "keyword.operator.assignment",
+                    "keyword.operator.comparison",
+                    "keyword.operator",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                }
+            },
+            {
+                "name": "Braces, brackets and parentheses",
+                "scope": [
+                    "punctuation.definition.arguments",
+                    "punctuation.definition.dict",
+                    "punctuation.definition.list",
+                    "punctuation.definition.parameters",
+                    "punctuation.parenthesis",
+                ],
+                "settings": {
+                    "fontStyle": ""
+                }
+            },
+            {
+                "name": "Keywords",
+                "scope": [
+                    "keyword.control",
+                    "keyword.operator.logical",
+                    "storage.type",
+                    "storage.type.class",
+                    "storage.type.function",
+                ],
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "name": "Language constants",
+                "scope": [
+                    "constant.language",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                }
+            },
+            {
+                "name": "Named constants",
+                "scope": [
+                    "constant.other",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                }
+            },
+            {
+                "name": "YAML Anchors",
+                "scope": [
+                    "entity.name.type.anchor",
+                    "variable.other.alias",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                }
+            },
+            {
+                "name": "Numeric constants",
+                "scope": [
+                    "constant.numeric",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+
+            {
+                "name": "Interesting single characters",
+                "scope": [
+                    "keyword.operator.unpacking",
+                    "punctuation.separator.continuation",
+                    "storage.type.string.python",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+
+            {
+                "name": "Interesting yaml symbols",
+                "scope": [
+                    "constant.language.merge",
+                    "keyword.control.flow.block-scalar.folded",
+                    "punctuation.definition.alias",
+                    "punctuation.definition.anchor"
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+
+            {
+                "name": "strings and quotation marks",
+                "scope": [
+                    "punctuation.definition.string",
+                    "string.quoted",
+                    "string.unquoted",
+                    "string.quoted.double.yaml",
+                    "string.quoted.double.yaml punctuation.definition.string",
+                    "string.quoted.single.yaml",
+                    "string.quoted.single.yaml punctuation.definition.string"
+
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                }
+            },
+            {
+                "name": "Regular expressions",
+                "scope": [
+                    "string.regexp",
+                    //"meta.function-call.arguments string.regexp",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#b58900",  // Solarized $yellow
+                }
+            },
+            {
+                "name": "Regular expression special characters",
+                "scope": [
+                    "constant.other.set.regexp",
+                    "keyword.operator.quantifier.regexp",
+                    "support.other.escape.special.regexp",
+                    "support.other.match",
+                    "support.other.parenthesis.regexp punctuation.parenthesis",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+
+            {
+                "name": "docstrings",
+                "scope": [
+                    "string.quoted.docstring punctuation.definition.string",
+                    "string.quoted.docstring",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#806f40",  // Solarized $yellow, dim
+                }
+            },
+            {
+                "name": "comments",
+                "scope": [
+                    "comment",
+                    "punctuation.definition.comment",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#806f40",  // Solarized $yellow, dim
+                }
+            },
+            {
+                "name": "TODO's and FIXME's",
+                "scope": "keyword.codetag.notation.python",
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+
+            {
+                "name": "Decorators",
+                "scope": [
+                    "entity.name.function.decorator",
+                    "meta.function.decorator"
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+            {
+                "name": "Decorator Arguments",
+                "scope": [
+                    "entity.name.function.decorator.arguments",
+                    "meta.function.decorator.arguments",
+                    "meta.function.decorator meta.function-call.arguments variable.parameter.function-call",
+                    "meta.function.decorator meta.function-call.arguments keyword.operator.assignment",
+                    "meta.function.decorator meta.function-call.arguments string.quoted",
+                    "meta.function.decorator meta.function-call.arguments string.quoted punctuation.definition.string",
+                    "meta.function.decorator meta.function.parameters string.quoted",
+                    "meta.function.decorator meta.function.parameters string.quoted punctuation.definition.string",
+                ],
+                "settings": {
+                    "foreground": "#cb4b16",  // Solarized $orange
+                }
+            },
+
+            {
+                "name": "Function calls",
+                "scope": [
+                    "meta.function-call",
+                    "meta.function-call.generic",
+                ],
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+
+            {
+                "name": "Function call arguments",
+                "scope": [
+                    "meta.function-call meta.function-call.arguments",
+                ],
+                "settings": {
+                    "fontStyle": ""
+                }
+            },
+
+            {
+                "name": "Function definitions",
+                "scope": [
+                    "entity.name.function",
+                    "support.function.magic.python",
+                ],
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "name": "Class definitions",
+                "scope": [
+                    "entity.name.class",
+                    "entity.name.type.class",
+                ],
+                "settings": {
+                    "fontStyle": "bold"
+                }
+            },
+
+            {
+                "name": "Function parameter names",
+                "scope": [
+                    "variable.other.alias",
+                    "variable.parameter.function",
+                    "variable.parameter.function-call"
+                ],
+                "settings": {
+                    "fontStyle": "underline",
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+            {
+                "name": "Function parameters",
+                "scope": [
+                    "meta.function.parameters",
+                    "support.other.variable",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+            {
+                "name": "Class parameters (inherited classes)",
+                "scope": [
+                    "entity.other.inherited-class.python",
+                    "meta.class.inheritance.python",
+                    "meta.class.inheritence.python constant.other",
+                ],
+                "settings": {
+                    "fontStyle": "underline",
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+
+            {
+                "name": "Function calls (nested 1x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call",
+                    "meta.function-call.arguments meta.function-call.generic",
+                ],
+                "settings": {
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+            {
+                "name": "Function parameter names (nested 1x)",
+                "scope": [
+                    "meta.function-call.arguments variable.parameter.function-call",
+                ],
+                "settings": {
+                    "fontStyle": "underline",
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+            {
+                "name": "Function arguments (nested 1x)",
+                "scope": [
+                    "meta.function-call.arguments",
+                    "meta.function-call.arguments variable.parameter.function-call",
+                    // "meta.function.python constant.language",
+                    // "meta.function.python string.quoted",
+                    // "meta.function.python string.quoted punctuation.definition.string",
+                ],
+                "settings": {
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+            {
+                "name": "String function arguments (Nested 1x)",
+                "scope": [
+                    "meta.function-call.arguments string.quoted",
+                    "meta.function-call.arguments string.quoted punctuation.definition.string",
+                    "meta.function.parameters string.quoted",
+                    "meta.function.parameters string.quoted punctuation.definition.string",
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#657b83",  // Solarized $base00
+                }
+            },
+
+            {
+                "name": "Function calls (nested 2x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
+                ],
+                "settings": {
+                    "foreground": "#93a1a1",  // Solarized $base1
+                }
+            },
+            {
+                "name": "Function parameter names (nested 2x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                ],
+                "settings": {
+                    "foreground": "#93a1a1",  // Solarized $base1
+                }
+            },
+            {
+                "name": "Function arguments (nested 2x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments",
+                    "meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#93a1a1",  // Solarized $base1
+                }
+            },
+            {
+                "name": "String function arguments (nested 2x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments string.quoted",
+                    "meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
+                    "meta.function-call.arguments meta.function.parameters string.quoted",
+                    "meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#93a1a1",  // Solarized $base1
+                }
+            },
+
+            {
+                "name": "Function calls (nested 3–4x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
+                ],
+                "settings": {
+                    "foreground": "#93a1a188",  // Solarized $base1, 50%
+                }
+            },
+            {
+                "name": "Function parameter names (Nested 3–4x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                ],
+                "settings": {
+                    "foreground": "#93a1a188",  // Solarized $base1, 50%
+                }
+            },
+            {
+                "name": "Function arguments (nested 3–4x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                    "foreground": "#93a1a188",  // Solarized $base1, 50%
+                }
+            },
+            {
+                "name": "String function arguments (nested 3–4x)",
+                "scope": [
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted",
+                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#93a1a188",  // Solarized $base1, 50%
+                }
+            }
+        ]
+    },
+
+    "editor.wordBasedSuggestions": false,
+    "editor.wordWrap": "on",
+    "editor.wrappingIndent": "indent",
+
+    "errorLens.gutterIconSet": "circle",
+    "errorLens.gutterIconsEnabled": false,
+    "errorLens.statusBarColorsEnabled": false,
+
+    "explorer.confirmDelete": false,
+    "explorer.sortOrder": "mixed",
+
+    "extensions.ignoreRecommendations": false,
+
+    "files.associations": {
+        "*.pxd": "python",
+        "*.pyx": "python",
+        "Dockerfile*": "dockerfile"
+    },
+
+    "files.autoSave": "afterDelay",
+    "files.defaultLanguage": "python",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    "git.autofetch": true,
+
+    "keyboard.touchbar.enabled": true,
+
+    "problems.showCurrentInStatus": true,
+
+    "python.analysis.logLevel": "Trace",
+
+    "python.workspaceSymbols.ctagsPath": "/usr/local/bin/ctags",
+    "python.workspaceSymbols.enabled": true,
+    "python.workspaceSymbols.rebuildOnStart": true,
+    "python.workspaceSymbols.rebuildOnFileSave": true,
+    "python.venvPath": "Users/mpearson/venv/",
+
+    "scm.diffDecorationsGutterWidth": 4,
+
+    "search.quickOpen.history.filterSortOrder": "recency",
+    "search.showLineNumbers": true,
+    "search.smartCase": false,
+    "search.useGlobalIgnoreFiles": true,
+
+    "shellcheck.disableVersionCheck": true,
+
+    "telemetry.enableTelemetry": false,
+
+    "terminal.explorerKind": "integrated",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "block",
+    "terminal.integrated.fontSize": 10,
+    "terminal.integrated.lineHeight": 1.1,
+    "terminal.integrated.fontFamily": "Input Mono Narrow",
+    "terminal.integrated.fontWeight": "400",
+    "window.nativeTabs": true,
+
+    // "window.reopenFolders": "all",
+
+    "window.title": "${appName}${separator}${activeEditorMedium}${separator}${rootName}",
+    "window.zoomLevel": 0,
+
+    "workbench.activityBar.visible": false,
+    "workbench.colorCustomizations": {
+        "activityBarBadge.background": "#e5ecf2",
+
+        "badge.background": "#e5ecf2",
+        "badge.foreground": "#000",
+
+        "debugIcon.breakpointForeground": "#dc322f",
+
+        /* doesn't seem to work */
+        // "diffEditor.border": "#002b36",
+        "diffEditor.insertedTextBackground": "#dc322f20",
+        "diffEditor.removedTextBackground": "#85990020",
+        "diffEditor.renderSideBySide": false,
+
+        /* find matches are various shades of Solarized $cyan */
+        "editor.findMatchBackground": "#2aa19866",
+        "editor.findMatchHighlightBorder": "#2aa19800",
+        "editor.findMatchHighlightBackground": "#2aa19833",
+        "editor.findRangeHighlightBackground": "#2aa1980a",
+        "editorOverviewRuler.findMatchForeground": "#2aa19866",
+
+        "editorCursor.background": "#fff",
+        "editorCursor.foreground": "#cb4b16",  // solarized $orange
+
+        "editorGroupHeader.tabsBorder": "#fff",
+
+        "editorGutter.addedBackground": "#93a1a1",
+        "editorGutter.deletedBackground": "#93a1a1",
+        "editorGutter.modifiedBackground": "#93a1a1",
+        "editorOverviewRuler.addedForeground": "#93a1a141",
+        "editorOverviewRuler.deletedForeground": "#93a1a141",
+        "editorOverviewRuler.modifiedForeground": "#93a1a141",
+
+        /* selection matches are various shades of Solarized $base2 */
+        "editor.selectionBackground": "#eee8d5",
+        // "editor.inactiveSelectionBackground": "#600", // if unset, auto-computed
+        "editor.selectionHighlightBackground": "#eee8d599",
+        "editor.wordHighlightBackground": "#eee8d599",
+        "editor.wordHighlightStrongBackground": "#eee8d599",  // symbol definition?
+        "editorOverviewRuler.rangeHighlightForeground": "#eee8d5",
+        "editorOverviewRuler.selectionHighlightForeground": "#eee8d5",
+        "editorOverviewRuler.wordHighlightForeground": "#eee8d5",
+        "editorOverviewRuler.wordHighlightStrongForeground": "#eee8d5",
+
+        "editorBracketMatch.background": "#eee8d599",
+        "editorOverviewRuler.bracketMatchForeground": "#eee8d599",
+
+        "editorLineNumber.activeForeground": "#93a1a181",
+        "editorLineNumber.foreground": "#93a1a181",
+        "editorRuler.foreground": "#93a1a121",
+
+        "editorError.foreground": "#cb4b1600",      // Solarized $orange
+        "editorOverviewRuler.errorForeground": "#cb4b16",
+        "errorLens.errorBackgroundLight": "#cb4b1622",
+        "errorLens.errorForegroundLight": "#cb4b16",
+
+        "editorHint.foreground":  "#6c71c400",      // Solarized $violet
+        "editorOverviewRuler.hintForeground": "#6c71c4",
+        "errorLens.hintBackgroundLight": "#6c71c422",
+        "errorLens.hintForegroundLight": "#6c71c4",
+
+        "editorInfo.foreground": "#6c71c400",       // Solarized $violet
+        "editorOverviewRuler.infoForeground": "#6c71c4",
+        "errorLens.infoBackgroundLight": "#6c71c422",
+        "errorLens.infoForegroundLight": "#6c71c4",
+
+        "editorWarning.foreground": "#6c71c400",    // Solarized $violet
+        "editorOverviewRuler.warningForeground": "#6c71c4",
+        "errorLens.warningBackgroundLight": "#6c71c422",
+        "errorLens.warningForegroundLight": "#6c71c4",
+
+        "scrollbarSlider.activeBackground": "#93a1a1b1",
+        "scrollbarSlider.background": "#93a1a141",
+        "scrollbarSlider.hoverBackground": "#93a1a181",
+
+        "statusBar.background": "#0000",            // strangely, this has an effect
+
+        "tab.activeBackground": "#fff",
+        "tab.activeBorder": "#fff",
+        "tab.activeBorderTop": "#fff",
+        "tab.activeForeground": "#073642",
+
+        "tab.activeModifiedBorder": "#fff",
+        "tab.inactiveModifiedBorder": "#fff",
+    },
+
+    "workbench.colorTheme": "White",
+    "workbench.commandPalette.preserveInput": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.labelFormat": "default",
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.value": 6,
+    "workbench.editor.showIcons": false,
+    "workbench.editor.showTabs": true,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.editor.tabSizing": "fit",
+    "workbench.enableExperiments": false,
+    "workbench.fontAliasing": "default",
+    "workbench.iconTheme": null,
+    "workbench.panel.defaultLocation": "bottom",
+    "workbench.settings.editor": "json",
+    "workbench.settings.openDefaultKeybindings": true,
+    "workbench.settings.openDefaultSettings": true,
+    "workbench.settings.useSplitJSON": true,
+    "workbench.sideBar.location": "right",
+    "workbench.statusBar.visible": true,
+    "workbench.tree.indent": 23,
+    "workbench.view.alwaysShowHeaderActions": true,
+
+    "zenMode.fullScreen": false,
+    "zenMode.hideLineNumbers": false,
+}
+
+/*
+ * spare parts from previous config files follow
+ * ---------------------------------------------
+ */
+
+/*
+11 22 33 44 55 66 77
+88 99 AA BB CC DD EE
+
+
+    //     // Apple "blue" highlight color
+    //     "editor.findMatchBackground": "#b2d7fe66",
+    //     "editor.findMatchHighlightBackground": "#b2d7fe33",
+    //     "editor.findRangeHighlightBackground": "#b2d7fe22",
+    //     "editorOverviewRuler.findMatchForeground": "#0069d9",
+
+    //     "editor.selectionBackground": "#ffefb0",
+
+    //     "editor.hoverHighlightBackground": "#ffefb099",
+    //     "editor.selectionHighlightBackground": "#ffefb099",
+
+    //     "editor.selectionForeground": "#000",
+    //     "editorCursor.background": "#000",
+
+    //     "editorCursor.foreground": "#ffd200",
+    //     "editorOverviewRuler.selectionHighlightForeground": "#ffd200",
+
+    //     // Apple "pink" highlight color
+    //     "editorBracketMatch.background": "#ffbfd2cc",
+    //     "editorBracketMatch.border": "#ff2968cc",
+
+    //     // error - Apple "red" highlight colors
+    //     "editorError.border": "#ff3b3122",
+    //     "editorError.foreground": "#ff3b31",
+    //     "editorOverviewRuler.errorForeground": "#ff3b31",
+
+    //     // warning - Apple "orange" highlight colors
+    //     "editorWarning.border": "#ff950044",
+    //     "editorWarning.foreground": "#ff9500",
+    //     "editorOverviewRuler.warningForeground": "#ff950099",
+
+    //     // info - Apple "purple" highlight colors
+    //     "editorInfo.border": "#ca124322",
+    //     "editorInfo.foreground": "#ca124399",
+    //     "editorOverviewRuler.infoForeground": "#ca124366",
+
+    //     // add/remove -- terminal "yellow" and "blue"
+    //     "editorGutter.addedBackground": "#eab700",
+    //     "editorOverviewRuler.addedForeground": "#eab700",
+    //     // deleted doesn't seem to actually trigger anything
+    //     "editorGutter.deletedBackground": "#4271ae",
+    //     "editorOverviewRuler.deletedForeground": "#4271ae",
+    //     "editorGutter.modifiedBackground": "#4271ae",
+    //     "editorOverviewRuler.modifiedForeground": "#4271ae",
+
+    //     "editorIndentGuide.background": "#B1A79922",
+    //     "editorRuler.foreground": "#B1A79922",
+    //     "editorWidget.border": "#B1A79922",
+    //     "list.hoverBackground": "#B1A79922",
+    //     "scrollbarSlider.background": "#B1A79922",
+    //     "editor.lineHighlightBackground": "#B1A79922",
+
+    //     "editorLineNumber.foreground": "#B1A79955",
+    //     "editorWhitespace.foreground": "#B1A79955",
+    //     "list.inactiveSelectionBackground": "#B1A79955",
+    //     "scrollbarSlider.hoverBackground": "#B1A79955",
+    //     "scrollbarSlider.activeBackground": "#B1A79955",
+    //     "statusBar.background": "#716E6A",
+
+    //     "activityBar.background": "#B1A79977",
+    //     "list.activeSelectionBackground": "#B1A79977",
+
+    //     "activityBar.foreground": "#0007",
+    //     "list.activeSelectionForeground": "#0007",
+    //     "sideBarTitle.foreground": "#0007",
+    //     "statusBar.foreground": "#FFFB", // "#D5D0C8",
+    //     //"terminal.foreground": "#ddb8b877",
+
+    //     "tab.activeForeground": "#000C",
+
+    //     "editor.background": "#FFF",
+    //     "editorWidget.background": "#FFF",
+    //     "scrollbar.shadow": "#FFF"
+    // },
+
+
+        "[Nord Wave]": {
+            // Nord-specific color overrides
+            "textMateRules": [
+                {
+                    "name": "Comments",
+                    "scope": [
+                        "comment",
+                        "keyword.codetag.notation.python",
+                        "punctuation.definition.comment",
+                        "string.quoted.docstring.multi.python",
+                    ],
+                    "settings": {
+                        "foreground": "#d08770bb",
+                    }
+                },
+                {
+                    "name": "Comment Delimiters",
+                    "scope": "string.quoted.docstring.multi.python punctuation.definition.string",
+                    "settings": {
+                        "foreground": "#d0877066",
+                    }
+                },
+                {
+                    "name": "Comment Highlight",
+                    "scope": "keyword.codetag.notation.python",
+                    "settings": {
+                        "foreground": "#d08770",
+                    }
+                },
+                {
+                "name": "Constants (capitalized)",
+                "scope": "constant.other.caps.python",
+                "settings": {
+                    "foreground": "#ebcb8bff"
+                }
+                },
+                {
+                    "name": "Constants (numeric)",
+                    "scope": "constant.numeric",
+                    "settings": {
+                        "foreground": "#b48eadff",
+                    }
+                },
+                {
+                    "name": "Exceptions",
+                    "scope": "support.type.exception.python",
+                    "settings": {
+                        "foreground": "#ebcb8bff",
+                    }
+                },
+                {
+                    "name": "Function Calls",
+                    "scope": [
+                        "source.python meta.function-call",
+                        "source.python meta.function-call.generic"
+                    ],
+                    "settings": {
+                        "foreground": "#d8dee9"
+                    }
+                },
+                {
+                    "name": "Function Arguments",
+                    "scope": "meta.function-call.arguments",
+                    "settings": {
+                        "foreground": "#d8dee999"
+                    }
+                },
+                {
+                    "name": "Function Calls (Nested 1-2x)",
+                    "scope": [
+                        "source.python meta.function-call.arguments meta.function-call",
+                        "source.python meta.function-call.arguments meta.function-call.generic",
+                        "source.python meta.function-call.arguments meta.function-call.arguments meta.function-call",
+                        "source.python meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
+                    ],
+                    "settings": {
+                        "foreground": "#d8dee999"
+                    }
+                },
+                {
+                    "name": "Function Definitions",
+                    "scope": [
+                        "entity.name.function",
+                        "support.function.magic.python",
+                    ],
+                    "settings": {
+                        "foreground": "#b48eadff"
+                    }
+                },
+                {
+                    "name": "String Delimiters",
+                    "scope": [
+                        "meta.function-call string.quoted punctuation.definition",
+                        "string.quoted punctuation.definition",
+                    ],
+                    "settings": {
+                        "foreground": "#A3BE8C99",
+                    }
+                },
+                {
+                    "name": "String Regular Expressions",
+                    "scope": "string.regexp",
+                    "settings": {
+                        "foreground": "#A3BE8C",
+                    }
+                },
+                {
+                    "name": "String Regular Expression Escapes",
+                    "scope": "support.other.escape.special.regexp",
+                    "settings": {
+                        "foreground": "#ebcb8b",
+                    }
+                },
+                {
+                    "name": "String Storage",
+                    "scope": "storage.type.string.python",
+                    "settings": {
+                        "foreground": "#ebcb8bff",
+                    }
+                }
+            ],
+*/

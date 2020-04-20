@@ -1,0 +1,102 @@
+{
+	"folders": [
+		{
+			"name": "S3c",
+			"path": "locus-3/locus-pipe-cloud"
+		},
+		{
+			"name": "supplemental code",
+			"path": "locus"
+		}
+	],
+
+	"settings": {
+		"editor.formatOnSave": false,
+
+		"files.exclude": {
+			".gitignore": true,
+			".mypy_cache/": true,
+			".vscode": true
+		},
+
+		"python.analysis.memory.keepLibraryAst": true,
+		"python.autoComplete.addBrackets": true,
+		"python.autoComplete.extraPaths": [],
+
+		"python.experiments.enabled": false,
+    	"python.formatting.provider": "black",
+    	"python.jediEnabled": true,
+
+		"python.linting.flake8Args": [
+			"--config=setup.cfg",
+			"--doctests",
+			"--format=pylint",
+			//"--select=E121,E122,E123,E125,E128,E129,E24,E502,E7,E9,N,W",
+			//"--ignore=E124,E126,E127,E302,E902",
+			// E127 - continuation line overindented (many FPs)
+			// E227 - missing whitespace around bitwise operators
+			// E402 - same as Pylint:C0413 (wrong import position)
+			// E501 - line too long
+			// F401 - same as Pylint:W0611 (unused import)
+			// F821 - undefined name
+			// F841 - assigned to but never used; FP's for _
+			// N802 - something about function naming
+			// W503 - line break before binary operator
+			// W504 - line break after binary operator
+			"--ignore=E127,E227,E402,E501,F401,F821,F841,N802,W503,W504",
+			"-j",
+			"4"
+		],
+
+		"python.linting.flake8CategorySeverity.E": "Information",
+		"python.linting.flake8CategorySeverity.H": "Hint",
+		"python.linting.flake8CategorySeverity.I": "Information",
+		"python.linting.flake8CategorySeverity.W": "Information",
+		"python.linting.flake8Enabled": true,
+		"python.linting.flake8Path": "flake8",
+
+		"python.linting.lintOnSave": true,
+
+		"python.linting.mypyEnabled": true,
+		"python.linting.mypyArgs": [
+			"--config-file=setup.cfg"
+		],
+
+		"python.linting.prospectorEnabled": false,
+		"python.linting.prospectorPath": "prospector",
+
+		"python.linting.pycodestyleEnabled": false,  // included in flake8
+
+		"python.linting.pydocstyleArgs": [
+			// D100 - missing docstring in public module
+			// D101 - missing docstring in public class
+			// D102 - missing docstring in public method
+			// D103 - missing docstring in public function
+			// D104 - missing docstring in public package
+			// D105 - missing docstring in magic method
+			// D107 - newline after docstring opening
+			// D200 - one-line docstring should fit on one line
+			// D202 - missing docstring for __method__
+			// D402 - parens in docstring
+			"--add-ignore=D100,D101,D102,D103,D104,D105,D107,D202,D402",
+			"--config=setup.cfg"
+		],
+		"python.linting.pydocstyleEnabled": true,
+
+		"python.linting.pylintArgs": [
+			"--rcfile=setup.cfg"
+		],
+		"python.linting.pylintCategorySeverity.refactor": "Information",
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintUseMinimalCheckers": false,
+
+		"python.pythonPath": "/Users/mpearson/venv/vscode3.7/bin/python",
+		"python.unitTest.nosetestsEnabled": false,
+		"python.unitTest.promptToConfigure": false,
+		"python.unitTest.pyTestEnabled": false,
+		"python.unitTest.unittestEnabled": false,
+
+		"restructuredtext.confPath": "/Users/mpearson/Code/locus-3/locus-pipe-cloud/doc/source",
+		"restructuredtext.workspaceRoot": "/Users/mpearson/Code/locus-3/locus-pipe-cloud"
+	}
+}

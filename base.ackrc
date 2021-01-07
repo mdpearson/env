@@ -1,6 +1,6 @@
 #!/not/executable
 #
-# Copyright (c) 2011-2018 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2011-2020 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -9,9 +9,9 @@
 # custom commands to ack; see also perldoc Term::ANSIColor
 #
 
---color-filename=bright_cyan
---color-match=bright_green
---color-lineno=cyan
+--color-filename=bright_blue
+--color-match=bold blue on_white
+--color-lineno=blue
 --ignore-dir=bower_components
 --ignore-dir=build
 --ignore-dir=ve
@@ -31,5 +31,4 @@
 --nojson
 --noless
 --nosvg
---txt
 #EOF __TAGGED__

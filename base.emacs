@@ -1,5 +1,5 @@
 ;
-; Copyright (c) 1998-2015 Matthew Pearson <matthewpearson@gmail.com>.
+; Copyright (c) 1998-2021 Matthew Pearson <matthewpearson@gmail.com>.
 ; Based on software (c) 1997 Dartmouth Computer Science Department.
 ; Based on software (c) 2000 employees of Sun Microsystems.
 ;
@@ -10,6 +10,8 @@
 ; various and sundry emacs customizations, particularly for perl and c
 ;
 
+; make backspace work from an out-of-the-box mac terminal
+(normal-erase-is-backspace-mode 0)
 ; highlight matching parens
 (show-paren-mode 1)
 ; turn on all that cool syntax highlighting, baby!

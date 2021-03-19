@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2018 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2021 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -114,7 +114,7 @@ else
 	if [ `echo "$cur_cmd" | grep -c 'sh$'` -eq 1 ]
 	then
 		sh_name=`basename "$cur_cmd"`
-		sh_path=`(type "$cur_cmd" 2>&1) | awk '{ print $NF}'`
+		sh_path=`(type "$cur_cmd" 2>&1) | awk '{print $NF}'`
 		[ -x "$sh_path" ] || unset sh_path
 	fi
 
@@ -217,7 +217,7 @@ then
 		cnt=0
 		while [ $cnt -lt 10 ]
 		do
-		    pidinfo=`jobs -l 2>&1 | grep "$check_pid" | egrep -v "Done|Exit"`
+			pidinfo=`jobs -l 2>&1 | grep "$check_pid" | egrep -v "Done|Exit"`
 			if [ "$pidinfo" ]
 			then
 				arg="0.0"${cnt}"s"
@@ -592,21 +592,32 @@ then
 
 	. $HOME/.isinstalled
 
+	VIRTUALENVWRAPPER_PYTHON=`(type python3 2>&1) | awk '{print $NF}'`
+	export VIRTUALENVWRAPPER_PYTHON
 	#
 	# configure virtual environments for Python
 	#
 	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
 	then
-		for vew_home in $HOME/.local/bin $HOME/Library/Python/2.7/bin \
-		  /usr/local/bin /Library/Frameworks/Python.framework/Versions/2.7/bin
+		for vew_home in $HOME/.local/bin \
+		  $HOME/Library/Python/3.9/bin \
+		  $HOME/Library/Python/3.8/bin \
+		  $HOME/Library/Python/3.7/bin \
+		  $HOME/Library/Python/3.6/bin \
+		  $HOME/Library/Python/2.7/bin \
+		  /usr/local/bin
 		do
 			if [ `check_path $vew_home` -eq 1 ]
 			then
-				if [ -f $vew_home/virtualenvwrapper.sh ]
+				if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ] && [ -f $vew_home/virtualenvwrapper.sh ]
 				then
 					VIRTUALENVWRAPPER_SCRIPT=$vew_home/virtualenvwrapper.sh
 					export VIRTUALENVWRAPPER_SCRIPT
-					break
+				fi
+				if [ ! "$VIRTUALENVWRAPPER_VIRTUALENV" ] && [ -f $vew_home/virtualenv ]
+				then
+					VIRTUALENVWRAPPER_VIRTUALENV=$vew_home/virtualenv
+					export VIRTUALENVWRAPPER_VIRTUALENV
 				fi
 			fi
 		done

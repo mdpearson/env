@@ -1,11 +1,10 @@
 #!/not/executable
 #
-# Copyright (c) 2012-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2012-2021 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # configuration setup for git
 #
 

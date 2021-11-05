@@ -456,8 +456,8 @@ then
 	append_path userp ${HOME}/perl5/bin
 
 	#
-	# additional bin paths from env.conf; null_guard protects
-	# against parse errors if G_PATH is undefined
+	# Add additional bin paths from env.conf; null_guard
+	# protects against parse errors if G_PATH is undefined.
 	#
 	if [ "__G_PATH__" ]
 	then
@@ -482,8 +482,8 @@ then
 	export PATH
 
 	#
-	# additional man paths from env.conf; null_guard protects
-	# against parse errors if G_MANPATH is undefined
+	# Add additional man paths from env.conf; null_guard
+	# protects against parse errors if G_MANPATH is undefined.
 	#
 	if [ "__G_MANPATH__" ]
 	then
@@ -499,8 +499,8 @@ then
 	export MANPATH
 
 	#
-	# additional dyld paths from env.conf; null_guard protects
-	# against parse errors if G_DYLD_FALLBACK_LIBRARY_PATH is undefined
+	# Add additional dyld paths from env.conf; null_guard protects
+	# against parse errors if G_DYLD_FALLBACK_LIBRARY_PATH is undefined.
 	#
 	if [ "__G_DYLD_FALLBACK_LIBRARY_PATH__" ]
 	then
@@ -513,8 +513,8 @@ then
 	fi
 
 	#
-	# additional package config paths from env.conf; null_guard protects
-	# against parse errors if G_PKG_CONFIG_PATH is undefined
+	# Add additional package config paths from env.conf; null_guard
+	# protects against parse errors if G_PKG_CONFIG_PATH is undefined.
 	#
 	if [ "__G_PKG_CONFIG_PATH__" ]
 	then
@@ -546,11 +546,11 @@ then
 
 	. $HOME/.isinstalled
 
+	#
+	# Configure virtual environments for Python.
+	#
 	VIRTUALENVWRAPPER_PYTHON=`(type python3 2>&1) | awk '{print $NF}'`
 	export VIRTUALENVWRAPPER_PYTHON
-	#
-	# configure virtual environments for Python
-	#
 	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
 	then
 		for vew_home in $HOME/.local/bin \
@@ -715,8 +715,8 @@ then
 	fi
 
 	#
-	# if not under DT Xsession control, switch to bash.
-	# this command -must- run last in this block.
+	# If not under DT Xsession control, switch to bash.
+	# This command -must- run last in this block.
 	#
 	if [ ! "$DT" ] && [ ! "$BASH" ]
 	then

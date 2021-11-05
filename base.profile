@@ -488,6 +488,12 @@ then
 	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib
 	export LD_LIBRARY_PATH
 	export DYLD_FALLBACK_LIBRARY_PATH
+	
+	ld_path PERL5LIB ${HOME}/perl5/lib/perl5
+	ld_path PERL_LOCAL_LIB_ROOT ${HOME}/perl5
+	PERL_MB_OPT="--install_base \"/Users/mdp/perl5\""
+	PERL_MM_OPT="INSTALL_BASE=${PERL_LOCAL_LIB_ROOT}"
+	export PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 
 	append_path userm ${HOME}/man
 	append_path userm ${HOME}/share/man
@@ -499,6 +505,7 @@ then
 	append_path userp ${HOME}/bin/${ost}
 #	append_path userp ${HOME}/bin/gnu
 	append_path userp ${HOME}/bin
+	append_path userp ${HOME}/perl5/bin
 
 	#
 	# additional bin paths from env.conf; null_guard protects

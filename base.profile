@@ -195,6 +195,9 @@ fi
 if [ "$_ENV_PROFILED" != "$TTY.$USER.$PPID" ]
 then
 	# define some handy path-manipulation functions
+	
+	sleep 0s >/dev/null 2>&1
+	[ $? -eq 0 ] && _SLEEP_UNIT="s" || _SLEEP_UNIT=
 
 	#
 	# Echoes 1 if the path exists, 0 if it does not.
@@ -219,7 +222,7 @@ then
 			pidinfo=`jobs -l 2>&1 | grep "$check_pid" | egrep -v "Done|Exit"`
 			if [ "$pidinfo" ]
 			then
-				arg="0.0"${cnt}"s"
+				arg="0.0"${cnt}${_SLEEP_UNIT}
 				sleep $arg
 			else
 				unset check_pid

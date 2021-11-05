@@ -308,7 +308,7 @@ function prompt_update
 function log_error
 {
 	_errno=$?
-	_cmd=$1
+	_cmd=$*
 
 	if [ "$_errno" ] && [ $_errno -ne 0 ]
 	then

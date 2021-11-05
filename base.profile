@@ -253,7 +253,6 @@ then
 		res=`check_path "$2"`
 		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
 		[ "$res" -eq 1 ] && printf "." >&2
-#		[ "$res" -ne 1 ] && printf " " >&2
 		unset res
 	}
 
@@ -264,7 +263,6 @@ then
 		res=`check_path $2`
 		[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
 		[ "$res" -eq 1 ] && printf "." >&2
-#		[ "$res" -ne 1 ] && printf " " >&2
 		unset res
 	}
 
@@ -304,7 +302,6 @@ then
 				[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}$2
 			fi
 			[ "$res" -eq 1 ] && printf "." >&2
-#			[ "$res" -ne 1 ] && printf " " >&2
 			unset res
 		else
 			#
@@ -350,9 +347,6 @@ then
 	VISUAL=emacs
 	export MAILCHECK TTY VISUAL
 
-	# AUTOMOUNT_FIXNAMES=true
-	# export AUTOMOUNT_FIXNAMES
-
 	[ "__G_PRINTER__" ] && PRINTER=__G_PRINTER__
 	UT_NO_USAGE_TRACKING=1
 	export PRINTER UT_NO_USAGE_TRACKING
@@ -394,13 +388,8 @@ then
 			/usr/share /usr/X11R6"
 		blist="/Developer/Tools"
 		;;
-		OSF1)
-		# XXX - compare to util path, above
-		alist="/usr/local /usr / /usr/X11 /util /usr/util"
-		;;
 		*)
-		# XXX - compare to util path, above
-		alist="/usr/local /usr / /usr/share"
+		alist="/usr/local /usr / /usr/X11 /util /usr/util /usr/share"
 		;;
 	esac
 
@@ -455,13 +444,11 @@ then
 
 	append_path userm ${HOME}/man
 	append_path userm ${HOME}/share/man
-#	append_path userp ${HOME}/scripts/${ost}
 	append_path userp ${HOME}/scripts
 	append_path userp ${HOME}/bin/exec/${ost}
 	append_path userp ${HOME}/bin/exec
 	append_path userp ${HOME}/bin/${ost}-${arch}
 	append_path userp ${HOME}/bin/${ost}
-#	append_path userp ${HOME}/bin/gnu
 	append_path userp ${HOME}/bin
 	append_path userp ${HOME}/perl5/bin
 

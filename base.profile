@@ -57,7 +57,7 @@ do
 	  -m 'vt100:vt100' \
 	  -m 'xnuppc:?xnuppc' \
 	  -m 'xterm:xterm' \
-	  -m 'xterm-256color:xterm-color' \
+	  -m 'xterm-256color:xterm-256color' \
 	  -m 'xterm-color:xterm-color' \
 	  -m ':?xterm'`
 	export TERM				# Darwin tset forgets to do this

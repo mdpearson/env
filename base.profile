@@ -391,8 +391,7 @@ then
 		;;
 		Darwin)
 		alist="/usr/local /usr / /usr/local/share \
-			/usr/share /usr/X11R6 \
-			/System/Library/Frameworks/JavaVM.framework/Home/"
+			/usr/share /usr/X11R6"
 		blist="/Developer/Tools"
 		;;
 		OSF1)
@@ -429,47 +428,6 @@ then
 	export PATH MANPATH
 
 	unset alist blist mlist basep basem ppath
-
-	if [ `type -t use` ]
-	then
-		printf " (invoking \`use\` " >&2
-#		reuse -q envdiff
-#		printf "." >&2
-		reuse -q .subversion-1.7.2
-		printf "." >&2
-		reuse -q LSF
-		printf "." >&2
-		reuse -q Java-1.5
-		printf "." >&2
-#		reuse -q Python-2.6
-#		printf "." >&2
-#		reuse -q set-LDFLAGS++
-#		printf "." >&2
-#		reuse -q GCC-4.4
-#		printf "." >&2
-		reuse -q CTAGS
-		printf "." >&2
-#		reuse -q GCC-trunk
-#		printf "." >&2
-#		reuse -q BLAST
-#		printf "." >&2
-		reuse -q Maven-2.2
-		printf "." >&2
-
-		if [ "__G_DOTKITS__" ]
-		then
-			for dkit in __G_DOTKITS__ null_guard
-			do
-				if [ $dkit != null_guard ]
-				then
-					reuse -q $dkit
-					printf "." >&2
-				fi
-			done
-		fi
-
-		printf ") " >&2
-	fi
 
 	#
 	# At this point PATH is defined to work on the given host. Add

@@ -19,6 +19,7 @@ TERM	vt102
 TERM	vt220
 TERM	xnuppc
 TERM	xterm
+TERM	xterm-256color
 TERM	xterm-color
 
 NORMAL	00

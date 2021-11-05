@@ -5,7 +5,6 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # sh-compatible commands executed at login for sh, ksh, bash
 #
 
@@ -22,8 +21,8 @@ export LC_COLLATE
 
 #
 # First thing to do is make sure the terminal is set up correctly.
-# The SHELL environment variable may be unset (or worse, set wrong) at
-# this point. Later on it gets set for real, but for now it's set to a
+# The SHELL environment variable may be unset (or, worse, set wrong) at
+# this point. Later on we set it for real, but for now we simply use a
 # base value (sh) that should work for all interpreters that read this
 # file (csh and friends never read a file called .profile).
 #
@@ -36,8 +35,8 @@ export LC_COLLATE
 # terminal that appears in both termcap (tset) and terminfo (tput).
 #
 # tput init is a expensive op and only should be done on as part of a
-# login. If _ENV_PROFILED is set to the current tty/user/ppid then it
-# is not run. Note that redo() unsets this value when it does a heavy-
+# login. If _ENV_PROFILED is set to the current tty/user/ppid then we
+# do not run it. Note that redo() unsets this value when it does a heavy-
 # weight terminal reinitialization. When bash shells are launched in X,
 # the call to tput is skipped.
 #
@@ -200,8 +199,8 @@ then
 	#
 	# Echoes 1 if the path exists, 0 if it does not.
 	#
-	# If the path is on a wedged filesystem that cannot
-	# be stat'ed, *should* return 0 after printing an error.
+	# If the path is on a wedged filesystem that cannot be
+	# stat'ed, this *should* return 0 after printing an error.
 	#
 	check_path() {
 		if [ ! "$1" ]

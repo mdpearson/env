@@ -1,11 +1,10 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2017 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2021 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # shell commands executed each time a bash shell is invoked
 #
 
@@ -393,7 +392,11 @@ if [ `isinstalled brew` ]
 then
 	if [ -f $(brew --prefix)/etc/bash_completion ]
 	then
+		trap - ERR
+		set +o posix
 		. $(brew --prefix)/etc/bash_completion
+		set -o posix
+		trap 'log_error $BASH_COMMAND' ERR
 	fi
 fi
 unset isinstalled

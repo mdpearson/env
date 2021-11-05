@@ -98,7 +98,7 @@ then
 
 			printf ' %s %s%s\n' \
 			  "\$SHELL environment variable clashes with \$BASH: changing" \
-			  ${sh_oldn:+"from ${sh_oldn} "} "to $SHELL" >&2
+			  ${sh_oldn:+"from ${sh_oldn} "} "to $BASH" >&2
 			unset sh_oldn
 		fi
 		SHELL=$BASH

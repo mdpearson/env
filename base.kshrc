@@ -1,11 +1,10 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2021 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # shell commands executed each time a ksh (not bash) shell is invoked
 #
 
@@ -35,7 +34,7 @@ cda=$(type cd | awk '/alias/ { print $NF }')
 pwda=$(type pwd | awk '/alias/ { print $NF }')
 [ "$cda" ] && eval unset -f $cda
 [ "$pwda" ] && eval unset -f $pwda
-unalias cd pwd
+unalias cd pwd 2>/dev/null
 unset cda pwda
 
 stamp=$(echo ${RANDOM}_${SECONDS} | sed 's/\.//')

@@ -5,7 +5,7 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# sh-compatible commands executed at login for sh, ksh, bash
+# sh-compatible commands executed at login for bash, ksh, sh, zsh
 #
 
 # force legacy Digital systems to use a standards-compliant sh
@@ -195,7 +195,7 @@ fi
 if [ "$_ENV_PROFILED" != "$TTY.$USER.$PPID" ]
 then
 	# define some handy path-manipulation functions
-	
+
 	sleep 0s >/dev/null 2>&1
 	[ $? -eq 0 ] && _SLEEP_UNIT="s" || _SLEEP_UNIT=
 
@@ -438,7 +438,7 @@ then
 	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib
 	export LD_LIBRARY_PATH
 	export DYLD_FALLBACK_LIBRARY_PATH
-	
+
 	ld_path PERL5LIB ${HOME}/perl5/lib/perl5
 	ld_path PERL_LOCAL_LIB_ROOT ${HOME}/perl5
 	PERL_MB_OPT="--install_base \"/Users/mdp/perl5\""
@@ -703,9 +703,15 @@ then
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
+	if [ -x /usr/libexec/java_home ]
+	then
+		JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+		export JAVA_HOME
+	fi
+
 	_ENV_PROFILED="$TTY.$USER.$PPID"
 	export _ENV_PROFILED
-	
+
 	# sdkman insists these commands should go toward the end of the file
 	if [ -r "$HOME/.sdkman" ]
 	then
@@ -731,7 +737,7 @@ else	# if [ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ]
 	# if we're here, this file has been sourced already
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
-	
+
 	# sdkman insists these commands should go toward the end of the file
 	if [ -r "$HOME/.sdkman" ]
 	then

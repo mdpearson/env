@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2001-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2001-2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -11,7 +11,7 @@
 
 [ -f $HOME/.profile ] && . $HOME/.profile
 
-CDPATH=.:${HOME}
+CDPATH=.:${HOME}:__G_WORKSPACE__
 unset MAILCHECK
 
 if [ -d $HOME/.autoenv ]

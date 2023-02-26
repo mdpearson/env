@@ -91,8 +91,8 @@
 (global-set-key "\M-r"	'tags-query-replace)
 (global-set-key "\M-n"	'tags-loop-continue)
 
-(global-set-key "\M-["	'backward-paragraph)
-(global-set-key "\M-]"	'forward-paragraph)
+; (global-set-key "\M-["	'backward-paragraph)
+; (global-set-key "\M-]"	'forward-paragraph)
 (global-set-key "\M-l"	'font-lock-fontify-block)
 
 (global-set-key "\C-xs" 'save-buffer)

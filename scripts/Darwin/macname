@@ -12,17 +12,18 @@
 [ -f /Library/Preferences/SystemConfiguration/preferences.plist ] || exit 1
 
 # set THOST to the AppleTalk (user-chosen) name on Macs
-LocalHostName=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
-  grep 'LocalHostName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
-ComputerName=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System | \
-  grep 'ComputerName = ' | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+RawHostNameData=`defaults read /Library/Preferences/SystemConfiguration/preferences.plist System`
+LocalHostName=`echo "$RawHostNameData" | grep 'LocalHostName = ' | \
+  sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
+ComputerName=`echo "$RawHostNameData" | grep 'ComputerName = ' | \
+  sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' -e 's/\\\\U2019/\\xe2\\x80\\x99/' | uniq`
 if [ "$LocalHostName" = "$ComputerName" ]
 then
 	THOST="$LocalHostName"
 else
 	# try to handle the "(3)" and "-2" AppleTalk name issues that got worse with Yosemite
-	LocalHostName=`echo $LocalHostName | sed 's/ *-[0-9]*//'`
-	ComputerName=`echo $ComputerName | sed 's/ *([0-9]*)//'`
+	LocalHostName=`echo $LocalHostName | sed 's/ *-[0-9][0-9]*//'`
+	ComputerName=`echo $ComputerName | sed 's/ *([0-9][0-9]*)//'`
 	if [ "$LocalHostName" = "$ComputerName" ]
 	then
 		THOST="$LocalHostName"

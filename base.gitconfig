@@ -9,7 +9,9 @@
 #
 
 [alias]
-	ack = grep -E -I --break --heading --untracked
+	ack = "!f() { \
+		git grep -E -I --break --heading --show-function \"$*\" -- ':(exclude)*.css.map' ':(exclude)*.min.*' ; \
+	}; f"
 	bbdiff = difftool -y -t bbdiff
 	cancel = reset --soft HEAD^
 	diffstat = diff -r --no-merges --stat

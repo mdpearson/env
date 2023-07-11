@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-# Copyright (c) 2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # makes a best guess as to what the name of a Mac is
 #
 
@@ -16,19 +15,27 @@ RawHostNameData=`defaults read /Library/Preferences/SystemConfiguration/preferen
 LocalHostName=`echo "$RawHostNameData" | grep 'LocalHostName = ' | \
   sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
 ComputerName=`echo "$RawHostNameData" | grep 'ComputerName = ' | \
-  sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' -e 's/\\\\U2019/\\xe2\\x80\\x99/' | uniq`
+  sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' | uniq`
 if [ "$LocalHostName" = "$ComputerName" ]
 then
 	THOST="$LocalHostName"
 else
 	# try to handle the "(3)" and "-2" AppleTalk name issues that got worse with Yosemite
-	LocalHostName=`echo $LocalHostName | sed 's/ *-[0-9][0-9]*//'`
-	ComputerName=`echo $ComputerName | sed 's/ *([0-9][0-9]*)//'`
-	if [ "$LocalHostName" = "$ComputerName" ]
+	LocalHostName=`echo "$LocalHostName" | sed 's/ *-[0-9][0-9]*//'`
+	ComputerName=`echo "$ComputerName" | sed 's/ *([0-9][0-9]*)//'`
+
+	# Unicode characters and spaces present differently in these two variables
+	AsciiLocalHostName=`echo "$LocalHostName" | sed 's/-/ /'`
+	AsciiComputerName=`echo "$ComputerName" | sed -E 's/\\\\U[0-9]{4,4}//'`
+
+	# unescape smart single quotes from computer name
+	UnescapedComputerName=`echo "$ComputerName" | sed -e 's/\\\\U2019/\\xe2\\x80\\x99/'`
+
+	if [ "$AsciiLocalHostName" = "$AsciiComputerName" ]
 	then
-		THOST="$LocalHostName"
+		THOST="$UnescapedComputerName"
 	else
-		THOST="${LocalHostName} (${ComputerName})"
+		THOST="${LocalHostName} (${UnescapedComputerName})"
 	fi
 fi
 

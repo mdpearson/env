@@ -147,26 +147,23 @@ function init_bash_prompt
 		#
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
 		then			# running as different user:
-			uf='31'			# red user
-			pf='31;01'		# bold, red prompt
-			hf='31;03'		# italic, red hostname
+			cf='31'		# red prompt
 			include_username=1
 		elif [ `is_remote_tty` ]
 		then			# remote host:
-			uf='34'			# blue user
-			pf='34;01'		# bold, blue prompt
-			hf='34;03'		# italic, blue hostname
+			cf='34'		# blue prompt
 			include_username=1
 		else			# local:
-			uf='33'			# yellow user
-			pf='33;01'		# bold, yellow prompt
-			hf='33;03'		# italic, yellow hostname
+			cf='32'		# green prompt
 			include_username=1
-			nn="localhost"	# override hostname
+			nn="localhost"		# override hostname
 		fi
 
-		af='02'		# dim coloring for at-sign
-		if='32'		# green coloring for history count
+		uf="${cf}"			# green user
+		af="${cf};02"		# dim coloring for at-sign
+		hf="${cf};03"		# italic hostname
+		if="${cf};02;04"	# dim, italic history count
+		pf="${cf};01"		# bold prompt
 
 		if [ "$include_username" ]
 		then

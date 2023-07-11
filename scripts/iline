@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2017 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # print a line of useful hw or sw information about a host
 #
 
@@ -461,13 +460,16 @@ osxhw() {
 	[ "$NAME" ] || NAME=`hostname`
 
 	freq=`sysctl -n hw.cpufrequency`
-	if [ $freq -ge 1000000000 ]
+	if [ "$freq" ] && [ "$freq" -ge 1000000000 ]
 	then
 		fmhz=`toghz $freq`
 		CMHZ=`round 2 $fmhz`GHz
-	else
+	elif [ "$freq" ]
+	then
 		fmhz=`tomhz $freq`
 		CMHZ=`round 1 $fmhz`MHz
+	else
+		CMHZ=
 	fi
 
 	if [ "$verbose" ]
@@ -562,6 +564,9 @@ osxhw() {
 			CLASS="MacBook" ;;
 		Macmini*)
 			CLASS="Mac Mini" ;;
+		Mac*)
+			# not true for all instances of this type, but good enough for now
+			CLASS="MacBook Pro" ;;
 		PowerBook6*)
 			case "$minor" in
 				1)	CLASS="12\" PowerBook G4" ;;
@@ -754,10 +759,19 @@ else
 
 	if [ "$CHIPC" = 1 ]
 	then
-		case "$CMHZ" in
-			8*) CHIPC="an" ;;
-			*)	CHIPC="a"  ;;
-		esac
+
+		if ! [ "$CMHZ" ]
+		then
+			case "$CHIP" in
+				A*) CHIPC="an" ;;
+				*)  CHIPC="a" ;;
+			esac
+		else
+			case "$CMHZ" in
+				8*) CHIPC="an" ;;
+				*)	CHIPC="a"  ;;
+			esac
+		fi
 	else
 		case "$CHIPC" in
 			2) CHIPC="two" ;;
@@ -792,8 +806,8 @@ else
 				# remote host - blue text
 				pre=`tput setaf 4 2>/dev/null`
 			else
-				# local host - yellow text
-				pre=`tput setaf 3 2>/dev/null`
+				# local host - green text
+				pre=`tput setaf 2 2>/dev/null`
 			fi
 			post=`tput sgr0`
 			#
@@ -825,9 +839,9 @@ else
 	fi
 
 	# organize the fields from xxxhw
-	msg=`printf '%s%s with %s %s %s (%s%s RAM)\n' \
-	  "${prefix:+$prefix }" "$CLASS" "$CHIPC" "$CMHZ" \
-	  "$CHIP" "$coremsg" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
+	msg=`printf '%s%s with %s %s (%s%s RAM)\n' \
+	  "${prefix:+$prefix }" "$CLASS" "$CHIPC" "${CMHZ:+$CMHZ }$CHIP" \
+	  "$coremsg" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
 
 	tmp=`tput cols`
 	termwidth=`expr $tmp - ${limit:-0} + 1 + ${ccharf:-0}`

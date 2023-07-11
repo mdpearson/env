@@ -301,7 +301,7 @@ function prompt_update
 
 		if [ "$use_git_prompt" ]
 		then
-			__git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" `git_repo_name`"|%s "
+			__git_ps1 "${PS1_FIRST} {" "} ${PS1_SECOND}" `git_repo_name`":%s"
 		else
 			PS1="${PS1_FIRST} ${PS1_SECOND}"
 		fi

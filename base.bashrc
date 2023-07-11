@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2021 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -28,9 +28,15 @@ fi
 
 if [ -f "${HOME}/.git-completion.bash" ]
 then
-	. "$HOME/.git-completion.bash"
-elif [ -f "${HOME}/.git-prompt.sh" ]
-then
+	if [[ $(set -o | grep posix) =~ 'on' ]]
+	then
+		set +o posix
+		. "$HOME/.git-completion.bash"
+		set -o posix
+	else
+		. "$HOME/.git-completion.bash"
+	fi
+else
 	echo " (you may want to install git-completion)" >&2
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
 fi

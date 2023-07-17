@@ -9,7 +9,7 @@
 #
 
 # don't run if shell is not interactive
-echo $- | fgrep -s i > /dev/null
+echo $- | grep -Fs i >/dev/null
 [ $? -eq 0 ] || return
 
 if [ -f "${HOME}/.git-prompt.sh" ]
@@ -19,7 +19,6 @@ then
 	GIT_PS1_SHOWDIRTYSTATE=1
 	GIT_PS1_SHOWSTASHSTATE=1
 	GIT_PS1_SHOWUNTRACKEDFILES=1
-	# GIT_PS1_DISABLEPROMPT=1
 	GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
 	echo " (you may want to install git-prompt)" >&2
@@ -58,7 +57,7 @@ then
 fi
 
 # run .bash_logout for all shells, not just login ones
-trap "[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout" EXIT
+trap '[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout' EXIT
 
 #
 # This file may be sourced by the user running under a different uid;
@@ -66,7 +65,7 @@ trap "[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout" EXIT
 # to source other files like .profile and .common.ksh properly. Once
 # these files are loaded in, we can restore HOME to its previous value.
 #
-if [ ! "$HOME" ] || [ "$(basename $HOME)" != __G_USER__ ]
+if [ ! "$HOME" ] || [ "$(basename "$HOME")" != __G_USER__ ]
 then
 	old_home=$HOME				# cache old HOME
 	# first, check NIS for the proper passwd entry
@@ -78,7 +77,7 @@ then
 	# unreliable: last resort
 	if [ ! "$HOME" ]
 	then
-		if [ `uname -s` = 'Darwin' ]
+		if [ "$(uname -s)" = 'Darwin' ]
 		then
 			HOME=/Users/__G_USER__
 		else
@@ -107,8 +106,8 @@ get_histfile_name()
 
 # create a unique history file for each host
 [ -d $HOME/.bash_histories ] || mkdir $HOME/.bash_histories
-histfile_name=`get_histfile_name "$THOST"`
-[ "$histfile_name" ] || histfile_name=`get_histfile_name "$HOST"`
+histfile_name=$(get_histfile_name "$THOST")
+[ "$histfile_name" ] || histfile_name=$(get_histfile_name "$HOST")
 
 HISTFILE="$HOME/.bash_histories/$histfile_name"
 unset histfile_name
@@ -142,7 +141,7 @@ function init_bash_prompt
 	then
 		PS1="\h console \$ "
 	elif [ "$TERM" ] && [ -f $HOME/.dircolors ] && \
-	  [ $(grep -c "[^-a-z]$TERM$" $HOME/.dircolors) -eq 1 ]
+	  [ "$(grep -c "[^-a-z]${TERM}$" $HOME/.dircolors)" -eq 1 ]
 	then
 		#
 		# attribute codes:
@@ -152,24 +151,24 @@ function init_bash_prompt
 		# separate multiple codes with semicolons.
 		#
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
-		then			# running as different user:
-			cf='31'		# red prompt
+		then 					# running as different user:
+			cf='31'				# red prompt
 			include_username=1
-		elif [ `is_remote_tty` ]
-		then			# remote host:
-			cf='34'		# blue prompt
+		elif [ "$(is_remote_tty)" ]
+		then					# remote host:
+			cf='34'				# blue prompt
 			include_username=1
-		else			# local:
-			cf='32'		# green prompt
-			include_username=1
+		else					# local:
+			cf='32'				# green prompt
 			nn="localhost"		# override hostname
+			include_username=1
 		fi
 
-		uf="${cf}"			# green user
-		af="${cf};02"		# dim coloring for at-sign
-		hf="${cf};03"		# italic hostname
-		if="${cf};02;04"	# dim, italic history count
-		pf="${cf};01"		# bold prompt
+		uf="${cf}"				# use selected color for username
+		af="${cf};02"			# dim coloring for at-sign
+		hf="${cf};03"			# italic hostname
+		if="${cf};02;04"		# dim, italic history count
+		pf="${cf};01"			# bold prompt
 
 		if [ "$include_username" ]
 		then
@@ -200,7 +199,7 @@ function init_bash_prompt
 	unset nn dn shellabbr pchar
 }
 
-if [ "`declare -f __git_ps1`" ]
+if [ "$(declare -f __git_ps1)" ]
 then
 	#
 	# __git_ps1 depends on a few global variables which can be overridden here.
@@ -214,7 +213,7 @@ then
 	# $u -- set to "%" when something is unstaged
 	# $w -- set to "*" when something has been modified in the repository
 	#
-	__git_ps1_colorize_gitstring ()
+	__git_ps1_colorize_gitstring()
 	{
 		__GIT_PS1_AHEAD_FMT='\[\e[33;03m\]'		# local ahead of remote - yellow
 		__GIT_PS1_BEHIND_FMT='\[\e[34;03m\]'	# remote ahead of local - blue
@@ -227,7 +226,7 @@ then
 		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# flag that stashed files exist - magenta
 		__GIT_PS1_UNTRACKED_FMT='\[\e[02m\]'	# flag that untracked files exist - dim
 
-		if [ "$detached" = "yes" ]
+		if [ "$detached" = 'yes' ]
 		then
 			c=$__GIT_PS1_DETACHED_FMT"$c"
 		else
@@ -241,13 +240,13 @@ then
 		if [ -n "$p" ]
 		then
 			# adjust display of upstream/downstream state
-			p=`echo "$p" | sed \
+			p=$(echo "$p" | sed \
 			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
 			  -e 's/u//' \
 			  -e 's/=//' \
 			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
-			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/'`
-			p=`eval echo "$p"`
+			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/')
+			p=$(eval echo "$p")
 		fi
 		if [ -n "$r" ]
 		then
@@ -281,7 +280,7 @@ function prompt_update
 {
 	update_titles
 
-	if [ "`declare -f __git_ps1`" ]
+	if [ "$(declare -f __git_ps1)" ]
 	then
 		use_git_prompt=1
 
@@ -294,7 +293,7 @@ function prompt_update
 					unset use_git_prompt
 					;;
 				/locus/*)
-					[ `uname` = "Darwin" ] && unset use_git_prompt
+					[ "$(uname)" = 'Darwin' ] && unset use_git_prompt
 					;;
 			esac
 		fi
@@ -313,11 +312,11 @@ function log_error
 	_errno=$?
 	_cmd=$*
 
-	if [ "$_errno" ] && [ $_errno -ne 0 ]
+	if [ "$_errno" ] && [ "$_errno" -ne 0 ]
 	then
-		[ "$_pre_val" ] || _pre_val=`(tput setaf 1; tput bold) 2>/dev/null`
-		[ "$_post_val" ] || _post_val=`tput sgr0 2>/dev/null`
-		echo "${_pre_val}\`$_cmd\` returned error code ${_pre_val}${_errno}.${_post_val}"
+		[ "$_pre_val" ] || _pre_val=$( (tput setaf 1; tput bold) 2>/dev/null)
+		[ "$_post_val" ] || _post_val=$(tput sgr0 2>/dev/null)
+		echo "${_pre_val}\`$_cmd\` returned error code ${_pre_val}${_errno}${_post_val}."
 	fi
 	unset _errno _cmd
 }
@@ -339,7 +338,7 @@ function cd_wrapper
 		autoenv_init
 
 		echo "cd: working directory now $PWD"
-		[ $(truels -C | wc -l) -le 6 ] && ls
+		[ "$(truels -C | wc -l)" -le 6 ] && ls
 	fi
 	unset thispwd
 }
@@ -353,11 +352,11 @@ function history_update
 	history -a
 
 	. "$HOME/.isinstalled"
-	if [ `isinstalled python` ]
+	if [ "$(isinstalled python)" ]
 	then
 		uniq_history -i "$HISTFILE"
 	else
-		cat "$HISTFILE" | sort -u >| "$HISTFILE.tmp.$$"
+		sort -u "$HISTFILE" >| "$HISTFILE.tmp.$$"
 		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
 	fi
 
@@ -371,7 +370,7 @@ PROMPT_COMMAND='prompt_update $?'
 
 set -b					# immediately notify of terminated processes
 set -C					# i.e., noclobber
-set -o posix			# do the right thing
+set -o posix			# do things by the book
 set -P					# cd ../ follows physical not logical structure
 
 shopt -s cdspell		# look for minor typos in cd cmds
@@ -391,13 +390,13 @@ shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
 
 # command-line completion
 . $HOME/.isinstalled
-if [ `isinstalled brew` ]
+if [ "$(isinstalled brew)" ]
 then
-	if [ -f $(brew --prefix)/etc/bash_completion ]
+	if [ -f "$(brew --prefix)/etc/bash_completion" ]
 	then
 		trap - ERR
 		set +o posix
-		. $(brew --prefix)/etc/bash_completion
+		. "$(brew --prefix)/etc/bash_completion"
 		set -o posix
 		trap 'log_error $BASH_COMMAND' ERR
 	fi

@@ -244,6 +244,7 @@ then
 			  -e 's/\(\+[0-9]*\)/${__GIT_PS1_AHEAD_FMT}\1${__GIT_PS1_RESET_FMT}/' \
 			  -e 's/\(-[0-9]*\)/${__GIT_PS1_BEHIND_FMT}\1${__GIT_PS1_RESET_FMT}/')"
 			upstream="|$(eval echo "$upstream")"
+			[ "$upstream" = '|' ] && upstream=''
 		fi
 		if [ -n "$r" ]
 		then

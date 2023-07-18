@@ -15,11 +15,11 @@ echo $- | grep -Fs i >/dev/null
 if [ -f "${HOME}/.git-prompt.sh" ]
 then
 	. "${HOME}/.git-prompt.sh"
-	GIT_PS1_SHOWCOLORHINTS=1
-	GIT_PS1_SHOWDIRTYSTATE=1
-	GIT_PS1_SHOWSTASHSTATE=1
-	GIT_PS1_SHOWUNTRACKEDFILES=1
-	GIT_PS1_SHOWUPSTREAM="auto verbose"
+	export GIT_PS1_SHOWCOLORHINTS=1
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	export GIT_PS1_SHOWSTASHSTATE=1
+	export GIT_PS1_SHOWUNTRACKEDFILES=1
+	export GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
 	echo " (you may want to install git-prompt)" >&2
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
@@ -178,8 +178,8 @@ function init_bash_prompt
 		fi
 		hoststr="\[\e[${hf}m\]$nn\[\e[0m\]${dn:+:$dn}"
 		histstr="\[\e[${if}m\]\!\[\e[0m\]"
-		hashstr="\[\e[${pf}m\]"${pchar}"\[\e[0m\]"
-		contstr="\[\e[${pf}m\]"\>"\[\e[0m\]"
+		hashstr="\[\e[${pf}m\]${pchar}\[\e[0m\]"
+		contstr="\[\e[${pf}m\]\>\[\e[0m\]"
 
 		PS1_FIRST="${userstr}${hoststr}"
 		PS1_SECOND="${histstr} ${hashstr} "
@@ -216,62 +216,64 @@ then
 	__git_ps1_colorize_gitstring()
 	{
 		__GIT_PS1_AHEAD_FMT='\[\e[33;03m\]'		# local ahead of remote - yellow
-		__GIT_PS1_BEHIND_FMT='\[\e[34;03m\]'	# remote ahead of local - blue
+		__GIT_PS1_BEHIND_FMT='\[\e[35;03m\]'	# remote ahead of local - magenta
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
-		__GIT_PS1_MODIFIED_FMT='\[\e[33m\]'		# flag that modified, unstaged files exist - yellow
+		__GIT_PS1_MODIFIED_FMT='\[\e[31;03m\]'	# flag that modified, unstaged files exist - red italic
 		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
-		__GIT_PS1_STAGED_FMT='\[\e[34m\]'		# flag that staged files exist - blue
-		__GIT_PS1_STASH_FMT='\[\e[35m\]'		# flag that stashed files exist - magenta
-		__GIT_PS1_UNTRACKED_FMT='\[\e[02m\]'	# flag that untracked files exist - dim
+		__GIT_PS1_STAGED_FMT='\[\e[32;03m\]'	# flag that staged files exist - green italic
+		__GIT_PS1_STASH_FMT='\[\e[34;03m\]'		# flag that stashed files exist - blue italic
+		__GIT_PS1_UNTRACKED_FMT='\[\e[02;03m\]'	# flag that untracked files exist - dim italic
 
+		# this variable is set in the git-prompt.sh script
+		# shellcheck disable=SC2154
 		if [ "$detached" = 'yes' ]
 		then
 			c=$__GIT_PS1_DETACHED_FMT"$c"
 		else
 			c=$__GIT_PS1_BRANCH_FMT"$c"
 		fi
-		if [ -n "$i" ]
-		then
-			# adjust how modified, staged files are flagged
-			i=$__GIT_PS1_RESET_FMT$__GIT_PS1_STAGED_FMT"^"
-		fi
-		if [ -n "$p" ]
+		if [ -n "$upstream" ]
 		then
 			# adjust display of upstream/downstream state
-			p=$(echo "$p" | sed \
-			  -e 's/^/$__GIT_PS1_RESET_FMT/' \
+			upstream="$(echo "$upstream" | sed \
+			  -e 's/|//' \
 			  -e 's/u//' \
 			  -e 's/=//' \
-			  -e 's/\(\+[0-9]*\)/$__GIT_PS1_AHEAD_FMT\1$__GIT_PS1_RESET_FMT/' \
-			  -e 's/\(-[0-9]*\)/$__GIT_PS1_BEHIND_FMT\1$__GIT_PS1_RESET_FMT/')
-			p=$(eval echo "$p")
+			  -e 's/\(\+[0-9]*\)/${__GIT_PS1_AHEAD_FMT}\1${__GIT_PS1_RESET_FMT}/' \
+			  -e 's/\(-[0-9]*\)/${__GIT_PS1_BEHIND_FMT}\1${__GIT_PS1_RESET_FMT}/')"
+			upstream="|$(eval echo "$upstream")"
 		fi
 		if [ -n "$r" ]
 		then
 			# adjust how rebase status is displayed
-			r=`echo "$r" | sed \
+			r=$(echo "$r" | sed \
 			  -e 's/|//' \
-			  -e 's/\([A-Za-z-]*\)/${__GIT_PS1_REBASE_FMT}\1${__GIT_PS1_RESET_FMT}/'`
-			r=$__GIT_PS1_RESET_FMT'|'`eval echo "$r"`
+			  -e 's/\([A-Za-z-]*\)/${__GIT_PS1_REBASE_FMT}\1${__GIT_PS1_RESET_FMT}/')
+			r="${__GIT_PS1_RESET_FMT}|$(eval echo "$r")"
 		else
-			r=$__GIT_PS1_RESET_FMT"$r"
-		fi
-		if [ -n "$s" ]
-		then
-			# adjust how stashed files are flagged
-			s=$__GIT_PS1_RESET_FMT$__GIT_PS1_STASH_FMT"+"
-		fi
-		if [ -n "$u" ]
-		then
-			# adjust how untracked files are flagged
-			u=$__GIT_PS1_RESET_FMT$__GIT_PS1_UNTRACKED_FMT"o"
+			r="${__GIT_PS1_RESET_FMT}${r}"
 		fi
 		if [ -n "$w" ]
 		then
 			# adjust how modified files are flagged
-			w=$__GIT_PS1_RESET_FMT$__GIT_PS1_MODIFIED_FMT"v"
+			w="${__GIT_PS1_RESET_FMT}${__GIT_PS1_MODIFIED_FMT}m"
+		fi
+		if [ -n "$i" ]
+		then
+			# adjust how modified, staged files are flagged
+			i="${__GIT_PS1_RESET_FMT}${__GIT_PS1_STAGED_FMT}s"
+		fi
+		if [ -n "$s" ]
+		then
+			# adjust how stashed files are flagged
+			s="${__GIT_PS1_RESET_FMT}${__GIT_PS1_STASH_FMT}t"
+		fi
+		if [ -n "$u" ]
+		then
+			# adjust how untracked files are flagged
+			u="${__GIT_PS1_RESET_FMT}${__GIT_PS1_UNTRACKED_FMT}u"
 		fi
 	}
 fi
@@ -300,7 +302,7 @@ function prompt_update
 
 		if [ "$use_git_prompt" ]
 		then
-			__git_ps1 "${PS1_FIRST} {" "} ${PS1_SECOND}" `git_repo_name`":%s"
+			__git_ps1 "${PS1_FIRST} " "${PS1_SECOND}" "{$(git_repo_name)|%s} "
 		else
 			PS1="${PS1_FIRST} ${PS1_SECOND}"
 		fi
@@ -334,6 +336,8 @@ function cd_wrapper
 	then
 		# undo prompt customizations of autoenv scripts when cd'ing away
 		unset OLDPS1
+		# see base.common.ksh for definition of WSNAME
+		# shellcheck disable=SC2034
 		WSNAME="None"
 		autoenv_init
 

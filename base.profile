@@ -604,6 +604,17 @@ then
 		export TZ
 	fi
 
+	#
+	# sdkman insists these commands should go at the very end of the file,
+	# but we depend on sdkman for some banner info
+	#
+	if [ -r "$HOME/.sdkman" ]
+	then
+		SDKMAN_DIR="$HOME/.sdkman"
+		export SDKMAN_DIR
+		[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && . "$HOME/.sdkman/bin/sdkman-init.sh"
+	fi
+
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]
 	then
@@ -620,7 +631,7 @@ then
 			  "running $ost $rel" >&2
 		fi
 
-		# identify c compiler and make
+		# identify c compiler, make and java versions
 		[ -x $HOME/bin/exec/ccv ] && trimline " with `ccv`"
 
 		# print out battery information if applicable
@@ -703,22 +714,8 @@ then
 	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
 	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
-	if [ -x /usr/libexec/java_home ]
-	then
-		JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-		export JAVA_HOME
-	fi
-
 	_ENV_PROFILED="$TTY.$USER.$PPID"
 	export _ENV_PROFILED
-
-	# sdkman insists these commands should go toward the end of the file
-	if [ -r "$HOME/.sdkman" ]
-	then
-		SDKMAN_DIR="$HOME/.sdkman"
-		export SDKMAN_DIR
-		[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && . "$HOME/.sdkman/bin/sdkman-init.sh"
-	fi
 
 	#
 	# If not under DT Xsession control, switch to bash.

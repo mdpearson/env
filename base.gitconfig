@@ -1,6 +1,6 @@
 #!/not/executable
 #
-# Copyright (c) 2012-2021 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2012-2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -90,35 +90,35 @@
 	changed = yellow
 
 #
-# Blue means remote
+# Cyan means remote
 #
 
 # upstream branches
 [color "branch"]
-	upstream = blue bold
+	upstream = cyan bold
 # remote branches
 [color "branch"]
-	remote = blue
+	remote = cyan
 [color "decorate"]
-	remoteBranch = blue
-# local, staged editss
+	remoteBranch = cyan
+# local, staged edits
 [color "status"]
-	added = blue		# synonymous with 'updated'
+	added = cyan		# synonymous with 'updated'
 
 #
-# Cyan means metadata
+# Dim means metadata
 #
 
 [color "diff"]
-	commit = cyan		# this is also styles sha's in `git log`
-	frag = cyan
-	func = cyan bold
-	meta = cyan dim
+	commit = bold		# this is also styles sha's in `git log`
+	frag = dim
+	func = dim italic
+	meta = dim italic
 [color "grep"]
-	filename = cyan
-	function = cyan bold
-	linenumber = cyan dim
-	separator = cyan dim
+	filename = bold
+	function = dim italic
+	linenumber = dim
+	separator = dim
 [color "interactive"]
 	header = cyan
 
@@ -128,7 +128,7 @@
 [color "diff"]
 	new = green
 [color "grep"]
-	match = green bold
+	match = green bold ul
 
 #
 # Red means removed

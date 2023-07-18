@@ -159,7 +159,7 @@ function init_bash_prompt
 			cf='34'				# blue prompt
 			include_username=1
 		else					# local:
-			cf='32'				# green prompt
+			cf='01'				# bold prompt
 			nn="localhost"		# override hostname
 			include_username=1
 		fi
@@ -167,7 +167,7 @@ function init_bash_prompt
 		uf="${cf}"				# use selected color for username
 		af="${cf};02"			# dim coloring for at-sign
 		hf="${cf};03"			# italic hostname
-		if="${cf};02;04"		# dim, italic history count
+		if="${cf};00;02"		# dim history count
 		pf="${cf};01"			# bold prompt
 
 		if [ "$include_username" ]
@@ -216,7 +216,7 @@ then
 	__git_ps1_colorize_gitstring()
 	{
 		__GIT_PS1_AHEAD_FMT='\[\e[33;03m\]'		# local ahead of remote - yellow
-		__GIT_PS1_BEHIND_FMT='\[\e[35;03m\]'	# remote ahead of local - magenta
+		__GIT_PS1_BEHIND_FMT='\[\e[36;03m\]'	# remote ahead of local - cyan
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
 		__GIT_PS1_MODIFIED_FMT='\[\e[31;03m\]'	# flag that modified, unstaged files exist - red italic

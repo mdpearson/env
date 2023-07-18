@@ -30,6 +30,8 @@
 	autosetuprebase = always
 [color]
 	ui = auto
+[commit]
+	gpgsign = true
 [core]
 	autocrlf = false
 	editor = emacs
@@ -46,6 +48,10 @@
 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool "twdiff"]
 	cmd = twdiff --wait --resume "$REMOTE" "$LOCAL"
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [grep]
 	lineNumber = true
 [log]
@@ -67,7 +73,7 @@
 [user]
 	email = __G_USER_EMAIL__
 	name = __G_USER_TRUENAME__
-
+	signingkey = __G_SIGNINGKEY__
 
 #
 # Yellow means local

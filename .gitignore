@@ -1,7 +1,9 @@
 .DS_Store
 .env
-\#*\#
+.idea
+*.orig
 *~
+\#*\#
 env.conf
 env.tar
 Icon\r

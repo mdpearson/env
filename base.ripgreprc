@@ -1,0 +1,27 @@
+#!/not/executable
+#
+# Copyright (c) 2023 Matthew Pearson <matthewpearson@gmail.com>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# set colors and other options for ripgrep (`rg`)
+#
+
+--colors=line:fg:black
+# 'intense' maps to ANSI's 'dim'
+--colors=line:style:intense
+--colors=match:fg:green
+--colors=match:style:bold
+--colors=match:style:underline
+--colors=path:fg:black
+--colors=path:style:bold
+
+--glob=!.git/*
+--glob=!*.orig
+
+# truncate long matching lines with a notification of runaway matches
+--max-columns=256
+--max-columns-preview
+
+--smart-case

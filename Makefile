@@ -1,11 +1,10 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2016 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # filter and install env dotfiles in their appropriate locations
 #
 
@@ -21,7 +20,8 @@ include $(CONF)
 
 DOTFILES = .ackrc .bash_profile .common.ksh .cvsrc .dbxrc .dircolors .emacs \
   .gitconfig .hgrc .inputrc .isinstalled .kshrc .profile .profile_custom \
-  .sh_aliases .tcshrc .MacOSX/environment.plist venv/postactivate venv/predeactivate
+  .ripgreprc .sh_aliases .tcshrc .MacOSX/environment.plist venv/postactivate \
+  venv/predeactivate
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 

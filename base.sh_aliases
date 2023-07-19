@@ -184,6 +184,9 @@ set_colors()
 		export LS_COLORS
 	fi
 	unset dirc
+
+	RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+	export RIPGREP_CONFIG_PATH
 }
 
 alias gdiff='git diff --word-diff --no-index --'

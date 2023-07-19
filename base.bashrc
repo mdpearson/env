@@ -179,7 +179,7 @@ function init_bash_prompt
 		hoststr="\[\e[${hf}m\]$nn\[\e[0m\]${dn:+:$dn}"
 		histstr="\[\e[${if}m\]\!\[\e[0m\]"
 		hashstr="\[\e[${pf}m\]${pchar}\[\e[0m\]"
-		contstr="\[\e[${pf}m\]\>\[\e[0m\]"
+		contstr="\[\e[${pf}m\]>\[\e[0m\]"
 
 		PS1_FIRST="${userstr}${hoststr}"
 		PS1_SECOND="${histstr} ${hashstr} "

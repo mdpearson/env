@@ -806,8 +806,8 @@ else
 				# remote host - blue text
 				pre=`tput setaf 4 2>/dev/null`
 			else
-				# local host - green text
-				pre=`tput setaf 2 2>/dev/null`
+				# local host - bold text
+				pre=`tput bold 2>/dev/null`
 			fi
 			post=`tput sgr0`
 			#

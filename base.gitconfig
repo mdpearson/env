@@ -51,6 +51,7 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
+	allowedSignersFile = __G_HOME__/.gitconfig_signers
 	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [grep]
 	lineNumber = true
@@ -70,6 +71,8 @@
 	whitespace = fix
 [remote]
 	verbose = true
+[tag]
+	gpgsign = true
 [user]
 	email = __G_USER_EMAIL__
 	name = __G_USER_TRUENAME__

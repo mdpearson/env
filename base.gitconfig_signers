@@ -1,0 +1,10 @@
+#!/not/executable
+#
+# Copyright (c) 2023 Matthew Pearson <matthewpearson@gmail.com>.
+#
+# These scripts are free. There is no warranty; your mileage may vary.
+# Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
+#
+# trusted keys for git signing
+#
+__G_USER_EMAIL__ __G_SIGNINGKEY__

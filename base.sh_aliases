@@ -177,8 +177,8 @@ set_colors()
 	# GNU colors
 	unset LS_COLORS
 	dirc=`(type dircolors 2>&1) | awk '{print $NF}'`
-	if
-	[ -x "$dirc" ]
+	[ -x "$dirc" ] || dirc=`(type gdircolors 2>&1) | awk '{print $NF}'`
+	if [ -x "$dirc" ]
 	then
 		eval "`$dirc -b $HOME/.dircolors` 2>/dev/null"
 		export LS_COLORS

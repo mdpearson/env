@@ -40,6 +40,11 @@ else
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
 fi
 
+if [ -f /usr/local/bin/aws_completer ]
+then
+	complete -C '/usr/local/bin/aws_completer' aws
+fi
+
 if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
 then
 	if [ ! "$DYLD_INSERT_LIBRARIES" ]

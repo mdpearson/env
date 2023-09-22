@@ -73,6 +73,8 @@ alias nfilt="grep -v \
 
 alias ipython='label "iPython" && ipython'
 
+alias aws-mfa='. /Users/matty/bin/exec/aws_mfa.bash'
+
 rgrep()
 {
 	grep -r "$*" * | nfilt

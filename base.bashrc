@@ -25,26 +25,6 @@ else
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
 fi
 
-if [ -f "${HOME}/.git-completion.bash" ]
-then
-	if [[ $(set -o | grep posix) =~ 'on' ]]
-	then
-		set +o posix
-		. "$HOME/.git-completion.bash"
-		set -o posix
-	else
-		. "$HOME/.git-completion.bash"
-	fi
-else
-	echo " (you may want to install git-completion)" >&2
-	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
-fi
-
-if [ -f /usr/local/bin/aws_completer ]
-then
-	complete -C '/usr/local/bin/aws_completer' aws
-fi
-
 if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
 then
 	if [ ! "$DYLD_INSERT_LIBRARIES" ]
@@ -398,19 +378,55 @@ shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
 shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
 [ $? -eq 0 ] || alias echo="/bin/echo"			# use /bin/echo if above fails
 
-# command-line completion
+# command-line completions generally use more bash-isms than I am willing to write
 . $HOME/.isinstalled
+trap - ERR
+if [[ $(set -o | grep posix) =~ 'on' ]]
+then
+	set +o posix
+	restore_posix_flag=1
+fi
+
 if [ "$(isinstalled brew)" ]
 then
 	if [ -f "$(brew --prefix)/etc/bash_completion" ]
 	then
-		trap - ERR
-		set +o posix
 		. "$(brew --prefix)/etc/bash_completion"
-		set -o posix
-		trap 'log_error $BASH_COMMAND' ERR
 	fi
 fi
+
+if [ -f "${HOME}/.git-completion.bash" ]
+then
+	if [[ $(set -o | grep posix) =~ 'on' ]]
+	then
+		set +o posix
+		. "$HOME/.git-completion.bash"
+		set -o posix
+	else
+		. "$HOME/.git-completion.bash"
+	fi
+else
+	echo " (you may want to install git-completion)" >&2
+	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
+fi
+
+if [ -f /usr/local/bin/aws_completer ]
+then
+	complete -C '/usr/local/bin/aws_completer' aws
+fi
+
+if [ "$(isinstalled kubectl)" ]
+then
+	source <(kubectl completion bash)
+fi
+
+# restore shell settings after command-line completion magic is done
+if [ "$restore_posix_flag" ]
+then
+	set -o posix
+	unset restore_posix_flag
+fi
+trap 'log_error $BASH_COMMAND' ERR
 unset isinstalled
 
 if [ "$old_home" ]

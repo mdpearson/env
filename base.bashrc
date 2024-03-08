@@ -136,7 +136,7 @@ function init_bash_prompt
 		# separate multiple codes with semicolons.
 		#
 		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
-		then 					# running as different user:
+		then					# running as different user:
 			cf='31'				# red prompt
 			include_username=1
 		elif [ "$(is_remote_tty)" ]
@@ -389,10 +389,20 @@ fi
 
 if [ "$(isinstalled brew)" ]
 then
-	if [ -f "$(brew --prefix)/etc/bash_completion" ]
+	_brew_prefix="$(brew --prefix)"
+
+	if [ -f "${_brew_prefix}/etc/profile.d/bash_completion.sh" ]
 	then
-		. "$(brew --prefix)/etc/bash_completion"
+		export BASH_COMPLETION_COMPAT_DIR="${_brew_prefix}/etc/profile.d"
+		. "${_brew_prefix}/etc/profile.d/bash_completion.sh"
 	fi
+
+	for completion in "${_brew_prefix}/etc/bash_completion.d/"*
+	do
+		. "${completion}" 2>&1
+	done
+
+	unset _brew_prefix
 fi
 
 if [ -f "${HOME}/.git-completion.bash" ]

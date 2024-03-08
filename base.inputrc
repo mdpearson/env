@@ -13,7 +13,7 @@ set bell-style none
 set completion-query-items 96
 set editing-mode emacs
 set expand-tilde On
-set history-reserve-point On
+set history-preserve-point On
 set horizontal-scroll-mode Off
 set input-meta Off
 set mark-directories On

@@ -16,16 +16,9 @@ hash -r
 unalias cp 2>/dev/null
 unalias ls 2>/dev/null
 unalias rm 2>/dev/null
-tcp=`type cp | awk '{print $NF; exit}'`
-tls=`type ls | awk '{print $NF; exit}'`
-trm=`type rm | awk '{print $NF; exit}'`
-alias truecp="$tcp"
-alias truels="$tls"
-alias truerm="$trm"
-unset tcp tls trm
 
 alias cp="cp -i"
-alias cpf="truecp -f"
+alias cpf="cp -f"
 
 alias emacs="emacs -nw"
 
@@ -56,8 +49,8 @@ unset long_lsflags
 unset verylong_lsflags
 
 alias rm="rm -i"
-alias rmf="truerm -f"
-alias rmrf="truerm -rf"
+alias rmf="rm -f"
+alias rmrf="rm -rf"
 
 alias mv="mv -i"
 

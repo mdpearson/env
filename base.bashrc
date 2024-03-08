@@ -328,7 +328,7 @@ function cd_wrapper
 		autoenv_init
 
 		echo "cd: working directory now $PWD"
-		[ "$(truels -C | wc -l)" -le 6 ] && ls
+		[ "$(\ls -C | wc -l)" -le 6 ] && ls
 	fi
 	unset thispwd
 }

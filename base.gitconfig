@@ -33,10 +33,10 @@
 [commit]
 	gpgsign = true
 [core]
-	autocrlf = false
+	autocrlf = input
 	editor = emacs
 	pager = cat
-	safecrlf = true
+	safecrlf = false
 [diff]
 	mnemonicprefix = true
 	tool = "ksdiff"

@@ -736,8 +736,6 @@ then
 else	# if [ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ]
 
 	# if we're here, this file has been sourced already
-	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
-	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
 
 	# sdkman insists these commands should go toward the end of the file
 	if [ -r "$HOME/.sdkman" ]

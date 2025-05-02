@@ -130,4 +130,20 @@ redo()
 	fi
 }
 
+if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
+then
+	if [ ! "$DYLD_INSERT_LIBRARIES" ]
+	then
+		export DYLD_INSERT_LIBRARIES="${HOME}/opt/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
+	fi
+fi
+
+if [ -f "${HOME}/opt/stderred/build/libstderred.so" ]
+then
+	if [ ! "$LD_PRELOAD" ]
+	then
+		export LD_PRELOAD="${HOME}/opt/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+	fi
+fi
+
 #EOF __TAGGED__

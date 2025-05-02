@@ -24,22 +24,6 @@ else
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
 fi
 
-if [ -f "${HOME}/opt/stderred/build/libstderred.dylib" ]
-then
-	if [ ! "$DYLD_INSERT_LIBRARIES" ]
-	then
-		export DYLD_INSERT_LIBRARIES="${HOME}/opt/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}"
-	fi
-fi
-
-if [ -f "${HOME}/opt/stderred/build/libstderred.so" ]
-then
-	if [ ! "$LD_PRELOAD" ]
-	then
-		export LD_PRELOAD="${HOME}/opt/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
-	fi
-fi
-
 # run .bash_logout for all shells, not just login ones
 trap '[ -f "$HOME/.bash_logout" ] && . "$HOME/.bash_logout"' EXIT
 

@@ -29,40 +29,40 @@ IFS="$OLDIFS"
 
 # convert AppleSmartBattery device data into shell variable assignments
 eval $(/usr/sbin/ioreg -c AppleSmartBattery -r AppleSmartBattery -w 0 | \
-  sed -Ene 's/ *\"('"${joined_fields}"')\" = (\d*)/\1=\2/p')
+  sed -Ene 's/ *\"('"${joined_fields}"')\" = ([0-9]*)/\1=\2/p')
 
-[ "$Voltage" ] || Voltage="unknown"
+[ -n "$Voltage" ] || Voltage="unknown"
 echo -n "volts=$Voltage"
 
-if [ "$CycleCount" ]
+if [ -n "$CycleCount" ]
 then
 	echo -n ", cycles=$CycleCount"
-elif [ "$Cycle_Count" ]
+elif [ -n "$Cycle_Count" ]
 then
 	echo -n ", cycles=$Cycle_Count"
 fi
 
-if [ "$CurrentCapacity" ]
+if [ -n "$CurrentCapacity" ]
 then
 	echo ", charge=$CurrentCapacity%	# $AppleRawCurrentCapacity/$AppleRawMaxCapacity of $DesignCapacity rated mAh"
 
-elif [ "$Current" -a "$Capacity" -a "$AbsoluteMaxCapacity" ]
+elif [ -n "$Current" ] && [ -n "$Capacity" ] && [ -n "$AbsoluteMaxCapacity" ]
 then
 	pct1=$(echo "scale=1; 100 * $Current / $Capacity" | \
-	  bc | sed 's/\.0//')
+	  bc | sed 's/\.0$//')
 	pct2=$(echo "scale=1; 100 * $Current / $AbsoluteMaxCapacity" | \
-	  bc | sed 's/\.0//')
+	  bc | sed 's/\.0$//')
 
 	echo ", charge=$Current/$Capacity/$AbsoluteMaxCapacity ($pct1/$pct2%)"
 
-elif [ "$Current" -a "$Capacity" ]
+elif [ -n "$Current" ] && [ -n "$Capacity" ]
 then
 	pct=$(echo "scale=1; 100 * $Current / $Capacity" | \
-	  bc | sed 's/\.0//')
+	  bc | sed 's/\.0$//')
 
 	echo ", charge=$Current/$Capacity ($pct%)"
 
-elif [ "$Current" ]
+elif [ -n "$Current" ]
 then
 	echo ", charge=$Current"
 else

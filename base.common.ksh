@@ -130,10 +130,4 @@ redo()
 	fi
 }
 
-# append the current working directory to the end of the path
-adddot()
-{
-	export PATH="$(echo "$PATH" | sed -e 's/:\.//g'):."
-}
-
 #EOF __TAGGED__

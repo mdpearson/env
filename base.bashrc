@@ -380,7 +380,7 @@ shopt -s xpg_echo 2>/dev/null						# use xpg4 semantics for echo
 # command-line completions generally use more bash-isms than I am willing to write
 . "$HOME/.isinstalled"
 trap - ERR
-if [[ $(set -o | grep posix) =~ 'on' ]]
+if shopt -qo posix
 then
 	set +o posix
 	restore_posix_flag=1
@@ -406,14 +406,7 @@ fi
 
 if [ -f "${HOME}/.git-completion.bash" ]
 then
-	if [[ $(set -o | grep posix) =~ 'on' ]]
-	then
-		set +o posix
-		. "$HOME/.git-completion.bash"
-		set -o posix
-	else
-		. "$HOME/.git-completion.bash"
-	fi
+	. "$HOME/.git-completion.bash"
 else
 	echo " (you may want to install git-completion in ~/.git-completion.bash)" >&2
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2

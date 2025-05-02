@@ -19,7 +19,7 @@ if [ "$BASH" ]
 then
 	if [ "$BASH_VERSINFO" -lt 4 ]
 	then
-		. $HOME/.bashrc
+		. "$HOME/.bashrc"
 	fi
 	return
 fi
@@ -27,39 +27,39 @@ fi
 # stop if shell is not interactive, or isn't really ksh
 [ -o interactive ] || return
 
-[ -f $HOME/.common.ksh ] && . $HOME/.common.ksh
+[ -f "$HOME/.common.ksh" ] && . "$HOME/.common.ksh"
 
 # override builtin cd and pwd commands to update terminal title
 cda=$(type cd | awk '/alias/ { print $NF }')
 pwda=$(type pwd | awk '/alias/ { print $NF }')
-[ "$cda" ] && eval unset -f $cda
-[ "$pwda" ] && eval unset -f $pwda
+[ "$cda" ] && eval unset -f "$cda"
+[ "$pwda" ] && eval unset -f "$pwda"
 unalias cd pwd 2>/dev/null
 unset cda pwda
 
 stamp=$(echo ${RANDOM}_${SECONDS} | sed 's/\.//')
-eval function __cd_${stamp} '{
+eval function "__cd_${stamp}" '{
 	command cd $*
 	update_titles
 }'
-eval function __pwd_${stamp} '{
+eval function "__pwd_${stamp}" '{
 	command pwd $*
 	update_titles
 }'
 
-alias cd=__cd_${stamp}
-alias pwd=__pwd_${stamp}
+alias cd="__cd_${stamp}"
+alias pwd="__pwd_${stamp}"
 
 unset stamp
 
-if [ "$USER" = "root" ]
+if [ "$USER" = root ]
 then
 	pchar='#'
 else
 	pchar='\$'
 fi
 
-export PS1='${HOST}'" ksh|! ${USER} (ws:None) "${pchar}" "
+export PS1='${HOST}'" ksh|! ${USER} (ws:None) ${pchar} "
 export PS2='> '
 export PS4='+ '
 unset pchar
@@ -70,9 +70,9 @@ set +o ignoreeof
 set -o markdirs
 set -o noclobber
 
-alias __A=$(print )	# Up-arrow grabs previous command from history
-alias __B=$(print )	# Down-arrow grabs next command from history
-alias __C=$(print )	# Right-arrow moves right one character
-alias __D=$(print )	# Left-arrow moves left one character
+alias __A="$(print )"	# Up-arrow grabs previous command from history
+alias __B="$(print )"	# Down-arrow grabs next command from history
+alias __C="$(print )"	# Right-arrow moves right one character
+alias __D="$(print )"	# Left-arrow moves left one character
 
 #EOF __TAGGED__

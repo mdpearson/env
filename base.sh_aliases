@@ -1,17 +1,16 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # alias definitions and other sh cmds that must be run per tty
 #
 
 hash -r
 
-. $HOME/.isinstalled
+. "$HOME/.isinstalled"
 
 unalias cp 2>/dev/null
 unalias ls 2>/dev/null
@@ -22,16 +21,16 @@ alias cpf="cp -f"
 
 alias emacs="emacs -nw"
 
-checkls=`ls --color=auto -ah 2>&1 > /dev/null`
-if [ $? -ne 0 ] || [ "$checkls" ]
+checkls_error="`ls --color=auto -ah 2>&1 > /dev/null`"
+if [ "$?" -ne 0 ] || [ "$checkls_error" ]
 then
 	alias ls='ls -Fb'
 else
 	alias ls='ls -Fbh --color=auto'
 fi
-unset checkls
+unset checkls_error
 
-if [ `uname` = "Darwin" ]
+if [ "`uname`" = Darwin ]
 then
 	long_lsflags="O"
 	verylong_lsflags="Oe@"
@@ -39,10 +38,10 @@ fi
 
 alias lsa="ls -A"
 alias lsd="ls -d"
-alias ll="ls -lh"$long_lsflags
-alias lla="ls -Alh"$long_lsflags
-alias lld="ls -Alhd"$long_lsflags
-alias lll="ls -Alh"$verylong_lsflags
+alias ll="ls -lh${long_lsflags}"
+alias lla="ls -Alh${long_lsflags}"
+alias lld="ls -Alhd${long_lsflags}"
+alias lll="ls -Alh${verylong_lsflags}"
 alias lt='ll -rt | tail'
 
 unset long_lsflags
@@ -66,22 +65,22 @@ alias nfilt="grep -v \
 
 alias ipython='label "iPython" && ipython'
 
-alias aws-mfa='. /Users/matty/bin/exec/aws_mfa.bash'
+alias aws-mfa=". $HOME/bin/exec/aws_mfa.bash"
 
 rgrep()
 {
 	grep -r "$*" * | nfilt
 }
 
-[ `isinstalled cstyle` ] && alias cstyle="cstyle -chpvP"
-[ `isinstalled dbx` ] && alias rdbx="dbx -s $HOME/.dbxrc"
-[ `isinstalled node` ] && alias clonejs="node ~/bin/clone.js"
-[ `isinstalled python` ] && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
+[ "`isinstalled cstyle`" ] && alias cstyle="cstyle -chpvP"
+[ "`isinstalled dbx`" ] && alias rdbx="dbx -s $HOME/.dbxrc"
+[ "`isinstalled node`" ] && alias clonejs="node ~/bin/clone.js"
+[ "`isinstalled python`" ] && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
 
-[ `isinstalled bsub` ] && [ `isinstalled bsub_wrapper` ] && \
-  alias bsub="bsub_wrapper"
+[ "`isinstalled bsub`" ] && [ "`isinstalled bsub_wrapper`" ] && \
+  alias bsub='bsub_wrapper'
 
-if [ `isinstalled a2ps` ]
+if [ "`isinstalled a2ps`" ]
 then
 	alias c2ps="a2ps -=code"
 	alias m2ps="a2ps -=man"
@@ -89,12 +88,12 @@ then
 	alias t2ps="a2ps -=text"
 fi
 
-if [ -x $HOME/Sites/util/publish ]
+if [ -x "$HOME/Sites/util/publish" ]
 then
 	alias publish="$HOME/Sites/util/publish $HOME/Sites"
 fi
 
-if [ `uname -s` = 'Darwin' ]
+if [ "`uname -s`" = Darwin ]
 then
 	psargs='-axo user,pid,state,pri,%cpu,command'
 else
@@ -108,7 +107,7 @@ alias findpa="psaw | grep -v grep | grep -i"
 unset psargs
 
 unalias less 2>/dev/null
-lessl=`(type less 2>/dev/null) | awk '{print $NF}'`
+lessl="`(type less 2>/dev/null) | awk '{print $NF}'`"
 if [ -x "$lessl" ]
 then
 	PAGER="$lessl"
@@ -125,27 +124,27 @@ then
 fi
 
 unalias bbedit bbdiff bbfind 2>/dev/null
-if [ `isinstalled edit` ]
+if [ "`isinstalled edit`" ]
 then
-	[ `isinstalled bbedit` ] || alias bbedit="edit"
+	[ "`isinstalled bbedit`" ] || alias bbedit="edit"
 fi
-if [ `isinstalled twdiff` ]
+if [ "`isinstalled twdiff`" ]
 then
-	[ `isinstalled bbdiff` ] || alias bbdiff="twdiff"
+	[ "`isinstalled bbdiff`" ] || alias bbdiff="twdiff"
 fi
-if [ `isinstalled twfind` ]
+if [ "`isinstalled twfind`" ]
 then
-	[ `isinstalled bbfind` ] || alias bbfind="twfind"
+	[ "`isinstalled bbfind`" ] || alias bbfind="twfind"
 fi
 
 alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'
-if [ `isinstalled bbedit` ] || [ `isinstalled edit` ]
+if [ "`isinstalled bbedit`" ] || [ "`isinstalled edit`" ]
 then
 	openmods()
 	{
 		for f in `mods`
 		do
-			bbedit $f
+			bbedit "$f"
 		done
 	}
 fi
@@ -171,11 +170,11 @@ set_colors()
 
 	# GNU colors
 	unset LS_COLORS
-	dirc=`(type dircolors 2>&1) | awk '{print $NF}'`
-	[ -x "$dirc" ] || dirc=`(type gdircolors 2>&1) | awk '{print $NF}'`
+	dirc="`(type dircolors 2>&1) | awk '{print $NF}'`"
+	[ -x "$dirc" ] || dirc="`(type gdircolors 2>&1) | awk '{print $NF}'`"
 	if [ -x "$dirc" ]
 	then
-		eval "`$dirc -b $HOME/.dircolors` 2>/dev/null"
+		eval "`$dirc -b \"$HOME/.dircolors\"` 2>/dev/null"
 		export LS_COLORS
 	fi
 	unset dirc

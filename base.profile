@@ -44,12 +44,12 @@ export LC_COLLATE
 #
 
 # override TERM setting on Darwin console shells
-[ `uname -s` = 'Darwin' ] && [ `tty` = '/dev/console' ] && TERM=xnuppc
+[ "`uname -s`" = 'Darwin' ] && [ "`tty`" = '/dev/console' ] && TERM=xnuppc
 
 set noglob
 while [ -t 1 ]
 do
-	eval `SHELL=sh tset -s -e ^H -IQ \
+	eval "`SHELL=sh tset -s -e ^H -IQ \
 	  -m 'dtterm:dtterm' \
 	  -m 'linux:xterm-color' \
 	  -m 'nxterm:xterm' \
@@ -59,7 +59,7 @@ do
 	  -m 'xterm:xterm' \
 	  -m 'xterm-256color:xterm-256color' \
 	  -m 'xterm-color:xterm-color' \
-	  -m ':?xterm'`
+	  -m ':?xterm'`"
 	export TERM				# Darwin tset forgets to do this
 
 	[ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ] && break	# terminal already set up
@@ -70,7 +70,7 @@ do
 	# Error 3 means unrecognized term: loop and try again.
 	# Other errors can't be fixed here. Let them fall through.
 	#
-	[ $? -ne 3 ] && break
+	[ "$?" -ne 3 ] && break
 done
 unset noglob
 
@@ -83,7 +83,7 @@ unset noglob
 # case is when su - is called from a Darwin console.
 #
 
-if [ `echo "$BASH" | grep -c 'bash$'` -eq 1 ]
+if [ "`echo \"$BASH\" | grep -c 'bash$'`" -eq 1 ]
 then
 	# if the BASH env var is set and valid, override SHELL
 	if [ "$BASH" != "$SHELL" ]
@@ -92,7 +92,7 @@ then
 		# If bash was instantiated as sh, it's no big deal.
 		# Otherwise, print a message saying that SHELL is changing.
 		#
-		if [ `echo "$SHELL" | grep -c '/sh$'` -ne 1 ]
+		if [ "`echo "$SHELL" | grep -c '/sh$'`" -ne 1 ]
 		then
 			sh_oldn="$SHELL"
 
@@ -101,7 +101,7 @@ then
 			  ${sh_oldn:+"from ${sh_oldn} "} "to $BASH" >&2
 			unset sh_oldn
 		fi
-		SHELL=$BASH
+		SHELL="$BASH"
 	fi
 else
 	#
@@ -109,11 +109,11 @@ else
 	# (In some cases it can be something like su or login.)
 	#
 
-	cur_cmd=`echo "$0" | sed 's/^-//'`
-	if [ `echo "$cur_cmd" | grep -c 'sh$'` -eq 1 ]
+	cur_cmd="`echo \"$0\" | sed 's/^-//'`"
+	if [ "`echo \"$cur_cmd\" | grep -c 'sh$'`" -eq 1 ]
 	then
-		sh_name=`basename "$cur_cmd"`
-		sh_path=`(type "$cur_cmd" 2>&1) | awk '{print $NF}'`
+		sh_name="`basename \"$cur_cmd\"`"
+		sh_path="`(type \"$cur_cmd\" 2>&1) | awk '{print $NF}'`"
 		[ -x "$sh_path" ] || unset sh_path
 	fi
 
@@ -122,8 +122,8 @@ else
 	# the shell path discovered above from $0, or /bin/sh as a
 	# last resort.
 	#
-	if [ ! "$SHELL" ] || [ `echo "$SHELL" | grep -c 'sh$'` -eq 0 ] || \
-	  [ "$sh_name" ] && [ `basename "$SHELL"` != "$sh_name" ]
+	if [ ! "$SHELL" ] || [ "`echo \"$SHELL\" | grep -c 'sh$'`" -eq 0 ] || \
+	  [ "$sh_name" ] && [ "`basename \"$SHELL\"`" != "$sh_name" ]
 	then
 		sh_oldn="$SHELL"
 		SHELL=${sh_path:-/bin/sh}
@@ -141,19 +141,19 @@ export SHELL
 # Set general environment variables.
 #
 
-HOST=`hostname | sed 's/\..*//'`	# drop domain name if present
-[ "$USER" ] || USER=`whoami`
-HOSTNAME=$HOST
+HOST="`hostname | sed 's/\..*//'`"	# drop domain name if present
+[ "$USER" ] || USER="`whoami`"
+HOSTNAME="$HOST"
 export HOST HOSTNAME USER
 
-COLUMNS=`tput cols`
+COLUMNS="`tput cols`"
 [ "$COLUMNS" ] || COLUMNS=80
-ENV=${HOME}/.kshrc
+ENV="${HOME}/.kshrc"
 export COLUMNS ENV
 
-if [ -r ${HOME}/.Xdefaults ]
+if [ -r "${HOME}/.Xdefaults" ]
 then
-	XENVIRONMENT=${HOME}/.Xdefaults
+	XENVIRONMENT="${HOME}/.Xdefaults"
 	export XENVIRONMENT
 fi
 
@@ -170,7 +170,7 @@ fi
 # (bash and ksh use control chars bourne cannot parse.)
 #
 
-if [ `echo "$SHELL" | grep -c '\/sh$'` -eq 1 ] && [ ! "$BASH" ]
+if [ "`echo \"$SHELL\" | grep -c '\/sh$'`" -eq 1 ] && [ ! "$BASH" ]
 then
 	if [ "$USER" = "root" ]
 	then
@@ -197,7 +197,7 @@ then
 	# define some handy path-manipulation functions
 
 	sleep 0s >/dev/null 2>&1
-	[ $? -eq 0 ] && _SLEEP_UNIT="s" || _SLEEP_UNIT=
+	[ "$?" -eq 0 ] && _SLEEP_UNIT="s" || _SLEEP_UNIT=
 
 	#
 	# Echoes 1 if the path exists, 0 if it does not.
@@ -213,22 +213,22 @@ then
 		fi
 
 		test -d "$1" &
-		check_pid=$!
+		check_pid="$!"
 
 		# busy-wait with an incremental backoff
 		cnt=0
-		while [ $cnt -lt 10 ]
+		while [ "$cnt" -lt 10 ]
 		do
-			pidinfo=`jobs -l 2>&1 | grep "$check_pid" | egrep -v "Done|Exit"`
+			pidinfo="`jobs -l 2>&1 | grep \"$check_pid\" | grep -Ev 'Done|Exit'`"
 			if [ "$pidinfo" ]
 			then
-				arg="0.0"${cnt}${_SLEEP_UNIT}
-				sleep $arg
+				arg="0.0${cnt}${_SLEEP_UNIT}"
+				sleep "$arg"
 			else
 				unset check_pid
 				break
 			fi
-			cnt=`expr $cnt + 1`
+			cnt="`expr \"$cnt\" + 1`"
 		done
 
 		if [ "$check_pid" ]
@@ -241,7 +241,7 @@ then
 			kill "$check_pid" >/dev/null 2>&1
 			res=0
 		else
-			res=`test -d "$1" && echo 1 || echo 0`
+			res="`test -d \"$1\" && echo 1 || echo 0`"
 		fi
 
 		echo "$res"
@@ -253,8 +253,8 @@ then
 	append_path() {
 		[ "$2" ] || return
 		[ "$2" = null_guard ] && return
-		res=`check_path "$2"`
-		[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}'$2'
+		res="`check_path \"$2\"`"
+		[ "$res" -eq 1 ] && eval "$1=\${$1:+\$$1:}\"$2\""
 		[ "$res" -eq 1 ] && printf "." >&2
 		unset res
 	}
@@ -263,8 +263,8 @@ then
 	prepend_path() {
 		[ "$2" ] || return
 		[ "$2" = null_guard ] && return
-		res=`check_path $2`
-		[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
+		res="`check_path \"$2\"`"
+		[ "$res" -eq 1 ] && eval "$1=\"$2\"\${$1:+:\$$1}"
 		[ "$res" -eq 1 ] && printf "." >&2
 		unset res
 	}
@@ -287,22 +287,22 @@ then
 		#
 		OPTIND=1
 		getopts f arg && prepend=y
-		shift `expr $OPTIND - 1`
+		shift "`expr \"$OPTIND\" - 1`"
 
 		[ "$2" ] || return
 		[ "$2" = null_guard ] && return
 
-		eval echo \$$1 | grep -sq "$2"
+		eval "echo \$$1" | grep -sq "$2"
 
-		if [ $? -ne 0 ]
+		if [ "$?" -ne 0 ]
 		then
 			if [ "$prepend" ]
 			then
-				res=`check_path $2`
-				[ "$res" -eq 1 ] && eval $1=$2\${$1:+:\$$1}
+				res="`check_path \"$2\"`"
+				[ "$res" -eq 1 ] && eval "$1=\"$2\"\${$1:+:\$$1}"
 			else
-				res=`check_path $2`
-				[ "$res" -eq 1 ] && eval $1=\${$1:+\$$1:}$2
+				res="`check_path \"$2\"`"
+				[ "$res" -eq 1 ] && eval "$1=\${$1:+\$$1:}\"$2\""
 			fi
 			[ "$res" -eq 1 ] && printf "." >&2
 			unset res
@@ -318,35 +318,35 @@ then
 
 	# this function trims output to a single line
 	trimline() {
-		if [ `expr $COLUMNS \< 255` -eq 1 ]
+		if [ "`expr \"$COLUMNS\" \< 255`" -eq 1 ]
 		then
-			lim=`expr $COLUMNS - 1`
+			lim="`expr \"$COLUMNS\" - 1`"
 			# next line requires xpg4 sed on SunOS
 			[ "$*" ] && echo "$*" | sed -e 's/^ */ /' \
-			  -e 's/\(.\{'$lim','$lim'\}\)...*/\1</' >&2
+			  -e 's/\(.\{'"$lim"','"$lim"'\}\)...*/\1</' >&2
 			unset lim
 		else
 			[ "$*" ] && echo "$*" >&2
 		fi
 	}
 
-	arch=`uname -p`
+	arch="`uname -p`"
 	# workaround for gnu uname
-	[ $arch = 'unknown' ] && arch=`uname -m`
+	[ "$arch" = 'unknown' ] && arch="`uname -m`"
 
-	ost=`uname -s`
-	rel=`uname -r`
+	ost="`uname -s`"
+	rel="`uname -r`"
 
 	if [ $ost = 'Darwin' -o $ost = 'OSF1' ]
 	then
-		plat=`machine`
+		plat="`machine`"
 	else
-		plat=`uname -i`
+		plat="`uname -i`"
 	fi
 
 	mesg n 2>/dev/null
 	MAILCHECK=0
-	TTY=`tty`
+	TTY="`tty`"
 	VISUAL=emacs
 	export MAILCHECK TTY VISUAL
 
@@ -380,7 +380,7 @@ then
 	# an installation.
 	#
 
-	case $ost in
+	case "$ost" in
 		SunOS)
 		alist="/usr/local /usr/xpg4 /usr / /usr/dt \
 			/usr/openwin /usr/platform/${plat} /usr/share"
@@ -398,14 +398,14 @@ then
 
 	for ppath in $alist
 	do
-		append_path basep `echo $ppath/bin | sed 's|//|/|'`
-		append_path basep `echo $ppath/sbin | sed 's|//|/|'`
-		append_path basem `echo $ppath/man | sed 's|//|/|'`
+		append_path basep "`echo \"$ppath/bin\" | sed 's|//|/|'`"
+		append_path basep "`echo \"$ppath/sbin\" | sed 's|//|/|'`"
+		append_path basem "`echo \"$ppath/man\" | sed 's|//|/|'`"
 	done
 
 	for ppath in $blist
 	do
-		append_path basep $ppath
+		append_path basep "$ppath"
 	done
 
 	for ppath in $mlist
@@ -413,10 +413,10 @@ then
 		append_path basem $ppath
 	done
 
-	PATH=`echo ${basep} | \
-		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
-	MANPATH=`echo ${basem} | \
-		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+	PATH="`echo \"${basep}\" | \
+		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
+	MANPATH="`echo \"${basem}\" | \
+		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 	export PATH MANPATH
 
 	unset alist blist mlist basep basem ppath
@@ -430,12 +430,12 @@ then
 	ld_path DYLD_FALLBACK_LIBRARY_PATH /usr/lib
 	ld_path LD_LIBRARY_PATH /usr/lib64
 	ld_path DYLD_FALLBACK_LIBRARY_PATH /usr/lib64
-	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}-${arch}
-	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib/${ost}-${arch}
-	ld_path LD_LIBRARY_PATH ${HOME}/lib/${ost}
-	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib/${ost}
-	ld_path LD_LIBRARY_PATH ${HOME}/lib
-	ld_path DYLD_FALLBACK_LIBRARY_PATH ${HOME}/lib
+	ld_path LD_LIBRARY_PATH "${HOME}/lib/${ost}-${arch}"
+	ld_path DYLD_FALLBACK_LIBRARY_PATH "${HOME}/lib/${ost}-${arch}"
+	ld_path LD_LIBRARY_PATH "${HOME}/lib/${ost}"
+	ld_path DYLD_FALLBACK_LIBRARY_PATH "${HOME}/lib/${ost}"
+	ld_path LD_LIBRARY_PATH "${HOME}/lib"
+	ld_path DYLD_FALLBACK_LIBRARY_PATH "${HOME}/lib"
 	export LD_LIBRARY_PATH
 	export DYLD_FALLBACK_LIBRARY_PATH
 
@@ -445,15 +445,15 @@ then
 	PERL_MM_OPT="INSTALL_BASE=${PERL_LOCAL_LIB_ROOT}"
 	export PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 
-	append_path userm ${HOME}/man
-	append_path userm ${HOME}/share/man
-	append_path userp ${HOME}/scripts
-	append_path userp ${HOME}/bin/exec/${ost}
-	append_path userp ${HOME}/bin/exec
-	append_path userp ${HOME}/bin/${ost}-${arch}
-	append_path userp ${HOME}/bin/${ost}
-	append_path userp ${HOME}/bin
-	append_path userp ${HOME}/perl5/bin
+	append_path userm "${HOME}/man"
+	append_path userm "${HOME}/share/man"
+	append_path userp "${HOME}/scripts"
+	append_path userp "${HOME}/bin/exec/${ost}"
+	append_path userp "${HOME}/bin/exec"
+	append_path userp "${HOME}/bin/${ost}-${arch}"
+	append_path userp "${HOME}/bin/${ost}"
+	append_path userp "${HOME}/bin"
+	append_path userp "${HOME}/perl5/bin"
 
 	#
 	# Add additional bin paths from env.conf; null_guard
@@ -463,16 +463,16 @@ then
 	then
 		for ppath in __G_PATH__ null_guard
 		do
-			if [ $ppath != null_guard ]
+			if [ "$ppath" != null_guard ]
 			then
-				ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+				ppath_repl="`echo \"$ppath\" | sed 's/___/\\ /g'`"
 				append_path customp "$ppath_repl"
 			fi
 		done
 	fi
 
-	PATH=`echo ${userp}:${customp}:${PATH} | \
-	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+	PATH="`echo \"${userp}:${customp}:${PATH}\" | \
+	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 
 	if [ "$SGE_O_PATH" ]
 	then
@@ -489,13 +489,13 @@ then
 	then
 		for ppath in __G_MANPATH__ null_guard
 		do
-			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			ppath_repl="`echo \"$ppath\" | sed 's/___/\\ /g'`"
 			append_path customm "$ppath_repl"
 		done
 	fi
 
-	MANPATH=`echo ${userm}:${customm}:${MANPATH} | \
-	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`
+	MANPATH="`echo \"${userm}:${customm}:${MANPATH}\" | \
+	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 	export MANPATH
 
 	#
@@ -506,7 +506,7 @@ then
 	then
 		for ppath in __G_DYLD_FALLBACK_LIBRARY_PATH__ null_guard
 		do
-			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			ppath_repl="`echo \"$ppath\" | sed 's/___/\\ /g'`"
 			ld_path -f DYLD_FALLBACK_LIBRARY_PATH "$ppath_repl"
 		done
 		export DYLD_FALLBACK_LIBRARY_PATH
@@ -520,7 +520,7 @@ then
 	then
 		for ppath in __G_PKG_CONFIG_PATH__ null_guard
 		do
-			ppath_repl=`echo $ppath | sed 's/___/\\ /g'`
+			ppath_repl="`echo \"$ppath\" | sed 's/___/\\ /g'`"
 			ld_path -f PKG_CONFIG_PATH "$ppath_repl"
 		done
 		export PKG_CONFIG_PATH
@@ -544,7 +544,7 @@ then
 
 	echo " <done>" >&2
 
-	. $HOME/.isinstalled
+	. "$HOME/.isinstalled"
 
 	# support 1Password
 	SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -553,28 +553,28 @@ then
 	#
 	# Configure virtual environments for Python.
 	#
-	VIRTUALENVWRAPPER_PYTHON=`(type python3 2>&1) | awk '{print $NF}'`
+	VIRTUALENVWRAPPER_PYTHON="`(type python3 2>&1) | awk '{print $NF}'`"
 	export VIRTUALENVWRAPPER_PYTHON
 	if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ]
 	then
-		for vew_home in $HOME/.local/bin \
-		  $HOME/Library/Python/3.9/bin \
-		  $HOME/Library/Python/3.8/bin \
-		  $HOME/Library/Python/3.7/bin \
-		  $HOME/Library/Python/3.6/bin \
-		  $HOME/Library/Python/2.7/bin \
+		for vew_home in "$HOME/.local/bin" \
+		  "$HOME/Library/Python/3.9/bin" \
+		  "$HOME/Library/Python/3.8/bin" \
+		  "$HOME/Library/Python/3.7/bin" \
+		  "$HOME/Library/Python/3.6/bin" \
+		  "$HOME/Library/Python/2.7/bin" \
 		  /usr/local/bin
 		do
-			if [ `check_path $vew_home` -eq 1 ]
+			if [ "`check_path \"$vew_home\"`" -eq 1 ]
 			then
-				if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ] && [ -f $vew_home/virtualenvwrapper.sh ]
+				if [ ! "$VIRTUALENVWRAPPER_SCRIPT" ] && [ -f "$vew_home/virtualenvwrapper.sh" ]
 				then
-					VIRTUALENVWRAPPER_SCRIPT=$vew_home/virtualenvwrapper.sh
+					VIRTUALENVWRAPPER_SCRIPT="$vew_home/virtualenvwrapper.sh"
 					export VIRTUALENVWRAPPER_SCRIPT
 				fi
-				if [ ! "$VIRTUALENVWRAPPER_VIRTUALENV" ] && [ -f $vew_home/virtualenv ]
+				if [ ! "$VIRTUALENVWRAPPER_VIRTUALENV" ] && [ -f "$vew_home/virtualenv" ]
 				then
-					VIRTUALENVWRAPPER_VIRTUALENV=$vew_home/virtualenv
+					VIRTUALENVWRAPPER_VIRTUALENV="$vew_home/virtualenv"
 					export VIRTUALENVWRAPPER_VIRTUALENV
 				fi
 			fi
@@ -587,14 +587,14 @@ then
 		WORKON_HOME=venv
 		export WORKON_HOME
 		unalias cd 2>/dev/null
-		. $VIRTUALENVWRAPPER_SCRIPT
+		. "$VIRTUALENVWRAPPER_SCRIPT"
 		alias workoff="deactivate"
 	fi
 
-	[ `isinstalled macname` ] && THOST=`macname`
+	[ "`isinstalled macname`" ] && THOST="`macname`"
 	[ "$THOST" ] && export THOST
 
-	if [ `isinstalled sysctl` ] && sysctl -n hw.ncpu >/dev/null 2>&1
+	if [ "`isinstalled sysctl`" ] && sysctl -n hw.ncpu >/dev/null 2>&1
 	then
 		MAKEFLAGS="-j`sysctl -n hw.ncpu`"
 		export MAKEFLAGS
@@ -602,7 +602,7 @@ then
 
 	unset isinstalled
 
-	if [ `date +%Z` = "UTC" ]
+	if [ "`date +%Z`" = "UTC" ]
 	then
 		TZ='America/Los_Angeles'
 		export TZ
@@ -622,32 +622,32 @@ then
 	# display a welcome message introducing the host and OS
 	if [ ! "$DT" ]
 	then
-		if [ -x $HOME/bin/exec/iline ]
+		if [ -x "$HOME/bin/exec/iline" ]
 		then
 			echo " Welcome to `$HOME/bin/exec/iline -anb -l 12`" >&2
 			echo " running `$HOME/bin/exec/iline -sv -l 9`" >&2
 		elif [ -r /etc/release ]
 		then
 			echo " Welcome to ${HOST}, a $arch-type machine" \
-			  "running" `cat /etc/release | line | sed 's/^ *//'` >&2
+			  "running `cat /etc/release | line | sed 's/^ *//'`" >&2
 		else
 			echo " Welcome to ${HOST}, a $arch-type machine" \
 			  "running $ost $rel" >&2
 		fi
 
 		# identify c compiler, make and java versions
-		[ -x $HOME/bin/exec/ccv ] && trimline " with `ccv`"
+		[ -x "$HOME/bin/exec/ccv" ] && trimline " with `ccv`"
 
 		# print out battery information if applicable
-		[ -x $HOME/bin/exec/$ost/bat ] && \
-		  trimline `$HOME/bin/exec/$ost/bat`
+		[ -x "$HOME/bin/exec/$ost/bat" ] && \
+		  trimline "`$HOME/bin/exec/$ost/bat`"
 
 		# pretty print env. var names if desired
 		pre="" # `tput smul 2>/dev/null`
 		post="" # `tput sgr0 2>/dev/null`
 
 		# print tty info
-		printf ' %s; ' "${pre}TTY${post}=`echo $TTY | \
+		printf ' %s; ' "${pre}TTY${post}=`echo \"$TTY\" | \
 		  sed 's/\/dev\///'`" >&2
 
 		# print out terminal information
@@ -656,26 +656,26 @@ then
 
 	# set DISPLAY if possible
 	if [ "__SET_DISPLAY__" = "yes" ] && [ -r "$XENVIRONMENT" ] && \
-	  [ $TTY != '/dev/console' ] && [ `echo $TTY | cut -c1-5` = '/dev/' ]
+	  [ "$TTY" != '/dev/console' ] && [ "`echo \"$TTY\" | cut -c1-5`" = '/dev/' ]
 	then
 		# find out name of host on controlling side of terminal
-		wholine=`who -m --lookup 2>/dev/null`
-		[ $? -eq 0 ] || wholine=`who -m`
+		wholine="`who -m --lookup 2>/dev/null`"
+		[ "$?" -eq 0 ] || wholine="`who -m`"
 
-		lhost=`echo "$wholine" | awk '{ print $6 }' | \
-		  sed 's/(\([^):]*\).*/\1/'`
+		lhost="`echo "$wholine" | awk '{ print $6 }' | \
+		  sed 's/(\([^):]*\).*/\1/'`"
 
 		if [ ! "$DISPLAY" ]
 		then
-			DISPLAY=${lhost}:0.0
+			DISPLAY="${lhost}:0.0"
 			export DISPLAY
 		fi
 
 		# if possible, do a quick test to see if DISPLAY is sane
-		if [ -x $HOME/bin/exec/xping ]
+		if [ -x "$HOME/bin/exec/xping" ]
 		then
-			$HOME/bin/exec/xping >/dev/null 2>&1
-			[ $? -ne 0 ] && unset DISPLAY
+			"$HOME/bin/exec/xping" >/dev/null 2>&1
+			[ "$?" -ne 0 ] && unset DISPLAY
 		fi
 
 		unset wholine lhost
@@ -688,26 +688,26 @@ then
 	if [ ! "$DT" ]
 	then
 		# print out display information
-		printf '%s%s; ' "${pre}DISPLAY${post}=" ${DISPLAY:-"unset"} >&2
+		printf '%s%s; ' "${pre}DISPLAY${post}=" "${DISPLAY:-unset}" >&2
 
 		# print out time zone information
 		if [ "$TZ" ]
 		then
 			tzmsg="`date '+%z %Z'` (localized from machine's native UTC)"
 		else
-			tzmsg=`date '+%z %Z'`
+			tzmsg="`date '+%z %Z'`"
 		fi
 		echo "${pre}timezone${post}=$tzmsg" >&2
 
 		# print uptime
-		trimline `uptime | sed -e 's/	 */ /g' -e 's/^ */ /'`
+		trimline "`uptime | sed -e 's/	 */ /g' -e 's/^ */ /'`"
 
 		# print a list of users
-		if [ -x $HOME/bin/exec/lwho ]
+		if [ -x "$HOME/bin/exec/lwho" ]
 		then
-			users=`lwho -csq 2>/dev/null`
+			users="`lwho -csq 2>/dev/null`"
 			[ "$users" ] && \
-			  trimline `echo "$users" | sed -e 's/^\([0-9]*\)/\1 other /'`
+			  trimline "`echo \"$users\" | sed -e 's/^\([0-9]*\)/\1 other /'`"
 			unset users
 		fi
 
@@ -715,8 +715,8 @@ then
 		unset pre post
 	fi
 
-	[ -f $HOME/.sh_aliases ] && . $HOME/.sh_aliases
-	[ -f $HOME/.profile-custom ] && . $HOME/.profile-custom
+	[ -f "$HOME/.sh_aliases" ] && . "$HOME/.sh_aliases"
+	[ -f "$HOME/.profile-custom" ] && . "$HOME/.profile-custom"
 
 	_ENV_PROFILED="$TTY.$USER.$PPID"
 	export _ENV_PROFILED
@@ -728,7 +728,7 @@ then
 	if [ ! "$DT" ] && [ ! "$BASH" ]
 	then
 		type bash >/dev/null 2>&1
-		[ $? -eq 0 ] && exec bash
+		[ "$?" -eq 0 ] && exec bash
 	fi
 
 	# NO CODE HERE

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -42,7 +42,7 @@ then
 fi
 
 # run .bash_logout for all shells, not just login ones
-trap '[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout' EXIT
+trap '[ -f "$HOME/.bash_logout" ] && . "$HOME/.bash_logout"' EXIT
 
 #
 # This file may be sourced by the user running under a different uid;
@@ -52,12 +52,12 @@ trap '[ -f $HOME/.bash_logout ] && . $HOME/.bash_logout' EXIT
 #
 if [ ! "$HOME" ] || [ "$(basename "$HOME")" != __G_USER__ ]
 then
-	old_home=$HOME				# cache old HOME
+	old_home="$HOME"				# cache old HOME
 	# first, check NIS for the proper passwd entry
-	passl=$(ypcat passwd 2>/dev/null | grep "^__G_USER__:")
+	passl="$(ypcat passwd 2>/dev/null | grep '^__G_USER__:')"
 	# check local passwd file if nis lookup fails
-	[ "$passl" ] || passl=$(grep "^__G_USER__:" /etc/passwd 2>/dev/null)
-	HOME=$(echo "$passl" | awk -F: '{print $6}' 2>/dev/null)
+	[ "$passl" ] || passl="$(grep '^__G_USER__:' /etc/passwd 2>/dev/null)"
+	HOME="$(echo "$passl" | awk -F: '{print $6}' 2>/dev/null)"
 
 	# unreliable: last resort
 	if [ ! "$HOME" ]
@@ -74,8 +74,8 @@ then
 fi
 
 # load up commands common to bash and ksh
-[ -f $HOME/.common.ksh ] && . $HOME/.common.ksh
-[ -f $HOME/.inputrc ] && export INPUTRC=$HOME/.inputrc
+[ -f "$HOME/.common.ksh" ] && . "$HOME/.common.ksh"
+[ -f "$HOME/.inputrc" ] && export INPUTRC="$HOME/.inputrc"
 
 get_histfile_name()
 {
@@ -90,9 +90,9 @@ get_histfile_name()
 }
 
 # create a unique history file for each host
-[ -d $HOME/.bash_histories ] || mkdir $HOME/.bash_histories
-histfile_name=$(get_histfile_name "$THOST")
-[ "$histfile_name" ] || histfile_name=$(get_histfile_name "$HOST")
+[ -d "$HOME/.bash_histories" ] || mkdir "$HOME/.bash_histories"
+histfile_name="$(get_histfile_name "$THOST")"
+[ "$histfile_name" ] || histfile_name="$(get_histfile_name "$HOST")"
 
 HISTFILE="$HOME/.bash_histories/$histfile_name"
 unset histfile_name
@@ -115,7 +115,7 @@ function init_bash_prompt
 		dn=
 	fi
 
-	if [ "$USER" = "root" ]
+	if [ "$USER" = root ]
 	then
 		pchar='#'
 	else
@@ -125,8 +125,8 @@ function init_bash_prompt
 	if [ "$BUTTONS" ]
 	then
 		PS1="\h console \$ "
-	elif [ "$TERM" ] && [ -f $HOME/.dircolors ] && \
-	  [ "$(grep -c "[^-a-z]${TERM}$" $HOME/.dircolors)" -eq 1 ]
+	elif [ "$TERM" ] && [ -f "$HOME/.dircolors" ] && \
+	  [ "$(grep -c "[^-a-z]${TERM}$" "$HOME/.dircolors")" -eq 1 ]
 	then
 		#
 		# attribute codes:
@@ -135,7 +135,7 @@ function init_bash_prompt
 		#  30=blk 31=red 32=grn 33=yel 34=blu 35=mag 36=cyn 37=wht
 		# separate multiple codes with semicolons.
 		#
-		if [ "$USER" != __G_USER__ ] || [ "$USER" = "admin" ]
+		if [ "$USER" != __G_USER__ ] || [ "$USER" = admin ]
 		then					# running as different user:
 			cf='31'				# red prompt
 			include_username=1
@@ -215,9 +215,9 @@ then
 		# shellcheck disable=SC2154
 		if [ "$detached" = 'yes' ]
 		then
-			c=$__GIT_PS1_DETACHED_FMT"$c"
+			c="${__GIT_PS1_DETACHED_FMT}${c}"
 		else
-			c=$__GIT_PS1_BRANCH_FMT"$c"
+			c="${__GIT_PS1_BRANCH_FMT}${c}"
 		fi
 		if [ -n "$upstream" ]
 		then
@@ -229,7 +229,7 @@ then
 			  -e 's/\(\+[0-9]*\)/${__GIT_PS1_AHEAD_FMT}\1${__GIT_PS1_RESET_FMT}/' \
 			  -e 's/\(-[0-9]*\)/${__GIT_PS1_BEHIND_FMT}\1${__GIT_PS1_RESET_FMT}/')"
 			upstream="|$(eval echo "$upstream")"
-			[ "$upstream" = '|' ] && upstream=''
+			[ "$upstream" = '|' ] && upstream=
 		fi
 		if [ -n "$r" ]
 		then
@@ -276,7 +276,7 @@ function prompt_update
 		then
 			unset use_git_prompt
 		else
-			case $PWD in
+			case "$PWD" in
 				/Volumes/*)
 					unset use_git_prompt
 					;;
@@ -297,8 +297,8 @@ function prompt_update
 
 function log_error
 {
-	_errno=$?
-	_cmd=$*
+	_errno="$?"
+	_cmd="$*"
 
 	if [ "$_errno" ] && [ "$_errno" -ne 0 ]
 	then
@@ -375,11 +375,11 @@ shopt -u sourcepath		# don't use PATH for `.' commands
 
 # the following shopts work only for 2.05 or greater
 shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
-shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
-[ $? -eq 0 ] || alias echo="/bin/echo"			# use /bin/echo if above fails
+shopt -s xpg_echo 2>/dev/null						# use xpg4 semantics for echo
+[ "$?" -eq 0 ] || alias echo="/bin/echo"		# use /bin/echo if above fails
 
 # command-line completions generally use more bash-isms than I am willing to write
-. $HOME/.isinstalled
+. "$HOME/.isinstalled"
 trap - ERR
 if [[ $(set -o | grep posix) =~ 'on' ]]
 then

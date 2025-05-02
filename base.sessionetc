@@ -11,11 +11,11 @@
 
 PATH=/usr/openwin/bin:/usr/bin:/bin
 
-[ -f $HOME/.Xdefaults ] && xrdb -load $HOME/.Xdefaults
+[ -f "$HOME/.Xdefaults" ] && xrdb -load "$HOME/.Xdefaults"
 
 if [ "$USER" != "root" ] && [ "$DISPLAY" = ":0.0" ]
 then
-	xhost + nis:${USER}@ >/dev/null
+	xhost + "nis:${USER}@" >/dev/null
 	xhost + nis:root@ >/dev/null
 	xhost + local: >/dev/null
 fi

@@ -29,7 +29,7 @@ then
 	export _ORIGINAL_PS1_SECOND
 fi
 
-venvnam=`basename $VIRTUAL_ENV`
+venvnam="`basename \"$VIRTUAL_ENV\"`"
 PS1_SECOND="[$venvnam] $_ORIGINAL_PS1_SECOND"
 
 echo " (updated prompt to reflect $VIRTUAL_ENV virtual environment)" >&2

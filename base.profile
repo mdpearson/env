@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2021 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -237,8 +237,8 @@ then
 			# It shouldn't take this long to stat a dir.
 			# The filesystem mount may be hosed.
 			#
-			printf "\n > unable to stat $1\n > killing hung job $pid\n " >&2
-			kill $pid >/dev/null 2>&1
+			printf "\n > unable to stat $1\n > killing hung job $check_pid\n " >&2
+			kill "$check_pid" >/dev/null 2>&1
 			res=0
 		else
 			res=`test -d "$1" && echo 1 || echo 0`

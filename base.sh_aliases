@@ -69,7 +69,7 @@ alias aws-mfa=". $HOME/bin/exec/aws_mfa.bash"
 
 rgrep()
 {
-	grep -r "$*" * | nfilt
+	grep -r "$*" ./* | nfilt
 }
 
 [ "`isinstalled cstyle`" ] && alias cstyle="cstyle -chpvP"
@@ -154,8 +154,8 @@ alias bye='exit'
 
 cerr()
 {
-	cd $1
-	cat *.err
+	cd "$1" || return
+	cat ./*.err
 }
 
 alias cvs='cvs -q'

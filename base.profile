@@ -550,6 +550,12 @@ then
 	SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 	export SSH_AUTH_SOCK
 
+	# support homebrew
+	if [ -f /opt/homebrew/bin/brew ]
+	then
+	    eval "`/opt/homebrew/bin/brew shellenv`"
+	fi
+
 	#
 	# Configure virtual environments for Python.
 	#

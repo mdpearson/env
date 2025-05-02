@@ -41,7 +41,7 @@ is_remote_tty()
 git_repo_name()
 {
     top_dir="$(git rev-parse --git-dir 2>/dev/null)"
-    if [ "$top_dir" == .git ]
+    if [ "$top_dir" = .git ]
     then
         echo "$(basename $(pwd))"
     elif [ "$top_dir" ]

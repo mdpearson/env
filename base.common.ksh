@@ -23,7 +23,7 @@ fi
 # internal variable used by update_title and redo
 if [ "$BASH" ]
 then
-	_shell=bash	# some bashes id themselves as /bin/sh
+	_shell=bash # some bashes id themselves as /bin/sh
 else
 	_shell="$(basename "$SHELL")"
 fi
@@ -40,14 +40,14 @@ is_remote_tty()
 # see https://gist.github.com/bamanzi/5875262
 git_repo_name()
 {
-    top_dir="$(git rev-parse --git-dir 2>/dev/null)"
-    if [ "$top_dir" = .git ]
-    then
-        basename "$PWD"
-    elif [ "$top_dir" ]
-    then
-        dirname "$top_dir" | xargs basename
-    fi
+	top_dir="$(git rev-parse --git-dir 2>/dev/null)"
+	if [ "$top_dir" = .git ]
+	then
+		basename "$PWD"
+	elif [ "$top_dir" ]
+	then
+		dirname "$top_dir" | xargs basename
+	fi
 }
 
 if [[ "$TTY" != *console ]] &&
@@ -64,12 +64,12 @@ then
 	#
 	set_terminal_title()
 	{
-		printf '\033]2;%s\007' "$*"	# works on most systems
+		printf '\033]2;%s\007' "$*" # works on most systems
 	}
 
 	set_tab_title()
 	{
-		printf '\033]1;%s\007' "$*"	# works on iterm2
+		printf '\033]1;%s\007' "$*" # works on iterm2
 	}
 
 	update_titles()

@@ -237,7 +237,7 @@ then
 			# It shouldn't take this long to stat a dir.
 			# The filesystem mount may be hosed.
 			#
-			printf "\n > unable to stat $1\n > killing hung job $check_pid\n " >&2
+			printf '\n > unable to stat %s\n > killing hung job %s\n ' "$1" "$check_pid" >&2
 			kill "$check_pid" >/dev/null 2>&1
 			res=0
 		else

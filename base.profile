@@ -337,7 +337,7 @@ then
 	ost="`uname -s`"
 	rel="`uname -r`"
 
-	if [ $ost = 'Darwin' -o $ost = 'OSF1' ]
+	if [ "$ost" = 'Darwin' ] || [ "$ost" = 'OSF1' ]
 	then
 		plat="`machine`"
 	else

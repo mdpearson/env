@@ -21,7 +21,7 @@ then
 	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export GIT_PS1_SHOWUPSTREAM="auto verbose"
 else
-	echo " (you may want to install git-prompt)" >&2
+	echo " (you may want to install git-prompt in ~/.git-prompt.sh)" >&2
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
 fi
 
@@ -416,7 +416,7 @@ then
 		. "$HOME/.git-completion.bash"
 	fi
 else
-	echo " (you may want to install git-completion)" >&2
+	echo " (you may want to install git-completion in ~/.git-completion.bash)" >&2
 	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)" >&2
 fi
 

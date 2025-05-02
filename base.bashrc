@@ -9,8 +9,7 @@
 #
 
 # don't run if shell is not interactive
-echo $- | grep -Fs i >/dev/null
-[ $? -eq 0 ] || return
+[[ $- == *i* ]] || return
 
 if [ -f "${HOME}/.git-prompt.sh" ]
 then

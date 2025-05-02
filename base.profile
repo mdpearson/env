@@ -372,7 +372,6 @@ then
 	# Define basic and X paths, per o/s release --
 	#	alist:	dirs with bin, sbin and/or man subdirs
 	#	blist:	dirs with binaries not named [s]bin
-	#	mlist:	dirs with manpages not named man
 	#
 	# Custom paths should be set in G_PATH and G_MANPATH
 	# instead, see env.conf for details. Paths in this
@@ -408,18 +407,13 @@ then
 		append_path basep "$ppath"
 	done
 
-	for ppath in $mlist
-	do
-		append_path basem $ppath
-	done
-
 	PATH="`echo \"${basep}\" | \
 		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 	MANPATH="`echo \"${basem}\" | \
 		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 	export PATH MANPATH
 
-	unset alist blist mlist basep basem ppath
+	unset alist blist basep basem ppath
 
 	#
 	# At this point PATH is defined to work on the given host. Add

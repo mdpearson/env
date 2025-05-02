@@ -1,9 +1,10 @@
+*.orig
+*~
 .DS_Store
 .env
 .idea
-*.orig
-*~
+Icon\r
 \#*\#
 env.conf
+env.iml
 env.tar
-Icon\r

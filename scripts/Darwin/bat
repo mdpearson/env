@@ -1,60 +1,72 @@
 #!/bin/bash
 #
-# Copyright (c) 2004-2014 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2004-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # print out battery statistics extracted from ioreg
 #
 
 [ -x /usr/sbin/ioreg ] || exit 1
 
-# convert the IOBatteryInfo device line into variable assignments
-# XXX - need to better handle case where no battery exists
-eval $(/usr/sbin/ioreg -w 0 -c AppleSmartBattery | \
-  sed -ne '/BatteryInfo/ {
-	s/.*{//
-	s/}.*//
-	s/ /_/g
-	s/,/; /g
-	s/"//g
-	p
-	}' ) #'
+OLDIFS="$IFS"
+IFS='|'
+fields=(
+  'AbsoluteMaxCapacity'
+  'AppleRawCurrentCapacity'
+  'AppleRawMaxCapacity'
+  'Capacity'
+  'Current'
+  'CurrentCapacity'
+  'CycleCount'
+  'Cycle_Count'
+  'DesignCapacity'
+  'Voltage'
+)
+joined_fields="${fields[*]}"
+IFS="$OLDIFS"
+
+# convert AppleSmartBattery device data into shell variable assignments
+eval $(/usr/sbin/ioreg -c AppleSmartBattery -r AppleSmartBattery -w 0 | \
+  sed -Ene 's/ *\"('"${joined_fields}"')\" = (\d*)/\1=\2/p')
 
 [ "$Voltage" ] || Voltage="unknown"
+echo -n "volts=$Voltage"
 
-echo -n "volts=$Voltage, "
+if [ "$CycleCount" ]
+then
+	echo -n ", cycles=$CycleCount"
+elif [ "$Cycle_Count" ]
+then
+	echo -n ", cycles=$Cycle_Count"
+fi
 
-if [ "$Current" -a "$Capacity" -a "$AbsoluteMaxCapacity" ]
+if [ "$CurrentCapacity" ]
+then
+	echo ", charge=$CurrentCapacity%	# $AppleRawCurrentCapacity/$AppleRawMaxCapacity of $DesignCapacity rated mAh"
+
+elif [ "$Current" -a "$Capacity" -a "$AbsoluteMaxCapacity" ]
 then
 	pct1=$(echo "scale=1; 100 * $Current / $Capacity" | \
 	  bc | sed 's/\.0//')
 	pct2=$(echo "scale=1; 100 * $Current / $AbsoluteMaxCapacity" | \
 	  bc | sed 's/\.0//')
 
-	echo -n "charge=$Current/$Capacity/$AbsoluteMaxCapacity ($pct1/$pct2%)"
+	echo ", charge=$Current/$Capacity/$AbsoluteMaxCapacity ($pct1/$pct2%)"
 
 elif [ "$Current" -a "$Capacity" ]
 then
 	pct=$(echo "scale=1; 100 * $Current / $Capacity" | \
 	  bc | sed 's/\.0//')
 
-	echo -n "charge=$Current/$Capacity ($pct%)"
+	echo ", charge=$Current/$Capacity ($pct%)"
 
 elif [ "$Current" ]
 then
-	echo -n "charge=$Current"
+	echo ", charge=$Current"
 else
-	echo -n "charge=unknown"
-fi
-
-if [ "$Cycle_Count" ]
-then
-	echo ", cycles=$Cycle_Count"
-else
-	echo ""
+	echo ", charge=unknown"
 fi
 
 #EOF __TAGGED__

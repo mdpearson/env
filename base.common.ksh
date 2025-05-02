@@ -43,10 +43,10 @@ git_repo_name()
     top_dir="$(git rev-parse --git-dir 2>/dev/null)"
     if [ "$top_dir" = .git ]
     then
-        echo "$(basename "$PWD")"
+        basename "$PWD"
     elif [ "$top_dir" ]
     then
-        echo "$(dirname "$top_dir" | xargs basename)"
+        dirname "$top_dir" | xargs basename
     fi
 }
 

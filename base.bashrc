@@ -304,7 +304,7 @@ function log_error
 	then
 		[ "$_pre_val" ] || _pre_val=$( (tput setaf 1; tput bold) 2>/dev/null)
 		[ "$_post_val" ] || _post_val=$(tput sgr0 2>/dev/null)
-		echo "${_pre_val}\`$_cmd\` returned error code ${_pre_val}${_errno}${_post_val}."
+		echo "${_pre_val}\`$_cmd\` returned error code ${_pre_val}${_errno}.${_post_val}"
 	fi
 	unset _errno _cmd
 }

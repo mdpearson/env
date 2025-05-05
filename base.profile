@@ -639,7 +639,7 @@ then
 		elif [ -r /etc/release ]
 		then
 			echo " Welcome to ${HOST}, a $arch-type machine" \
-			  "running `cat /etc/release | line | sed 's/^ *//'`" >&2
+			  "running `line < /etc/release | sed 's/^ *//'`" >&2
 		else
 			echo " Welcome to ${HOST}, a $arch-type machine" \
 			  "running $ost $rel" >&2

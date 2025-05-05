@@ -200,8 +200,14 @@ if [ "$_ENV_PROFILED" != "$TTY.$USER.$PPID" ]
 then
 	# define some handy path-manipulation functions
 
-	sleep 0s >/dev/null 2>&1
-	[ "$?" -eq 0 ] && _SLEEP_UNIT="s" || _SLEEP_UNIT=
+	if sleep 0s >/dev/null 2>&1
+	then
+		# GNU-like sleep
+		_SLEEP_UNIT="s"
+	else
+		# BSD-like sleep
+		_SLEEP_UNIT=
+	fi
 
 	#
 	# Echoes 1 if the path exists, 0 if it does not.
@@ -678,8 +684,14 @@ then
 		# if possible, do a quick test to see if DISPLAY is sane
 		if [ -x "$HOME/bin/exec/xping" ]
 		then
-			"$HOME/bin/exec/xping" >/dev/null 2>&1
-			[ "$?" -ne 0 ] && unset DISPLAY
+			if $HOME/bin/exec/xping >/dev/null 2>&1
+			then
+				# DISPLAY is good
+				:
+			else
+				# DISPLAY is bad, unset it
+				unset DISPLAY
+			fi
 		fi
 
 		unset wholine lhost
@@ -731,8 +743,7 @@ then
 	#
 	if [ ! "$DT" ] && [ ! "$BASH" ]
 	then
-		type bash >/dev/null 2>&1
-		[ "$?" -eq 0 ] && exec bash
+		type bash >/dev/null 2>&1 && exec bash
 	fi
 
 	# NO CODE HERE

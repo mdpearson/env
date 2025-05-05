@@ -7,6 +7,10 @@
 #
 # sh-compatible commands executed at login for bash, ksh, sh, zsh
 #
+# shellcheck disable=SC2003		# although expr is old, it's portable
+# shellcheck disable=SC2006		# $() doesn't work in old Bourne shells
+# shellcheck disable=SC2078		# don't warn about __G_VARS__ interpolation
+#
 
 # force legacy Digital systems to use a standards-compliant sh
 BIN_SH=xpg4

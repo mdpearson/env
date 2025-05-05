@@ -53,6 +53,7 @@ export LC_COLLATE
 set noglob
 while [ -t 1 ]
 do
+	# shellcheck disable=SC2209
 	eval "`SHELL=sh tset -s -e ^H -IQ \
 	  -m 'dtterm:dtterm' \
 	  -m 'linux:xterm-color' \
@@ -222,6 +223,7 @@ then
 			return
 		fi
 
+		# shellcheck disable=SC2265
 		test -d "$1" &
 		check_pid="$!"
 
@@ -671,6 +673,7 @@ then
 	fi
 
 	# set DISPLAY if possible
+	# shellcheck disable=SC2050
 	if [ "__SET_DISPLAY__" = "yes" ] && [ -r "$XENVIRONMENT" ] && \
 	  [ "$TTY" != '/dev/console' ] && [ "`echo \"$TTY\" | cut -c1-5`" = '/dev/' ]
 	then

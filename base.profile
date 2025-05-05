@@ -405,6 +405,9 @@ then
 		;;
 	esac
 
+	basep=
+	basem=
+
 	for ppath in $alist
 	do
 		append_path basep "`echo \"$ppath/bin\" | sed 's|//|/|'`"
@@ -424,6 +427,10 @@ then
 	export PATH MANPATH
 
 	unset alist blist basep basem ppath
+	userm=
+	userp=
+	customm=
+	customp=
 
 	#
 	# At this point PATH is defined to work on the given host. Add
@@ -532,7 +539,6 @@ then
 
 	unset userp customp
 	unset userm customm
-	unset customk
 	unset ppath ppath_repl
 
 	if [ "__G_ACLOCAL_FLAGS__" ]

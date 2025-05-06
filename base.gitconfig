@@ -79,40 +79,77 @@
 	signingkey = __G_SIGNINGKEY__
 
 #
-# Yellow means local
+# Green means staged and ready to go, or added text
 #
 
-# currently-selected branch
-[color "branch"]
-	current = yellow reverse bold
-[color "decorate"]
-	HEAD = yellow reverse bold
+[color "diff"]
+	new = green
 [color "status"]
-	branch = yellow reverse bold
-# non-selected local branches
-[color "branch"]
-	local = yellow
-[color "decorate"]
-	branch = yellow
-# local, uncommitted edits
-[color "status"]
-	changed = yellow
+	added = green		# synonymous with 'updated'
 
 #
-# Cyan means remote
+# Yellow means modified
 #
 
-# upstream branches
-[color "branch"]
-	upstream = cyan bold
-# remote branches
-[color "branch"]
-	remote = cyan
-[color "decorate"]
-	remoteBranch = cyan
-# local, staged edits
 [color "status"]
-	added = cyan		# synonymous with 'updated'
+    changed = yellow
+
+#
+# Blue means local, or found text
+#
+
+[color "branch"]
+	# currently-selected branch
+	current = blue reverse bold
+	# non-selected local branches
+	local = blue
+[color "decorate"]
+	HEAD = blue reverse bold
+	branch = blue
+[color "grep"]
+	match = blue bold ul
+[color "status"]
+	branch = blue reverse bold
+
+#
+# Magenta means remote
+#
+
+[color "branch"]
+	upstream = magenta reverse bold
+	remote = magenta
+[color "decorate"]
+	remoteBranch = magenta
+
+#
+# Red means removed or untracked
+#
+[color "diff"]
+	old = red
+[color "status"]
+    untracked = red
+
+#
+# Red reverse means error
+#
+[color "diff"]
+	whitespace = red reverse
+[color "interactive"]
+	error = red reverse bold
+[color "status"]
+	nobranch = red reverse bold
+
+#
+# Cyan means git-related
+#
+
+[color "branch"]
+	plain = cyan
+[color "decorate"]
+	stash = cyan
+	tag = cyan
+[color "interactive"]
+	prompt = cyan bold
 
 #
 # Dim means metadata
@@ -131,40 +168,6 @@
 [color "interactive"]
 	header = cyan
 
-#
-# Green means newly-added or found
-#
-[color "diff"]
-	new = green
-[color "grep"]
-	match = green bold ul
-
-#
-# Red means removed
-#
-[color "diff"]
-	old = red
-
-#
-# Red reverse means error
-#
-[color "diff"]
-	whitespace = red reverse
-[color "interactive"]
-	error = red reverse bold
-[color "status"]
-	nobranch = red reverse bold
-
-#
-# Magenta means git
-#
-[color "branch"]
-	plain = magenta
-[color "decorate"]
-	stash = magenta
-	tag = magenta
-[color "interactive"]
-	prompt = magenta bold
 
 #
 # Unassigned values inherit from the shell and are here for reference
@@ -178,6 +181,5 @@
 	help = dim
 [color "status"]
 	header =
-	untracked = dim
 
 #EOF __TAGGED__

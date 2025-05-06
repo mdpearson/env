@@ -1,16 +1,15 @@
 #!/not/executable
 #
-# Copyright (c) 2011-2023 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2011-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # custom commands to ack; see also perldoc Term::ANSIColor
 #
 
 --color-filename=bold
---color-match=bold green underline
+--color-match=bold blue underline
 --color-lineno=dark
 --ignore-dir=bower_components
 --ignore-dir=build

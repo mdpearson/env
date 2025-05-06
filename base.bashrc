@@ -124,7 +124,7 @@ function init_bash_prompt
 			include_username=1
 		elif [ "$(is_remote_tty)" ]
 		then					# remote host:
-			cf='34'				# blue prompt
+			cf='35'				# magenta prompt
 			include_username=1
 		else					# local:
 			cf='01'				# bold prompt
@@ -183,16 +183,16 @@ then
 	#
 	__git_ps1_colorize_gitstring()
 	{
-		__GIT_PS1_AHEAD_FMT='\[\e[33;03m\]'		# local ahead of remote - yellow
-		__GIT_PS1_BEHIND_FMT='\[\e[36;03m\]'	# remote ahead of local - cyan
+		__GIT_PS1_AHEAD_FMT='\[\e[34;03m\]'		# local ahead of remote - blue italic
+		__GIT_PS1_BEHIND_FMT='\[\e[35;03m\]'	# remote ahead of local - magenta italic
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
-		__GIT_PS1_MODIFIED_FMT='\[\e[32;03m\]'	# flag that modified, unstaged files exist - green italic
+		__GIT_PS1_MODIFIED_FMT='\[\e[33;01m\]'	# flag that modified, unstaged files exist - bold yellow
 		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
-		__GIT_PS1_STAGED_FMT='\[\e[34;03m\]'	# flag that staged files exist - blue italic
-		__GIT_PS1_STASH_FMT='\[\e[02;03;04m\]'	# flag that stashed files exist - gray italic underlined
-		__GIT_PS1_UNTRACKED_FMT='\[\e[31;03m\]'	# flag that untracked files exist - red italic
+		__GIT_PS1_STAGED_FMT='\[\e[32;01m\]'	# flag that staged files exist - bold green
+		__GIT_PS1_STASH_FMT='\[\e[01;02;04m\]'	# flag that stashed files exist - bold gray underlined
+		__GIT_PS1_UNTRACKED_FMT='\[\e[31;01m\]'	# flag that untracked files exist - bold red
 
 		# this variable is set in the git-prompt.sh script
 		# shellcheck disable=SC2154

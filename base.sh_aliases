@@ -190,7 +190,7 @@ alias gdiff='git diff --word-diff --no-index --'
 
 set_colors
 
-GREP_COLOR='1;4;32'
+GREP_COLOR='1;4;34'
 GREP_OPTIONS="--color=auto"
 export GREP_COLOR GREP_OPTIONS
 

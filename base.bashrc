@@ -343,7 +343,7 @@ PROMPT_COMMAND='prompt_update $?'
 
 set -b					# immediately notify of terminated processes
 set -C					# i.e., noclobber
-set -o posix			# do things by the book
+set +o posix			# strict posix compatibility breaks autocomplete
 set -P					# cd ../ follows physical not logical structure
 
 shopt -s cdspell		# look for minor typos in cd cmds
@@ -355,11 +355,12 @@ shopt -s histverify		# print changed cmd before running
 shopt -u huponexit		# don't send SIGHUP to children on exit
 shopt -u lithist		# save multiline commands with ';' delimiters not newlines
 shopt -s nullglob		# unmatched glob expands to '', not its string value
+shopt -s progcomp		# enable programmable completion
 shopt -u sourcepath		# don't use PATH for `.' commands
 
 # the following shopts work only for 2.05 or greater
 shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
-shopt -s xpg_echo 2>/dev/null						# use xpg4 semantics for echo
+shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
 [ "$?" -eq 0 ] || alias echo="/bin/echo"		# use /bin/echo if above fails
 
 # command-line completions generally use more bash-isms than I am willing to write
@@ -377,14 +378,8 @@ then
 
 	if [ -f "${_brew_prefix}/etc/profile.d/bash_completion.sh" ]
 	then
-		export BASH_COMPLETION_COMPAT_DIR="${_brew_prefix}/etc/profile.d"
 		. "${_brew_prefix}/etc/profile.d/bash_completion.sh"
 	fi
-
-	for completion in "${_brew_prefix}/etc/bash_completion.d/"*
-	do
-		. "${completion}" 2>&1
-	done
 
 	unset _brew_prefix
 fi

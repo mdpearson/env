@@ -40,7 +40,7 @@ else
 	then
 		THOST="UnicodeComputerName"
 	else
-		THOST="${LocalHostName} (${UnicodeComputerName})"
+		THOST="${UnicodeComputerName} (${LocalHostName})"
 	fi
 fi
 

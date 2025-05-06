@@ -1,6 +1,6 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -18,10 +18,28 @@ SHELL = /bin/bash
 
 include $(CONF)
 
-DOTFILES = .ackrc .bash_profile .common.ksh .cvsrc .dbxrc .dircolors .emacs \
-  .gitconfig .gitconfig_signers .hgrc .inputrc .isinstalled .kshrc .profile \
-  .profile_custom .ripgreprc .sh_aliases .tcshrc .MacOSX/environment.plist \
-  venv/postactivate venv/predeactivate
+DOTFILES = \
+  .ackrc \
+  .bash_profile \
+  .common.ksh \
+  .cvsrc \
+  .dbxrc \
+  .dircolors \
+  .emacs \
+  .gitconfig \
+  .gitconfig_signers \
+  .hgrc \
+  .inputrc \
+  .isinstalled \
+  .kshrc \
+  .profile \
+  .profile_custom \
+  .ripgreprc \
+  .sh_aliases \
+  .tcshrc \
+  .MacOSX/environment.plist \
+  venv/postactivate \
+  venv/predeactivate
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 

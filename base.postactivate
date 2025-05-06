@@ -5,8 +5,9 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # sh-compatible commands sourced after every virtualenv is activated
+#
+# shellcheck disable=SC2006		# $() doesn't work in old Bourne shells
 #
 
 [ "$VIRTUAL_ENV" ] || return

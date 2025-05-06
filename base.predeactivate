@@ -5,7 +5,6 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# $Id$
 # sh-compatible commands sourced before every virtualenv is deactivated
 #
 
@@ -17,12 +16,14 @@ fi
 
 if [ "$_ORIGINAL_PS1_FIRST" ]
 then
+	# shellcheck disable=SC2034		# PS1_FIRST is used in .bashrc
 	PS1_FIRST="$_ORIGINAL_PS1_FIRST"
 	unset _ORIGINAL_PS1_FIRST
 fi
 
 if [ "$_ORIGINAL_PS1_SECOND" ]
 then
+	# shellcheck disable=SC2034		# PS1_SECOND is used in .bashrc
 	PS1_SECOND="$_ORIGINAL_PS1_SECOND"
 	unset _ORIGINAL_PS1_SECOND
 fi

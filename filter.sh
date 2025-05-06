@@ -5,7 +5,9 @@
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
-# replaces vars in dotfiles and scripts with their assigned values
+# replace vars in dotfiles and scripts with their assigned values
+#
+# shellcheck disable=SC2006		# $() doesn't work in old Bourne shells
 #
 
 PATH=.	# for sourcing from current directory

@@ -118,6 +118,7 @@ redo()
 {
 	deactivate 2>/dev/null
 	hash -r
+	# shellcheck disable=SC2269
 	PATH="$PATH"
 	_ENV_PROFILED='' . "${HOME}/.${_shell}rc"
 	autoenv_init

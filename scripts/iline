@@ -1,11 +1,13 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2023 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
 #
 # print a line of useful hw or sw information about a host
+#
+# shellcheck disable=SC2006		# $() doesn't work in old Bourne shells
 #
 
 PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/sbin:$PATH

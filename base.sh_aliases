@@ -7,6 +7,9 @@
 #
 # alias definitions and other sh cmds that must be run per tty
 #
+# shellcheck disable=SC2003		# although expr is old, it's portable
+# shellcheck disable=SC2006		# $() doesn't work in old Bourne shells
+#
 
 hash -r
 
@@ -65,7 +68,7 @@ alias nfilt="grep -v \
 
 alias ipython='label "iPython" && ipython'
 
-alias aws-mfa=". $HOME/bin/exec/aws_mfa.bash"
+alias aws-mfa='. $HOME/bin/exec/aws_mfa.bash'
 
 rgrep()
 {
@@ -73,7 +76,7 @@ rgrep()
 }
 
 [ "`isinstalled cstyle`" ] && alias cstyle="cstyle -chpvP"
-[ "`isinstalled dbx`" ] && alias rdbx="dbx -s $HOME/.dbxrc"
+[ "`isinstalled dbx`" ] && alias rdbx='dbx -s "$HOME/.dbxrc"'
 [ "`isinstalled node`" ] && alias clonejs="node ~/bin/clone.js"
 [ "`isinstalled python`" ] && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
 
@@ -90,7 +93,7 @@ fi
 
 if [ -x "$HOME/Sites/util/publish" ]
 then
-	alias publish="$HOME/Sites/util/publish $HOME/Sites"
+	alias publish='$HOME/Sites/util/publish $HOME/Sites'
 fi
 
 if [ "`uname -s`" = Darwin ]

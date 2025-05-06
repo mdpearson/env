@@ -187,12 +187,12 @@ then
 		__GIT_PS1_BEHIND_FMT='\[\e[36;03m\]'	# remote ahead of local - cyan
 		__GIT_PS1_BRANCH_FMT='\[\e[02m\]'		# branch name in normal circumstances
 		__GIT_PS1_DETACHED_FMT='\[\e[31;01m\]'	# detached/special branch status
-		__GIT_PS1_MODIFIED_FMT='\[\e[31;03m\]'	# flag that modified, unstaged files exist - red italic
+		__GIT_PS1_MODIFIED_FMT='\[\e[32;03m\]'	# flag that modified, unstaged files exist - green italic
 		__GIT_PS1_REBASE_FMT='\[\e[31m\]'		# text in the midst of a rebase
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
-		__GIT_PS1_STAGED_FMT='\[\e[32;03m\]'	# flag that staged files exist - green italic
-		__GIT_PS1_STASH_FMT='\[\e[34;03m\]'		# flag that stashed files exist - blue italic
-		__GIT_PS1_UNTRACKED_FMT='\[\e[02;03m\]'	# flag that untracked files exist - dim italic
+		__GIT_PS1_STAGED_FMT='\[\e[34;03m\]'	# flag that staged files exist - blue italic
+		__GIT_PS1_STASH_FMT='\[\e[02;03;04m\]'	# flag that stashed files exist - gray italic underlined
+		__GIT_PS1_UNTRACKED_FMT='\[\e[31;03m\]'	# flag that untracked files exist - red italic
 
 		# this variable is set in the git-prompt.sh script
 		# shellcheck disable=SC2154
@@ -237,7 +237,7 @@ then
 		if [ -n "$s" ]
 		then
 			# adjust how stashed files are flagged
-			s="${__GIT_PS1_RESET_FMT}${__GIT_PS1_STASH_FMT}t"
+			s="${__GIT_PS1_RESET_FMT}${__GIT_PS1_STASH_FMT}s"
 		fi
 		if [ -n "$u" ]
 		then

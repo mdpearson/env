@@ -1,140 +1,53 @@
-
-/*
- * "#dc322f",  // solarized $red
- * "#cb4b16",  // solarized $orange
- * "#b58900",  // solarized $yellow
- * "#e6ac00",  // solarized $yellow, brighter
- * "#806f40",  // Solarized $yellow, dim
- * "#859900",  // solarized $green
- * "#9bb300",  // solarized $green, brighter
- * "#647300",  // Solarized $green, dim
- * "#2aa198",  // solarized $cyan
- * "#268bd2",  // solarized $blue
- * "#6c71c4",  // solarized $violet
- * "#d33682",  // solarized $magenta
- */
-
 {
-    "breadcrumbs.enabled": false,
-    "breadcrumbs.filePath": "last",
-    "breadcrumbs.icons": false,
-
-    "bracket-pair-colorizer-2.activeScopeCSS": [
-        "backgroundColor: {color}",
-        "borderColor: {color}",
-        "borderStyle: solid",
-        "borderWidth: 3px",
-        "opacity: 0.2"
-    ],
-    "bracket-pair-colorizer-2.colors": [
-        "#268bd2",  // Solarized $blue
-        "#9bb300",  // Solarized $green, brighter
-        "#e6ac00",  // Solarized $yellow, brighter
-    ],
-
-    "bracket-pair-colorizer-2.forceIterationColorCycle": false,
-    "bracket-pair-colorizer-2.highlightActiveScope": true,
-    "bracket-pair-colorizer-2.rulerPosition": "Center",
-    "bracket-pair-colorizer-2.showBracketsInGutter": true,
-    "bracket-pair-colorizer-2.showBracketsInRuler": false,
-    "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
-    "bracket-pair-colorizer-2.showVerticalScopeLine": false,
-    "bracket-pair-colorizer-2.unmatchedScopeColor": "#dc322f", // solarized red
-
-    "customizeUI.fontSizeMap": {
-        "13px": "11px",
-        "12px": "11px",
-        "window-title": "12px", // Window title font when using custom titlebar
-        "tab-title": "12px",    // Used for editor tab titles
-        "monospace": "10px",    // Used for monospace fonts in user interface
-        "menu": "13px",         // Used for menu items (windows only)
-    },
-
-    "customizeUI.listRowHeight": 20, // shrink rows to match XCode
-    "customizeUI.stylesheet": {
-        // https://github.com/microsoft/vscode/issues/46403#issuecomment-523286973
-        ".editor-actions": "display: none !important;",
-        // https://stackoverflow.com/questions/55193637/is-there-a-way-to-make-vscode-line-number-field-larger
-        ".monaco-editor .margin": "padding-left: 3px",
-        // https://github.com/microsoft/monaco-editor/issues/200#issuecomment-538356026
-        ".monaco-editor .lines-content": "padding-left: 2px",
-    },
-    "window.titleBarStyle": "native",   // needed for inline customizeUI
-    "customizeUI.titleBar": "inline",
-
-
-    "debug.console.fontSize": 10,
-    "debug.showBreakpointsInOverviewRuler": true,
-    "debug.toolBarLocation": "hidden",
-
-    "editor.autoClosingBrackets": "languageDefined",
-    "editor.autoClosingQuotes": "languageDefined",
-    "editor.autoIndent": "full",
-    "editor.codeLens": true,
-    "editor.colorDecorators": false,
-    "editor.copyWithSyntaxHighlighting": false,
-    "editor.cursorBlinking": "smooth",
-    "editor.cursorSmoothCaretAnimation": false,  // makes the cursor zip across the screen
-    "editor.cursorStyle": "block",
-    "editor.detectIndentation": true,
-    "editor.glyphMargin": false,                 // whether to show a gutter
-    "editor.find.autoFindInSelection": "multiline",
-    "editor.folding": false,                     // waste space with code folding arrows
-    "editor.fontFamily": "IBM Plex Mono RS",
-    "editor.fontLigatures": false,
-    "editor.fontSize": 10,
-    "editor.fontWeight": "400",
-    "editor.formatOnPaste": false,
-    "editor.hideCursorInOverviewRuler": false,
-    "editor.highlightActiveIndentGuide": true,
-    "editor.hover.sticky": true,
-    "editor.lineHeight": 13,
-    "editor.lineNumbers": "interval",
-    "editor.lineNumbersMinChars": 6,
-    "editor.matchBrackets": "always",
-    "editor.minimap.enabled": false,
-    "editor.minimap.maxColumn": 80,
-    "editor.minimap.renderCharacters": true,
-    "editor.minimap.side": "right",
-    "editor.occurrencesHighlight": true,        // auto highlight tokens, even if unselected
-    "editor.overviewRulerBorder": false,
-    "editor.renderControlCharacters": true,
-    "editor.renderIndentGuides": false,
-    "editor.renderLineHighlight": "none",
-    "editor.renderWhitespace": "none",
-    "editor.roundedSelection": false,
-    "editor.rulers": [80],
-    "editor.scrollBeyondLastLine": false,
-    "editor.selectionHighlight": true,          // auto highlight other selections, when selected
-    "editor.showFoldingControls": "always",
-    "editor.showUnused": true,
-    "editor.suggest.localityBonus": true,
-    "editor.suggest.statusBar.visible": true,
-    "editor.suggestFontSize": 10,
-    "editor.suggestLineHeight": 18,
-    "editor.suggestSelection": "first",
-    "editor.tabSize": 4,
-
+    "workbench.colorTheme": "Default Light Modern",
     "editor.tokenColorCustomizations": {
-        // Use >Developer: Inspect TM Scopes to get at these minutiae
-        "textMateRules": [
+
+        "[*Light*]": {
+            "textMateRules": [
             {
                 "name": "Generic text",
                 "scope": [
+                    "constant",
+                    "constant.character",
+                    "constant.character.escape",
+                    "constant.language",
+                    "constant.other.option",
+                    "entity",
+                    "entity.name",
+                    "entity.name.function",
+                    "entity.name.namespace",
                     "entity.name.tag",
+                    "entity.name.type",
+                    "entity.other.attribute-name",
+                    "keyword",
+                    "keyword.control",
+                    "keyword.operator",
+                    "keyword.operator.logical",
+                    "keyword.operator.logical.python",
                     "meta.function-call.arguments",
+                    "punctuation.definition.tag",
                     "source",
+                    "storage.modifier",
+                    "storage.type",
                     "string",
+                    "string.quoted.double.xml",
+                    "string.regexp",
+                    "support.function",
+                    "support.type.property-name.json",
+                    "variable",
+                    "variable.language",
+                    "variable.other.constant"
                 ],
                 "settings": {
                     "fontStyle": "",
-                    "foreground": "#000"        // black text
+                    "foreground": "#000"        // use simple black text
                 }
             },
 
             {
                 "name": "Reset scheme styling",
                 "scope": [
+                    "invalid.deprecated.shell",
                     "keyword.operator",
                     "meta.function-call.arguments",
                     "meta.function-call punctuation",
@@ -146,19 +59,19 @@
                 ],
                 "settings": {
                     "fontStyle": ""
-                },
+                }
             },
-
+            
             {
                 "name": "Operators, mostly symbols",
                 "scope": [
                     "keyword.operator.arithmetic",
                     "keyword.operator.assignment",
                     "keyword.operator.comparison",
-                    "keyword.operator",
+                    "keyword.operator"
                 ],
                 "settings": {
-                    "fontStyle": "",
+                    "fontStyle": ""
                 }
             },
             {
@@ -168,7 +81,7 @@
                     "punctuation.definition.dict",
                     "punctuation.definition.list",
                     "punctuation.definition.parameters",
-                    "punctuation.parenthesis",
+                    "punctuation.parenthesis"
                 ],
                 "settings": {
                     "fontStyle": ""
@@ -179,9 +92,10 @@
                 "scope": [
                     "keyword.control",
                     "keyword.operator.logical",
+                    "keyword.operator.logical.python",
                     "storage.type",
                     "storage.type.class",
-                    "storage.type.function",
+                    "storage.type.function"
                 ],
                 "settings": {
                     "fontStyle": "bold"
@@ -190,39 +104,40 @@
             {
                 "name": "Language constants",
                 "scope": [
-                    "constant.language",
+                    "constant.language"
                 ],
                 "settings": {
-                    "fontStyle": "bold",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "name": "Named constants",
                 "scope": [
                     "constant.other",
+                    "variable.other.constant"
                 ],
                 "settings": {
-                    "fontStyle": "bold",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "name": "YAML Anchors",
                 "scope": [
                     "entity.name.type.anchor",
-                    "variable.other.alias",
+                    "variable.other.alias"
                 ],
                 "settings": {
-                    "fontStyle": "bold",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "name": "Numeric constants",
                 "scope": [
-                    "constant.numeric",
+                    "constant.numeric"
                 ],
                 "settings": {
                     "fontStyle": "bold",
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground": "#ca6510"  // orange-600
                 }
             },
 
@@ -232,10 +147,11 @@
                     "keyword.operator.unpacking",
                     "punctuation.separator.continuation",
                     "storage.type.string.python",
+                    "punctuation.definition.tag"
                 ],
                 "settings": {
                     "fontStyle": "bold",
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground":  "#ca6510"  // orange-600
                 }
             },
 
@@ -249,7 +165,19 @@
                 ],
                 "settings": {
                     "fontStyle": "bold",
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground":  "#ca6510"  // orange-600
+                }
+            },
+
+{
+                "name": "hyperlinks",
+                "scope": [
+                    "markup.underline.link.hover",
+                    "markup.underline.link"
+                ],
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground":  "#ca6510"  // orange-600
                 }
             },
 
@@ -257,8 +185,11 @@
                 "name": "strings and quotation marks",
                 "scope": [
                     "punctuation.definition.string",
+                    "punctuation.separator",
+                    "punctuation.separator.key-value",
                     "string.quoted",
                     "string.unquoted",
+                    "string.quoted.double.xml",
                     "string.quoted.double.yaml",
                     "string.quoted.double.yaml punctuation.definition.string",
                     "string.quoted.single.yaml",
@@ -266,18 +197,18 @@
 
                 ],
                 "settings": {
-                    "fontStyle": "italic",
+                    "fontStyle": "italic"
                 }
             },
             {
                 "name": "Regular expressions",
                 "scope": [
                     "string.regexp",
-                    //"meta.function-call.arguments string.regexp",
+                    "meta.function-call.arguments string.regexp"
                 ],
                 "settings": {
-                    "fontStyle": "bold",
-                    "foreground": "#b58900",  // Solarized $yellow
+                    "fontStyle": "italic"
+                    // "foreground": "#b58900",  // Solarized $yellow
                 }
             },
             {
@@ -291,19 +222,19 @@
                 ],
                 "settings": {
                     "fontStyle": "bold",
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground":  "#ca6510"  // orange-600
                 }
             },
 
             {
                 "name": "docstrings",
                 "scope": [
-                    "string.quoted.docstring punctuation.definition.string",
                     "string.quoted.docstring",
+                    "string.quoted.docstring punctuation.definition.string"
                 ],
                 "settings": {
                     "fontStyle": "",
-                    "foreground": "#806f40",  // Solarized $yellow, dim
+                    "foreground": "#6c757d",  // gray-600
                 }
             },
             {
@@ -313,8 +244,8 @@
                     "punctuation.definition.comment",
                 ],
                 "settings": {
-                    "fontStyle": "",
-                    "foreground": "#806f40",  // Solarized $yellow, dim
+                    "fontStyle": "italic",
+                    "foreground": "#6c757d",  // gray-600
                 }
             },
             {
@@ -329,11 +260,12 @@
                 "name": "Decorators",
                 "scope": [
                     "entity.name.function.decorator",
-                    "meta.function.decorator"
+                    "meta.function.decorator",
+                    "meta.preprocessor"
                 ],
                 "settings": {
                     "fontStyle": "",
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground":  "#ca6510"  // orange-600
                 }
             },
             {
@@ -349,7 +281,7 @@
                     "meta.function.decorator meta.function.parameters string.quoted punctuation.definition.string",
                 ],
                 "settings": {
-                    "foreground": "#cb4b16",  // Solarized $orange
+                    "foreground":  "#ca6510",  // orange-600
                 }
             },
 
@@ -394,367 +326,152 @@
                     "fontStyle": "bold"
                 }
             },
-
-            {
-                "name": "Function parameter names",
-                "scope": [
-                    "variable.other.alias",
-                    "variable.parameter.function",
-                    "variable.parameter.function-call"
-                ],
-                "settings": {
-                    "fontStyle": "underline",
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-            {
-                "name": "Function parameters",
-                "scope": [
-                    "meta.function.parameters",
-                    "support.other.variable",
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-            {
-                "name": "Class parameters (inherited classes)",
-                "scope": [
-                    "entity.other.inherited-class.python",
-                    "meta.class.inheritance.python",
-                    "meta.class.inheritence.python constant.other",
-                ],
-                "settings": {
-                    "fontStyle": "underline",
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-
-            {
-                "name": "Function calls (nested 1x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call",
-                    "meta.function-call.arguments meta.function-call.generic",
-                ],
-                "settings": {
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-            {
-                "name": "Function parameter names (nested 1x)",
-                "scope": [
-                    "meta.function-call.arguments variable.parameter.function-call",
-                ],
-                "settings": {
-                    "fontStyle": "underline",
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-            {
-                "name": "Function arguments (nested 1x)",
-                "scope": [
-                    "meta.function-call.arguments",
-                    "meta.function-call.arguments variable.parameter.function-call",
-                    // "meta.function.python constant.language",
-                    // "meta.function.python string.quoted",
-                    // "meta.function.python string.quoted punctuation.definition.string",
-                ],
-                "settings": {
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-            {
-                "name": "String function arguments (Nested 1x)",
-                "scope": [
-                    "meta.function-call.arguments string.quoted",
-                    "meta.function-call.arguments string.quoted punctuation.definition.string",
-                    "meta.function.parameters string.quoted",
-                    "meta.function.parameters string.quoted punctuation.definition.string",
-                ],
-                "settings": {
-                    "fontStyle": "italic",
-                    "foreground": "#657b83",  // Solarized $base00
-                }
-            },
-
-            {
-                "name": "Function calls (nested 2x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
-                ],
-                "settings": {
-                    "foreground": "#93a1a1",  // Solarized $base1
-                }
-            },
-            {
-                "name": "Function parameter names (nested 2x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                ],
-                "settings": {
-                    "foreground": "#93a1a1",  // Solarized $base1
-                }
-            },
-            {
-                "name": "Function arguments (nested 2x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments",
-                    "meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground": "#93a1a1",  // Solarized $base1
-                }
-            },
-            {
-                "name": "String function arguments (nested 2x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments string.quoted",
-                    "meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
-                    "meta.function-call.arguments meta.function.parameters string.quoted",
-                    "meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
-                ],
-                "settings": {
-                    "fontStyle": "italic",
-                    "foreground": "#93a1a1",  // Solarized $base1
-                }
-            },
-
-            {
-                "name": "Function calls (nested 3–4x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.generic",
-                ],
-                "settings": {
-                    "foreground": "#93a1a188",  // Solarized $base1, 50%
-                }
-            },
-            {
-                "name": "Function parameter names (Nested 3–4x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                ],
-                "settings": {
-                    "foreground": "#93a1a188",  // Solarized $base1, 50%
-                }
-            },
-            {
-                "name": "Function arguments (nested 3–4x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments variable.parameter.function-call",
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground": "#93a1a188",  // Solarized $base1, 50%
-                }
-            },
-            {
-                "name": "String function arguments (nested 3–4x)",
-                "scope": [
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments string.quoted punctuation.definition.string",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted",
-                    "meta.function-call.arguments meta.function-call.arguments meta.function-call.arguments meta.function.parameters string.quoted punctuation.definition.string",
-                ],
-                "settings": {
-                    "fontStyle": "italic",
-                    "foreground": "#93a1a188",  // Solarized $base1, 50%
-                }
-            }
         ]
+        },
+        "[*Dark*]": {
+            "textMateRules": [
+                {
+                    "scope": "ref.matchtext",
+                    "settings": {
+                        "foreground": "#fff"
+                    }
+                }
+            ]
+        }
     },
-
-    "editor.wordBasedSuggestions": false,
-    "editor.wordWrap": "on",
-    "editor.wrappingIndent": "indent",
-
-    "errorLens.gutterIconSet": "circle",
-    "errorLens.gutterIconsEnabled": false,
-    "errorLens.statusBarColorsEnabled": false,
-
-    "explorer.confirmDelete": false,
-    "explorer.sortOrder": "mixed",
-
-    "extensions.ignoreRecommendations": false,
-
-    "files.associations": {
-        "*.pxd": "python",
-        "*.pyx": "python",
-        "Dockerfile*": "dockerfile"
-    },
-
-    "files.autoSave": "afterDelay",
-    "files.defaultLanguage": "python",
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true,
-
-    "git.autofetch": true,
-
-    "keyboard.touchbar.enabled": true,
-
-    "problems.showCurrentInStatus": true,
-
-    "python.analysis.logLevel": "Trace",
-
-    "python.workspaceSymbols.ctagsPath": "/usr/local/bin/ctags",
-    "python.workspaceSymbols.enabled": true,
-    "python.workspaceSymbols.rebuildOnStart": true,
-    "python.workspaceSymbols.rebuildOnFileSave": true,
-    "python.venvPath": "Users/mpearson/venv/",
-
-    "scm.diffDecorationsGutterWidth": 4,
-
-    "search.quickOpen.history.filterSortOrder": "recency",
-    "search.showLineNumbers": true,
-    "search.smartCase": false,
-    "search.useGlobalIgnoreFiles": true,
-
-    "shellcheck.disableVersionCheck": true,
-
-    "telemetry.enableTelemetry": false,
-
-    "terminal.explorerKind": "integrated",
-    "terminal.integrated.cursorBlinking": true,
-    "terminal.integrated.cursorStyle": "block",
-    "terminal.integrated.fontSize": 10,
-    "terminal.integrated.lineHeight": 1.1,
-    "terminal.integrated.fontFamily": "Input Mono Narrow",
-    "terminal.integrated.fontWeight": "400",
-
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-
-    "window.nativeTabs": true,
-
-    "window.title": "${appName}${separator}${activeEditorMedium}${separator}${rootName}",
-    "window.zoomLevel": 0,
-
-    "workbench.activityBar.visible": false,
+    "github.copilot.nextEditSuggestions.enabled": true,
     "workbench.colorCustomizations": {
-        "activityBarBadge.background": "#e5ecf2",
 
-        "badge.background": "#e5ecf2",
-        "badge.foreground": "#000",
+        "activityBarBadge.background": "#025fb8",  // same blue used in VSCode UI
+        "activityBarBadge.foreground": "#fff",
+        "badge.background": "#025fb8",  // same blue used in VSCode UI
+        "badge.foreground": "#fff",
 
-        "debugIcon.breakpointForeground": "#dc322f",
+        "debugIcon.breakpointForeground": "#dc3545",  // red-500
 
-        /* doesn't seem to work */
-        // "diffEditor.border": "#002b36",
-        "diffEditor.insertedTextBackground": "#dc322f20",
-        "diffEditor.removedTextBackground": "#85990020",
-        "diffEditor.renderSideBySide": false,
+        "diffEditor.insertedLineBackground": "#19875430",  // green-500 at 3/16 opacity
+        "diffEditor.insertedTextBackground": "#19875480",  // green-500 at 1/2 opacity
+        "diffEditor.removedLineBackground": "#dc354530",  // red-500 at 3/16 opacity
+        "diffEditor.removedTextBackground": "#dc354580",  // red-500 at 1/2 opacity
+        "diffEditor.renderSideBySide": true,
 
-        /* find matches are various shades of Solarized $cyan */
-        "editor.findMatchBackground": "#2aa19866",
-        "editor.findMatchHighlightBorder": "#2aa19800",
-        "editor.findMatchHighlightBackground": "#2aa19833",
-        "editor.findRangeHighlightBackground": "#2aa1980a",
-        "editorOverviewRuler.findMatchForeground": "#2aa19866",
+        "editor.findMatchBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+        "editor.findMatchBorder": "#6ea8fe",  // blue-300
+        "editor.findMatchForeground": "#0d6efd",  // blue-500
+        "editor.findMatchHighlightBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
 
-        "editorCursor.background": "#fff",
-        "editorCursor.foreground": "#000",
+        "editor.lineHighlightBackground": "#0d6efd20",
+        "editor.rangeHighlightBackground": "#0d6efd20",
+        "editor.selectionHighlightBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
+        "editor.wordHighlightBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
+        "editor.wordHighlightStrongBackground": "#0d6efda0",  // blue-500 at 5/8 opacity -- variable definitions
 
-        "editorGroupHeader.tabsBorder": "#fff",
+        "editor.inactiveSelectionBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
+        "editor.selectionBackground": "#0d6efd40",  // blue-500 at 1/4 opacity
 
-        "editorGutter.addedBackground": "#93a1a1",
-        "editorGutter.deletedBackground": "#93a1a1",
-        "editorGutter.modifiedBackground": "#93a1a1",
-        "editorOverviewRuler.addedForeground": "#93a1a141",
-        "editorOverviewRuler.deletedForeground": "#93a1a141",
-        "editorOverviewRuler.modifiedForeground": "#93a1a141",
+        "editorError.background": "#dc354530",  // red-500 at 3/16 opacity
+        "editorError.foreground": "#dc3545",  // red-500
+        "list.errorForeground": "#dc3545",
+        "editorOverviewRuler.errorForeground": "#dc3545",  // red-500
 
-        /* selection matches are various shades of Solarized $base2 */
-        "editor.hoverHighlightBackground": "#eee8d599",
-        "editor.selectionBackground": "#eee8d5",
-        // "editor.inactiveSelectionBackground": "#600", // if unset, auto-computed
-        "editor.selectionHighlightBackground": "#eee8d599",
-        "editor.symbolHighlightBackground": "#eee8d599",
-        "editor.wordHighlightBackground": "#eee8d599",
-        "editor.wordHighlightStrongBackground": "#eee8d599",  // symbol definition?
-        "editorOverviewRuler.rangeHighlightForeground": "#eee8d5",
-        "editorOverviewRuler.selectionHighlightForeground": "#eee8d5",
-        "editorOverviewRuler.wordHighlightForeground": "#eee8d5",
-        "editorOverviewRuler.wordHighlightStrongForeground": "#eee8d5",
+        "editorWarning.background": "#ffc10760",  // yellow-500 at 3/16 opacity
+        "editorWarning.foreground": "#cc9a06",    // yellow-600
+        "list.warningForeground": "#ffc107",
+        "editorOverviewRuler.warningForeground": "#ffc107",  // yellow-500
 
-        "editorBracketMatch.background": "#eee8d599",
-        "editorOverviewRuler.bracketMatchForeground": "#eee8d599",
+        "editorInfo.background": "#19875430",  // green-500 at 3/16 opacity
+        "editorInfo.foreground": "#198754", // green-500
+        "editorOverviewRuler.infoForeground": "#198754", // green-500
 
-        "editorLineNumber.activeForeground": "#93a1a181",
-        "editorLineNumber.foreground": "#93a1a181",
-        "editorRuler.foreground": "#93a1a121",
+        "editorGhostText.foreground": "#6ea8fe",  // blue-300
+        "editorGhostText.background": "#E7F0FF",  // blue-050
 
-        "editorError.foreground": "#cb4b1600",      // Solarized $orange
-        "editorOverviewRuler.errorForeground": "#cb4b16",
-        "errorLens.errorBackgroundLight": "#cb4b1622",
-        "errorLens.errorForegroundLight": "#cb4b16",
+        // "errorForeground": "#dc3545",  // red-500
 
-        "editorHint.foreground":  "#6c71c400",      // Solarized $violet
-        "editorOverviewRuler.hintForeground": "#6c71c4",
-        "errorLens.hintBackgroundLight": "#6c71c422",
-        "errorLens.hintForegroundLight": "#6c71c4",
+        "editorLineNumber.activeForeground": "#6ea8fe",  // blue-300
+        "editorLineNumber.foreground": "#CED4DA",  // gray-400
 
-        "editorInfo.foreground": "#6c71c400",       // Solarized $violet
-        "editorOverviewRuler.infoForeground": "#6c71c4",
-        "errorLens.infoBackgroundLight": "#6c71c422",
-        "errorLens.infoForegroundLight": "#6c71c4",
+        "editorRuler.foreground": "#E9ECEF",  // gray-200
+        
+        "editorCursor.background": "#cfe2ff",  // blue-100
+        "editorCursor.foreground": "#0d6efd",  // blue-500
 
-        "editorWarning.foreground": "#6c71c400",    // Solarized $violet
-        "editorOverviewRuler.warningForeground": "#6c71c4",
-        "errorLens.warningBackgroundLight": "#6c71c422",
-        "errorLens.warningForegroundLight": "#6c71c4",
+        "editorLink.activeForeground": "#0d6efd",
+        // "textLink.foreground": "#0d6efd",  // blue-500
+        // "textLink.activeForeground": "#0d6efd",  // blue-500
 
-        "scrollbarSlider.activeBackground": "#93a1a1b1",
-        "scrollbarSlider.background": "#93a1a141",
-        "scrollbarSlider.hoverBackground": "#93a1a181",
+        "editorGutter.addedBackground": "#198754",  // green-500
+        "editorGutter.deletedBackground": "#dc3545",  // red-500
+        "editorGutter.modifiedBackground": "#ffc107",  // yellow-500
+        "editorOverviewRuler.addedForeground": "#198754",  // green-500
+        "editorOverviewRuler.deletedForeground": "#dc3545",  // red-500
+        "editorOverviewRuler.findMatchForeground": "#0d6efd80",  // blue-500 at 50% opacity
+        "editorOverviewRuler.modifiedForeground": "#ffc107",  // yellow-500
 
-        "statusBar.background": "#0000",            // strangely, this has an effect
+        "gitDecoration.deletedResourceForeground": "#adb5bd",  // gray-500
+        "gitDecoration.ignoredResourceForeground": "#adb5bd",  // gray-500
+        "gitDecoration.modifiedResourceForeground": "#198754",  // green-500
+        "gitDecoration.addedResourceForeground": "#0d6efd",  // blue-500
+        "gitDecoration.untrackedResourceForeground": "#0d6efd",  // blue-500
+        "gitDecoration.stageDeletedResourceForeground":"#6f42c1",  // purple-500
+        "gitDecoration.conflictingResourceForeground": "#dc3545",  // red-500
+        "gitDecoration.stageModifiedResourceForeground": "#198754",  // green-500
+        "gitDecoration.renamedResourceForeground": "#20c997",  // teal-500
+        "gitDecoration.submoduleResourceForeground": "#0aa2c0",  // cyan-600
 
-        "tab.activeBackground": "#fff",
-        "tab.activeBorder": "#fff",
-        "tab.activeBorderTop": "#fff",
-        "tab.activeForeground": "#073642",
+        "editor.bracketPairColorization.colorizedBracketBorder": true,
 
-        "tab.activeModifiedBorder": "#fff",
-        "tab.inactiveModifiedBorder": "#fff",
+        "editorBracketHighlight.foreground1": "#520dc2", // indigo-600 for the first pair of matching braces
+        "editorBracketHighlight.foreground2": "#1aa179", // teal-600 for the second pair
+        "editorBracketHighlight.foreground3": "#ab296a", // pink-600 for the third pair
+        "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545", // red-500 for unexpected brackets
+    
+        "editorBracketMatch.background": "#cfe2ff80", // blue-100 at 50% opacity
+        "editorBracketMatch.border": "#3D8BFD" // blue-400
     },
 
-    "workbench.colorTheme": "White",
-    "workbench.commandPalette.preserveInput": true,
-    "workbench.editor.highlightModifiedTabs": true,
-    "workbench.editor.labelFormat": "default",
-    "workbench.editor.limit.enabled": true,
-    "workbench.editor.limit.perEditorGroup": true,
-    "workbench.editor.limit.value": 6,
-    "workbench.editor.showIcons": false,
-    "workbench.editor.showTabs": true,
-    "workbench.editor.tabCloseButton": "off",
-    "workbench.editor.tabSizing": "fit",
-    "workbench.enableExperiments": false,
-    "workbench.fontAliasing": "default",
-    "workbench.iconTheme": null,
-    "workbench.panel.defaultLocation": "bottom",
-    "workbench.settings.editor": "json",
-    "workbench.settings.openDefaultKeybindings": true,
-    "workbench.settings.openDefaultSettings": true,
-    "workbench.settings.useSplitJSON": true,
-    "workbench.sideBar.location": "right",
-    "workbench.statusBar.visible": true,
-    "workbench.tree.indent": 23,
-    "workbench.view.alwaysShowHeaderActions": true,
+    // https://github.com/vscode-shellcheck/vscode-shellcheck/issues/192
+    "[shellscript]": {
+        "editor.showDeprecated": false
+    },
 
-    "zenMode.fullScreen": false,
-    "zenMode.hideLineNumbers": false,
+    "diffEditor.experimental.showMoves": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "block",
+    "editor.detectIndentation": true,
+    "editor.find.addExtraSpaceOnTop": false,
+    "editor.fontFamily": "Input",
+    "editor.fontSize": 12,
+    "editor.glyphMargin": false,
+    "editor.guides.bracketPairsHorizontal": false,
+    "editor.hideCursorInOverviewRuler": false,
+    "editor.inlineSuggest.enabled": true,
+    "editor.inlineSuggest.syntaxHighlightingEnabled": false,
+    "editor.lineHeight": 17,
+    "editor.lineNumbers": "interval",
+    "editor.linkedEditing": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.occurrencesHighlight": "multiFile",
+    "editor.overtypeCursorStyle": "block-outline",
+    "editor.overviewRulerBorder": false,
+    "editor.renderLineHighlight": "all",
+    "editor.roundedSelection": false,
+    "editor.rulers": [72, 80],
+    "editor.stickyScroll.enabled": true,
+    "editor.stickyScroll.maxLineCount": 10,
+    "explorer.decorations.colors": false,
+    "window.systemColorTheme": "auto",
+    "window.zoomLevel": -1,
+    "workbench.editor.decorations.badges": false,
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.highlightModifiedTabs": false,
+    "workbench.editor.limit.enabled": false,
+    "workbench.editor.limit.perEditorGroup": true,
+    "workbench.editor.limit.value": 12,
+    "workbench.editor.showIcons": false,
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.fontAliasing": "default",
+    "workbench.panel.defaultLocation": "bottom",
+    "workbench.sideBar.location": "left",
+    "workbench.editor.tabActionCloseVisibility": false
 }

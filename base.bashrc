@@ -397,6 +397,8 @@ then
 	complete -C '/usr/local/bin/aws_completer' aws
 fi
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
 if [ "$(isinstalled kubectl)" ]
 then
 	source <(kubectl completion bash)

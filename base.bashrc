@@ -354,7 +354,7 @@ shopt -s histreedit		# edit failed history changes
 shopt -s histverify		# print changed cmd before running
 shopt -u huponexit		# don't send SIGHUP to children on exit
 shopt -u lithist		# save multiline commands with ';' delimiters not newlines
-shopt -s nullglob		# unmatched glob expands to '', not its string value
+shopt -u nullglob		# conflicts with bash completion, otherwise it's really useful
 shopt -s progcomp		# enable programmable completion
 shopt -u sourcepath		# don't use PATH for `.' commands
 

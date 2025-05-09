@@ -1,10 +1,11 @@
-*.orig
-*~
 .DS_Store
 .env
 .idea
-Icon\r
+*.code-workspace
+*.orig
+*~
 \#*\#
 env.conf
 env.iml
 env.tar
+Icon\r

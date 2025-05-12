@@ -484,7 +484,43 @@ then
 		done
 	fi
 
-	PATH="`echo \"${userp}:${customp}:${PATH}\" | \
+	# adjust the PATH to support homebrew
+	if [ -f /opt/homebrew/bin/brew ]
+	then
+		eval "`/opt/homebrew/bin/brew shellenv`"
+	fi
+
+	# adjsut the PATH to support nvm (node)
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+	# adjust the PATH to support sdkman
+	if [ -r "$HOME/.sdkman" ]
+	then
+		SDKMAN_DIR="$HOME/.sdkman"
+		export SDKMAN_DIR
+		[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && . "$HOME/.sdkman/bin/sdkman-init.sh"
+	fi
+
+	BASE_PATH="$PATH"
+
+	# this first definition of PATH is only tentative
+	PATH="`echo \"${userp}:${customp}:${BASE_PATH}\" | \
+	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
+
+	. "$HOME/.isinstalled"
+
+	# look for gems in the tentative path
+	if [ `isinstalled gem` ]
+	then
+		for p in `gem environment | awk '/GEM PATHS/{flag=1;next}/GEM CONFIGURATION/{flag=0}flag{print $2}'`
+		do
+			append_path customp "$p/bin"
+		done
+	fi
+
+	# now that we've found gem paths, we can construct a final PATH
+	PATH="`echo \"${userp}:${customp}:${BASE_PATH}\" | \
 	  sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 
 	if [ "$SGE_O_PATH" ]
@@ -492,6 +528,8 @@ then
 		printf " (Overriding PATH with SGE_O_PATH...)" >&2
 		PATH=$SGE_O_PATH
 	fi
+
+	unset BASE_PATH
 	export PATH
 
 	#
@@ -556,17 +594,9 @@ then
 
 	echo " <done>" >&2
 
-	. "$HOME/.isinstalled"
-
 	# support 1Password
 	SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 	export SSH_AUTH_SOCK
-
-	# support homebrew
-	if [ -f /opt/homebrew/bin/brew ]
-	then
-		eval "`/opt/homebrew/bin/brew shellenv`"
-	fi
 
 	#
 	# Configure virtual environments for Python.
@@ -624,17 +654,6 @@ then
 	then
 		TZ='America/Los_Angeles'
 		export TZ
-	fi
-
-	#
-	# sdkman insists these commands should go at the very end of the file,
-	# but we depend on sdkman for some banner info
-	#
-	if [ -r "$HOME/.sdkman" ]
-	then
-		SDKMAN_DIR="$HOME/.sdkman"
-		export SDKMAN_DIR
-		[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && . "$HOME/.sdkman/bin/sdkman-init.sh"
 	fi
 
 	# display a welcome message introducing the host and OS
@@ -761,13 +780,7 @@ else	# if [ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ]
 
 	# if we're here, this file has been sourced already
 
-	# sdkman insists these commands should go toward the end of the file
-	if [ -r "$HOME/.sdkman" ]
-	then
-		SDKMAN_DIR="$HOME/.sdkman"
-		export SDKMAN_DIR
-		[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && . "$HOME/.sdkman/bin/sdkman-init.sh"
-	fi
+	:
 fi
 
 # NO CODE HERE

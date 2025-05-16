@@ -511,7 +511,7 @@ then
 	. "$HOME/.isinstalled"
 
 	# look for gems in the tentative path
-	if [ `isinstalled gem` ]
+	if [ "`isinstalled gem`" ]
 	then
 		for p in `gem environment | awk '/GEM PATHS/{flag=1;next}/GEM CONFIGURATION/{flag=0}flag{print $2}'`
 		do
@@ -661,8 +661,8 @@ then
 	then
 		if [ -x "$HOME/bin/exec/iline" ]
 		then
-			echo " Welcome to `$HOME/bin/exec/iline -anb -l 12`" >&2
-			echo " running `$HOME/bin/exec/iline -sv -l 9`" >&2
+			echo " Welcome to `"$HOME"/bin/exec/iline -anb -l 12`" >&2
+			echo " running `"$HOME"/bin/exec/iline -sv -l 9`" >&2
 		elif [ -r /etc/release ]
 		then
 			echo " Welcome to ${HOST}, a $arch-type machine" \
@@ -677,7 +677,7 @@ then
 
 		# print out battery information if applicable
 		[ -x "$HOME/bin/exec/$ost/bat" ] && \
-		  trimline "`$HOME/bin/exec/$ost/bat`"
+		  trimline "`"$HOME"/bin/exec/"$ost"/bat`"
 
 		# pretty print env. var names if desired
 		pre="" # `tput smul 2>/dev/null`
@@ -712,7 +712,7 @@ then
 		# if possible, do a quick test to see if DISPLAY is sane
 		if [ -x "$HOME/bin/exec/xping" ]
 		then
-			if $HOME/bin/exec/xping >/dev/null 2>&1
+			if "$HOME/bin/exec/xping" >/dev/null 2>&1
 			then
 				# DISPLAY is good
 				:

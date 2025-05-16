@@ -40,6 +40,7 @@
                     "string",
                     "string.quoted.double.xml",
                     "string.regexp",
+                    "string.unquoted.plain.out.yaml",
                     "storage.type.generic.groovy",
                     "storage.type.primitive.groovy",
                     "support.class",
@@ -56,7 +57,6 @@
                     "foreground": "#000"        // use simple black text
                 }
             },
-
             {
                 "name": "Reset scheme styling",
                 "scope": [
@@ -74,7 +74,6 @@
                     "fontStyle": ""
                 }
             },
-
             {
                 "name": "Operators, mostly symbols",
                 "scope": [
@@ -155,7 +154,6 @@
                     "foreground": "#ab296a"  // pink-600
                 }
             },
-
             {
                 "name": "Interesting single characters",
                 "scope": [
@@ -163,14 +161,13 @@
                     "punctuation.separator.continuation",
                     "storage.type.string.python",
                     "punctuation.definition.tag",
-                    "punctuation.separator.continuation",
+                    "punctuation.separator.continuation"
                 ],
                 "settings": {
                     "fontStyle": "bold",
                     "foreground":  "#ab296a"  // pink-600
                 }
             },
-
             {
                 "name": "Interesting yaml symbols",
                 "scope": [
@@ -184,7 +181,6 @@
                     "foreground":  "#ab296a"  // pink-600
                 }
             },
-
             {
                 "name": "strings and quotation marks",
                 "scope": [
@@ -197,8 +193,8 @@
                     "string.quoted.double.yaml",
                     "string.quoted.double.yaml punctuation.definition.string",
                     "string.quoted.single.yaml",
-                    "string.quoted.single.yaml punctuation.definition.string"
-
+                    "string.quoted.single.yaml punctuation.definition.string",
+                    "string.unquoted.plain.out.yaml"
                 ],
                 "settings": {
                     "fontStyle": "italic"
@@ -233,7 +229,6 @@
                     "foreground":  "#ab296a"  // pink-600
                 }
             },
-
             {
                 "name": "docstrings",
                 "scope": [
@@ -264,7 +259,6 @@
                     "fontStyle": "bold"
                 }
             },
-
             {
                 "name": "Decorators",
                 "scope": [
@@ -297,7 +291,6 @@
                     "foreground":  "#ab296a"  // pink-600
                 }
             },
-
             {
                 "name": "Function calls",
                 "scope": [
@@ -308,7 +301,6 @@
                     "fontStyle": "bold"
                 }
             },
-
             {
                 "name": "Function call arguments",
                 "scope": [
@@ -318,7 +310,6 @@
                     "fontStyle": ""
                 }
             },
-
             {
                 "name": "Function definitions",
                 "scope": [
@@ -374,7 +365,9 @@
                 "name": "Markdown hyperlink",
                 "scope": [
                     "markup.underline.link",
+                    "markup.underline.link.comment",
                     "markup.underline.link.hover",
+                    "markup.underline.link.markdown",
                     "meta.link.inline.markdown",
                     "punctuation.definition.link",
                     "string.other.link.title.markdown",
@@ -402,7 +395,7 @@
                 "settings": {
                     "foreground": "#b02a37"  // red-600
                 }
-            },
+            }
             // {
             //     "name": "Bold parentheses, brackets, and braces in code",
             //     "scope": [
@@ -470,64 +463,133 @@
     },
     "workbench.colorCustomizations": {
 
-        "activityBarBadge.background": "#025fb8",  // same blue used in VSCode UI
+        /* apply the theme's distinctive blue to various UI elements */
+        "activityBarBadge.background": "#025fb8",
         "activityBarBadge.foreground": "#fff",
-        "badge.background": "#025fb8",  // same blue used in VSCode UI
+        "badge.background": "#025fb8",
         "badge.foreground": "#fff",
+
+        /* use the theme's grey color for various backgrounds */
+        "sideBar.background": "#f8f8f8",
+        "tab.inactiveBackground": "#f8f8f8",
+
+        /* make it slightly lighter in the central editor area */
+        "editorGutter.background": "#fcfcfc",  // halfway between panel and editor background
+        "panel.background": "#fcfcfc",
+
+        // match theme styling of faint lines as best we can
+        "editorIndentGuide.background1": "#eee",
+        "editorIndentGuide.activeBackground1": "#eee",
+        "editorRuler.foreground": "#eee",
+        "editorStickyScroll.border": "#eee",
+
+        /* remove all color and tint from the breadcrumb and search widget */
+        "breadcrumb.background": "#fff",
+        "editorStickyScroll.background": "#fff",
+        "editorWidget.background": "#fff",  // search popop
+        "editorWidget.border": "#0000",
+        "tab.activeBackground": "#fff",
+        "tab.activeBorder": "#fff",
+        "tab.activeBorderTop": "#000",
+
+        /* disable shadows, which are a little distracting */
+        "editorHoverWidget.shadow": "#0000",
+        "editorStickyScroll.shadow": "#0000",
+        "editorSuggestWidget.shadow": "#0000",
+        "scrollbar.shadow": "#0000",
+        "widget.shadow": "#0000",
+        
+        // match styling of the theme's default value popup as best we can
+        "editorHoverWidget.background": "#e8e8e8",
+        "editorHoverWidget.border": "#e3e3e3",
+        "editorHoverWidget.foreground": "#1a1a1a",
+        "editorHoverWidget.highlightForeground": "#0f0",  // not sure what this is yet
+        "editorHoverWidget.statusBarBackground": "#ccc",
+        "editorSuggestWidget.background": "#e8e8e8",
+        "editorSuggestWidget.border": "#e3e3e3",
+        "editorSuggestWidget.foreground": "#1a1a1a",
+        // editorInlayHint?
+        // editorParameterHint?
 
         "debugIcon.breakpointForeground": "#dc3545",  // red-500
 
+        /* colors for the diff view */
         "diffEditor.insertedLineBackground": "#19875430",  // green-500 at 3/16 opacity
         "diffEditor.insertedTextBackground": "#19875480",  // green-500 at 1/2 opacity
         "diffEditor.removedLineBackground": "#dc354530",  // red-500 at 3/16 opacity
         "diffEditor.removedTextBackground": "#dc354580",  // red-500 at 1/2 opacity
         "diffEditor.renderSideBySide": true,
 
-        "editor.findMatchBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
-        "editor.findMatchBorder": "#6ea8fe",  // blue-300
-        "editor.findMatchForeground": "#0d6efd",  // blue-500
-        "editor.findMatchHighlightBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+        /* current search match */
+        "editor.findMatchBackground": "#19875430",  // green-500 at 3/16 opacity
+        "editor.findMatchBorder": "#0d6efd",  // blue-500, same as editorCursor.foreground
+        "editor.findMatchForeground": "#146c43",  // green-600
 
-        "editor.lineHighlightBackground": "#0d6efd20",
-        "editor.rangeHighlightBackground": "#0d6efd20",
-        "editor.selectionHighlightBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
-        "editor.wordHighlightBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
-        "editor.wordHighlightStrongBackground": "#0d6efda0",  // blue-500 at 5/8 opacity -- variable definitions
+        /* other search matches */
+        "editor.findMatchHighlightBackground": "#19875430",  // green-500 at 3/16 opacity
+        "editor.findMatchHighlightBorder": "#fff0",  // no border
+        "editor.findMatchHighlightForeground": "#146c43",  // green-600
+        
+        /* colors for the cursor and the line the cursor is in */
+        "editorCursor.background": "#fff",  // pure white for contrast
+        "editorCursor.foreground": "#0d6efd",  // blue-500
+        "editor.lineHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "editor.lineHighlightBorder": "#fff0",
+        "editor.rangeHighlightBackground": "#fff0",  // this highlights the line under the search result
+        "editorStickyScrollHover.background": "#0d6efd18",  // this highlights the line anchoring current indentation level
 
-        "editor.inactiveSelectionBackground": "#0d6efd20",  // blue-500 at 1/8 opacity
-        "editor.selectionBackground": "#0d6efd40",  // blue-500 at 1/4 opacity
+        /* colors for the selected line/object in list views and panels */
+        "list.activeSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "list.activeSelectionForeground": "#025fb8",  // VSCode blue
+        "list.activeSelectionIconForeground": "#025fb8",  // VSCode blue
+        "list.hoverBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "list.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "list.inactiveSelectionForeground": "#025fb8",  // VSCode blue
+        "list.inactiveSelectionIconForeground": "#025fb8",  // VSCode blue
 
-        "editorError.background": "#dc354530",  // red-500 at 3/16 opacity
+        /* colors for selected text */
+        "editor.selectionBackground": "#0d6efd30",  // blue-500 at 3/8 opacity
+        "editor.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+
+        /* same text as selection, OR text selected via a double-click; cf. wordHighlightBackground */
+        "editor.selectionHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "editor.selectionHighlightBorder": "#fff0",
+
+        /* use of symbol/text under cursor */
+        "editor.wordHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+        "editor.wordHighlightBorder": "#fff0",
+
+        /* definition/modification of symbol/text under cursor */
+        "editor.wordHighlightStrongBackground": "#e2d9f3",  // purple-100
+        "editor.wordHighlightStrongBorder": "#e2d9f3",  // purple-100
+
+        "editorError.background": "#fff0",
         "editorError.foreground": "#dc3545",  // red-500
-        "list.errorForeground": "#dc3545",
         "editorOverviewRuler.errorForeground": "#dc3545",  // red-500
+        //"errorForeground": "#dc3545",  // red-500
+        "list.errorForeground": "#dc3545",
 
-        "editorWarning.background": "#ffc10760",  // yellow-500 at 3/16 opacity
-        "editorWarning.foreground": "#cc9a06",    // yellow-600
-        "list.warningForeground": "#ffc107",
+        "editorWarning.background": "#fff0",
+        "editorWarning.foreground": "#ffc107",  // yellow-500
         "editorOverviewRuler.warningForeground": "#ffc107",  // yellow-500
+        "list.warningForeground": "#ffc107",  // yellow-500
 
-        "editorInfo.background": "#19875430",  // green-500 at 3/16 opacity
+        "editorInfo.background": "#fff0",
         "editorInfo.foreground": "#198754", // green-500
         "editorOverviewRuler.infoForeground": "#198754", // green-500
+        "list.infoForeground": "#198754", // green-500
 
+        /* colors for AI suggestions */
+        "editorGhostText.background": "#cfe2ff40",  // blue-100 at 25% opacity
         "editorGhostText.foreground": "#6ea8fe",  // blue-300
-        "editorGhostText.background": "#E7F0FF",  // blue-050
-
-        //"errorForeground": "#dc3545",  // red-500
 
         "editorLineNumber.activeForeground": "#6ea8fe",  // blue-300
-        "editorLineNumber.foreground": "#CED4DA",  // gray-400
         "editorLineNumber.dimmedForeground":"#0d6efd",  // blue-500
+        "editorLineNumber.foreground": "#CED4DA",  // gray-400
 
-        "editorRuler.foreground": "#E9ECEF",  // gray-200
-
-        "editorCursor.background": "#cfe2ff",  // blue-100
-        "editorCursor.foreground": "#0d6efd",  // blue-500
-
-        "editorLink.activeForeground": "#0d6efd",
-        // "textLink.foreground": "#0d6efd",  // blue-500
-        // "textLink.activeForeground": "#0d6efd",  // blue-500
+        "editorLink.activeForeground": "#0d6efd",  // blue-500
+        "textLink.activeForeground": "#0d6efd",  // blue-500
+        "textLink.foreground": "#0d6efd",  // blue-500
 
         "editorGutter.addedBackground": "#198754",  // green-500
         "editorGutter.deletedBackground": "#dc3545",  // red-500
@@ -536,6 +598,13 @@
         "editorOverviewRuler.deletedForeground": "#dc3545",  // red-500
         "editorOverviewRuler.findMatchForeground": "#0d6efd80",  // blue-500 at 50% opacity
         "editorOverviewRuler.modifiedForeground": "#ffc107",  // yellow-500
+
+        "gitHub.copilot.inline-edit.addedBackground": "#198754",    // green-500 for added text
+        "gitHub.copilot.inline-edit.removedBackground": "#dc3545",  // red-500 for removed text
+        "gitHub.copilot.inline-edit.changedBackground": "#ffc107",  // yellow-500 for changed text
+        "gitHub.copilot.inline-edit.border": "#adb5bd",  // gray-500 for the border
+
+        "editorWhitespace.foreground": "#0d6efd40",  // blue-500 at 1/4 opacity
 
         "gitDecoration.deletedResourceForeground": "#adb5bd",  // gray-500
         "gitDecoration.ignoredResourceForeground": "#adb5bd",  // gray-500
@@ -550,13 +619,14 @@
 
         "editor.bracketPairColorization.colorizedBracketBorder": true,
 
-        "editorBracketHighlight.foreground1": "#6f42c1", // purple-650 for the first pair of matching braces
-        "editorBracketHighlight.foreground2": "#1aa179", // teal-600 for the second pair
-        "editorBracketHighlight.foreground3": "#ca6510", // orange-600 for the third pair
-        "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545", // red-500 for unexpected brackets
-
-        "editorBracketMatch.background": "#cfe2ff80", // blue-100 at 50% opacity
-        "editorBracketMatch.border": "#3D8BFD" // blue-400
+        "editorBracketHighlight.foreground1": "#6f42c1",  // purple-500 for the first pair of matching braces
+        "editorBracketHighlight.foreground2": "#1aa179",  // teal-600 for the second pair
+        "editorBracketHighlight.foreground3": "#ca6510",  // orange-600 for the third pair
+        "editorBracketHighlight.foreground4": "#0aa2c0",  // cyan-600 for the fourth pair
+        "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545",  // red-500 for unexpected brackets
+    
+        "editorBracketMatch.background": "#9ec5fe",  // blue-200
+        "editorBracketMatch.border": "#9ec5fe"  // blue-200
     },
 
     // https://github.com/vscode-shellcheck/vscode-shellcheck/issues/192
@@ -564,9 +634,33 @@
         "editor.showDeprecated": false
     },
 
-    "diffEditor.experimental.showMoves": true,
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "/Users/mdp/.sdkman/candidates/java/8.0.452-zulu",
+            "default": true
+        },
+        {
+            "name": "JavaSE-24",
+            "path": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem"
+        }
+    ],
 
-    "editor.cursorBlinking": "smooth",
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+
+    "sonarlint.connectedMode.connections.sonarcloud": [
+        {
+            "organizationKey": "openboxes",
+            "connectionId": "openboxes",
+            "region": "US"
+        }
+    ],
+
+    "breadcrumbs.enabled": true,
+    "diffEditor.experimental.showMoves": true,
     "editor.cursorStyle": "block",
     "editor.detectIndentation": true,
     "editor.find.addExtraSpaceOnTop": false,
@@ -575,40 +669,38 @@
     "editor.fontSize": 12,
     "editor.glyphMargin": false,
     "editor.guides.bracketPairsHorizontal": false,
+    "editor.guides.highlightActiveIndentation": "always",
+    "editor.guides.indentation": true,
     "editor.hideCursorInOverviewRuler": false,
+    "editor.inlineSuggest.edits.showCollapsed": false,
     "editor.inlineSuggest.enabled": true,
     "editor.inlineSuggest.syntaxHighlightingEnabled": false,
     "editor.lineHeight": 17,
     "editor.lineNumbers": "interval",
     "editor.linkedEditing": true,
+    "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
     "editor.occurrencesHighlight": "multiFile",
     "editor.overtypeCursorStyle": "block-outline",
     "editor.overviewRulerBorder": false,
     "editor.renderFinalNewline": "dimmed",
-    "editor.renderLineHighlight": "all",
+    "editor.renderLineHighlight": "gutter",
     "editor.roundedSelection": false,
     "editor.rulers": [72, 80],
+    "editor.showUnused": true,
     "editor.stickyScroll.enabled": true,
     "editor.stickyScroll.maxLineCount": 10,
-
     "explorer.decorations.colors": false,
-
     "github.copilot.nextEditSuggestions.enabled": true,
-
-    "launch": {
-
-        "configurations": [],
-        "compounds": []
-    },
-
+    "github.copilot.nextEditSuggestions.fixes": true,
+    "gradle.allowParallelRun": true,
+    "gradle.showStoppedDaemons": true,
+    "java.jdt.ls.java.home": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem",
     "redhat.telemetry.enabled": false,
-
     "sonarlint.pathToNodeExecutable": "/Users/mdp/.nvm/versions/node/v18.20.8/bin/node",
-
     "window.systemColorTheme": "auto",
     "window.zoomLevel": -1,
-
+    "workbench.activityBar.location": "default",
     "workbench.colorTheme": "Default Light Modern",
     "workbench.editor.decorations.badges": false,
     "workbench.editor.decorations.colors": true,

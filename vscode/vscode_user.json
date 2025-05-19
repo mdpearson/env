@@ -1,717 +1,718 @@
 {
-    "editor.tokenColorCustomizations": {
-
-        "[*Light*]": {
-            "textMateRules": [
-            {
-                "name": "Generic text",
-                "scope": [
-                    "constant",
-                    "constant.character",
-                    "constant.character.escape",
-                    "constant.language",
-                    "constant.other.option",
-                    "entity",
-                    "entity.name",
-                    "entity.name.function",
-                    "entity.name.namespace",
-                    "entity.name.tag",
-                    "entity.name.type",
-                    "entity.other.attribute-name",
-                    "entity.other.inherited-class",
-                    "keyword",
-                    "keyword.control",
-                    "keyword.operator",
-                    "keyword.operator.logical",
-                    "keyword.operator.logical.python",
-                    "keyword.operator.new",
-                    "markup.bold",
-                    "markup.heading",
-                    "markup.inline.raw",
-                    "markup.fenced_code.block.markdown",
-                    "meta.definition.variable.name",
-                    "meta.function-call.arguments",
-                    "meta.paragraph.markdown",
-                    "punctuation.definition.tag",
-                    "source",
-                    "storage.modifier",
-                    "storage.type",
-                    "storage.type.groovy",
-                    "string",
-                    "string.quoted.double.xml",
-                    "string.regexp",
-                    "string.unquoted.plain.out.yaml",
-                    "storage.type.generic.groovy",
-                    "storage.type.primitive.groovy",
-                    "support.class",
-                    "support.function",
-                    "support.type",
-                    "support.type.property-name.json",
-                    "support.variable.js",
-                    "variable",
-                    "variable.language",
-                    "variable.other.constant"
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground": "#000"        // use simple black text
-                }
-            },
-            {
-                "name": "Reset scheme styling",
-                "scope": [
-                    "invalid.deprecated.shell",
-                    "keyword.operator",
-                    "meta.function-call.arguments",
-                    "meta.function-call punctuation",
-                    "meta.function-call string.quoted punctuation.definition",
-                    "punctuation.definition.inheritance.begin.python",
-                    "punctuation.definition.inheritance.end.python",
-                    "punctuation.separator",
-                    "punctuation.separator.key-value"
-                ],
-                "settings": {
-                    "fontStyle": ""
-                }
-            },
-            {
-                "name": "Operators, mostly symbols",
-                "scope": [
-                    "keyword.operator.arithmetic",
-                    "keyword.operator.assignment",
-                    "keyword.operator.comparison",
-                    "keyword.operator"
-                ],
-                "settings": {
-                    "fontStyle": ""
-                }
-            },
-            {
-                "name": "Braces, brackets and parentheses",
-                "scope": [
-                    "punctuation.definition.arguments",
-                    "punctuation.definition.dict",
-                    "punctuation.definition.list",
-                    "punctuation.definition.parameters",
-                    "punctuation.parenthesis"
-                ],
-                "settings": {
-                    "fontStyle": ""
-                }
-            },
-            {
-                "name": "Keywords",
-                "scope": [
-                    "keyword.control",
-                    "keyword.operator.logical",
-                    "keyword.operator.logical.python",
-                    "keyword.operator.new",
-                    "storage.type",
-                    "storage.type.class",
-                    "storage.type.function",
-                    "storage.type.groovy"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Language constants",
-                "scope": [
-                    "constant.language"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Named constants",
-                "scope": [
-                    "constant.other",
-                    "variable.other.constant"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "YAML Anchors",
-                "scope": [
-                    "entity.name.type.anchor",
-                    "variable.other.alias"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Numeric constants",
-                "scope": [
-                    "constant.numeric"
-                ],
-                "settings": {
-                    "fontStyle": "bold italic",
-                    "foreground": "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "Interesting single characters",
-                "scope": [
-                    "keyword.operator.unpacking",
-                    "punctuation.separator.continuation",
-                    "storage.type.string.python",
-                    "punctuation.definition.tag",
-                    "punctuation.separator.continuation"
-                ],
-                "settings": {
-                    "fontStyle": "bold",
-                    "foreground":  "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "Interesting yaml symbols",
-                "scope": [
-                    "constant.language.merge",
-                    "keyword.control.flow.block-scalar.folded",
-                    "punctuation.definition.alias",
-                    "punctuation.definition.anchor"
-                ],
-                "settings": {
-                    "fontStyle": "bold",
-                    "foreground":  "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "strings and quotation marks",
-                "scope": [
-                    "punctuation.definition.string",
-                    "punctuation.separator",
-                    "punctuation.separator.key-value",
-                    "string.quoted",
-                    "string.unquoted",
-                    "string.quoted.double.xml",
-                    "string.quoted.double.yaml",
-                    "string.quoted.double.yaml punctuation.definition.string",
-                    "string.quoted.single.yaml",
-                    "string.quoted.single.yaml punctuation.definition.string",
-                    "string.unquoted.plain.out.yaml"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                }
-            },
-            {
-                "name": "Regular expressions",
-                "scope": [
-                    "string.regexp",
-                    "meta.function-call.arguments string.regexp"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                    // "foreground": "#b58900",  // Solarized $yellow
-                }
-            },
-            {
-                "name": "Regular expression special characters",
-                "scope": [
-                    "constant.other.character-class.regexp",
-                    "constant.other.set.regexp",
-                    "keyword.control.anchor.regexp",
-                    "keyword.operator.quantifier.regexp",
-                    "support.other.escape.special.regexp",
-                    "support.other.match",
-                    "support.other.parenthesis.regexp punctuation.parenthesis",
-                    "keyword.operator.or.regexp",
-                    "punctuation.definition.group.regexp"
-                ],
-                "settings": {
-                    "fontStyle": "bold",
-                    "foreground":  "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "docstrings",
-                "scope": [
-                    "fenced_code.block.language.markdown",
-                    "string.quoted.docstring",
-                    "string.quoted.docstring punctuation.definition.string"
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground": "#6c757d"  // gray-600
-                }
-            },
-            {
-                "name": "comments",
-                "scope": [
-                    "comment",
-                    "punctuation.definition.comment"
-                ],
-                "settings": {
-                    "fontStyle": "italic",
-                    "foreground": "#6c757d"  // gray-600
-                }
-            },
-            {
-                "name": "TODO's and FIXME's",
-                "scope": "keyword.codetag.notation.python",
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Decorators",
-                "scope": [
-                    "entity.name.function.decorator",
-                    "entity.name.function.preprocessor",
-                    "meta.function.decorator",
-                    "meta.preprocessor",
-                    "punctuation.definition.list",
-                    "punctuation.definition.list.begin.markdown",
-                    "storage.type.annotation.groovy"
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground":  "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "Decorator Arguments",
-                "scope": [
-                    "entity.name.function.decorator.arguments",
-                    "meta.function.decorator.arguments",
-                    "meta.function.decorator meta.function-call.arguments variable.parameter.function-call",
-                    "meta.function.decorator meta.function-call.arguments keyword.operator.assignment",
-                    "meta.function.decorator meta.function-call.arguments string.quoted",
-                    "meta.function.decorator meta.function-call.arguments string.quoted punctuation.definition.string",
-                    "meta.function.decorator meta.function.parameters string.quoted",
-                    "meta.function.decorator meta.function.parameters string.quoted punctuation.definition.string"
-                ],
-                "settings": {
-                    "foreground":  "#ab296a"  // pink-600
-                }
-            },
-            {
-                "name": "Function calls",
-                "scope": [
-                    "meta.function-call",
-                    "meta.function-call.generic"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Function call arguments",
-                "scope": [
-                    "meta.function-call meta.function-call.arguments"
-                ],
-                "settings": {
-                    "fontStyle": ""
-                }
-            },
-            {
-                "name": "Function definitions",
-                "scope": [
-                    "entity.name.function",
-                    "support.function.magic.python"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Class definitions",
-                "scope": [
-                    "entity.name.class",
-                    "entity.name.type.class",
-                    "meta.implementation",
-                    "storage.type.generic.groovy",
-                    "support.class"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Class inheritance",
-                "scope": [
-                    "entity.other.inherited-class"
-                ],
-                "settings": {
-                    "fontStyle": "bold italic"
-                }
-            },
-            {
-                "name": "Markdown bold",
-                "scope": [
-                    "markup.bold"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Markdown heading",
-                "scope": [
-                    "entity.name.section.markdown",
-                    "markup.heading"
-                ],
-                "settings": {
-                    "fontStyle": "bold"
-                }
-            },
-            {
-                "name": "Markdown hyperlink",
-                "scope": [
-                    "markup.underline.link",
-                    "markup.underline.link.comment",
-                    "markup.underline.link.hover",
-                    "markup.underline.link.markdown",
-                    "meta.link.inline.markdown",
-                    "punctuation.definition.link",
-                    "string.other.link.title.markdown",
-                    "string.quoted.double.html"
-                ],
-                "settings": {
-                    "fontStyle": "",
-                    "foreground":  "#0a58ca"  // blue-600
-                }
-            },
-            {
-                "name": "Markdown italic",
-                "scope": [
-                    "markup.italic"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                }
-            },
-            {
-                "name": "invalid",
-                "scope": [
-                    "invalid"
-                ],
-                "settings": {
-                    "foreground": "#b02a37"  // red-600
-                }
-            }
-            // {
-            //     "name": "Bold parentheses, brackets, and braces in code",
-            //     "scope": [
-            //         "meta.brace.square.shell", // Square brackets in shell scripts
-            //         "meta.group.shell",       // Double square brackets in shell scripts
-            //         "punctuation.definition.logical-expression.shell", // Logical expressions
-            //         "punctuation.definition.parameters", // Function parameters
-            //         "punctuation.definition.arguments", // Function arguments
-            //         "punctuation.definition.block",     // Code blocks
-            //         "punctuation.definition.dict",      // Dictionaries
-            //         "punctuation.definition.list",      // Lists
-            //         "punctuation.section.block",        // Blocks (e.g., `{}`)
-            //         "punctuation.section.parens",       // Parentheses (e.g., `()`)
-            //         "punctuation.section.brackets",      // Brackets (e.g., `[]`),
-            //         "punctuation.definition.dictionary.begin.json.comments", // JSON dictionaries
-            //         "punctuation.definition.dictionary.end.json.comments",   // JSON dictionaries
-            //         "punctuation.definition.array.begin.json.comments",
-            //         "punctuation.definition.array.end.json.comments",
-            //         "punctuation.definition.method-parameters",
-            //         "meta.brace.square.js",
-            //         "meta.brace.round.js",
-            //         "meta.brace.curly.js",
-            //         "meta.brace.round.groovy", // Parentheses in Groovy
-            //         "meta.brace.curly.groovy",  // Braces in Groovy
-            //         "punctuation.definition.template-expression.begin",
-            //         "punctuation.definition.template-expression.end",
-            //         "punctuation.definition.variable.shell",
-            //     ],
-            //     "settings": {
-            //         "fontStyle": "bold"
-            //     }
-            // },
-            // {
-            //     "name": "Gradle parentheses and braces",
-            //     "scope": [
-            //         "meta.brace.round.gradle", // Parentheses in Gradle
-            //         "meta.brace.curly.gradle"  // Braces in Gradle
-            //     ],
-            //     "settings": {
-            //         "fontStyle": "bold"
-            //     }
-            // },
-            // {
-            //     "name": "Exclude parentheses, brackets, and braces in strings",
-            //     "scope": [
-            //         "string punctuation.definition", // Punctuation inside strings
-            //         "string.quoted punctuation.definition" // Quoted strings
-            //     ],
-            //     "settings": {
-            //         "fontStyle": "" // Remove bold for punctuation in strings
-            //     }
-            // },
-        ]
-        },
-        "[*Dark*]": {
-            "textMateRules": [
-                {
-                    "scope": "ref.matchtext",
-                    "settings": {
-                        "foreground": "#fff"
-                    }
-                }
-            ]
-        }
-    },
-    "workbench.colorCustomizations": {
-
-        /* apply the theme's distinctive blue to various UI elements */
-        "activityBarBadge.background": "#025fb8",
-        "activityBarBadge.foreground": "#fff",
-        "badge.background": "#025fb8",
-        "badge.foreground": "#fff",
-
-        /* use the theme's grey color for various backgrounds */
-        "sideBar.background": "#f8f8f8",
-        "tab.inactiveBackground": "#f8f8f8",
-
-        /* make it slightly lighter in the central editor area */
-        "editorGutter.background": "#fcfcfc",  // halfway between panel and editor background
-        "panel.background": "#fcfcfc",
-
-        // match theme styling of faint lines as best we can
-        "editorIndentGuide.background1": "#eee",
-        "editorIndentGuide.activeBackground1": "#eee",
-        "editorRuler.foreground": "#eee",
-        "editorStickyScroll.border": "#eee",
-
-        /* remove all color and tint from the breadcrumb and search widget */
-        "breadcrumb.background": "#fff",
-        "editorStickyScroll.background": "#fff",
-        "editorWidget.background": "#fff",  // search popop
-        "editorWidget.border": "#0000",
-        "tab.activeBackground": "#fff",
-        "tab.activeBorder": "#fff",
-        "tab.activeBorderTop": "#000",
-
-        /* disable shadows, which are a little distracting */
-        "editorHoverWidget.shadow": "#0000",
-        "editorStickyScroll.shadow": "#0000",
-        "editorSuggestWidget.shadow": "#0000",
-        "scrollbar.shadow": "#0000",
-        "widget.shadow": "#0000",
-        
-        // match styling of the theme's default value popup as best we can
-        "editorHoverWidget.background": "#e8e8e8",
-        "editorHoverWidget.border": "#e3e3e3",
-        "editorHoverWidget.foreground": "#1a1a1a",
-        "editorHoverWidget.highlightForeground": "#0f0",  // not sure what this is yet
-        "editorHoverWidget.statusBarBackground": "#ccc",
-        "editorSuggestWidget.background": "#e8e8e8",
-        "editorSuggestWidget.border": "#e3e3e3",
-        "editorSuggestWidget.foreground": "#1a1a1a",
-        // editorInlayHint?
-        // editorParameterHint?
-
-        "debugIcon.breakpointForeground": "#dc3545",  // red-500
-
-        /* colors for the diff view */
-        "diffEditor.insertedLineBackground": "#19875430",  // green-500 at 3/16 opacity
-        "diffEditor.insertedTextBackground": "#19875480",  // green-500 at 1/2 opacity
-        "diffEditor.removedLineBackground": "#dc354530",  // red-500 at 3/16 opacity
-        "diffEditor.removedTextBackground": "#dc354580",  // red-500 at 1/2 opacity
-        "diffEditor.renderSideBySide": true,
-
-        /* current search match */
-        "editor.findMatchBackground": "#19875430",  // green-500 at 3/16 opacity
-        "editor.findMatchBorder": "#0d6efd",  // blue-500, same as editorCursor.foreground
-        "editor.findMatchForeground": "#146c43",  // green-600
-
-        /* other search matches */
-        "editor.findMatchHighlightBackground": "#19875430",  // green-500 at 3/16 opacity
-        "editor.findMatchHighlightBorder": "#fff0",  // no border
-        "editor.findMatchHighlightForeground": "#146c43",  // green-600
-        
-        /* colors for the cursor and the line the cursor is in */
-        "editorCursor.background": "#fff",  // pure white for contrast
-        "editorCursor.foreground": "#0d6efd",  // blue-500
-        "editor.lineHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "editor.lineHighlightBorder": "#fff0",
-        "editor.rangeHighlightBackground": "#fff0",  // this highlights the line under the search result
-        "editorStickyScrollHover.background": "#0d6efd18",  // this highlights the line anchoring current indentation level
-
-        /* colors for the selected line/object in list views and panels */
-        "list.activeSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "list.activeSelectionForeground": "#025fb8",  // VSCode blue
-        "list.activeSelectionIconForeground": "#025fb8",  // VSCode blue
-        "list.hoverBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "list.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "list.inactiveSelectionForeground": "#025fb8",  // VSCode blue
-        "list.inactiveSelectionIconForeground": "#025fb8",  // VSCode blue
-
-        /* colors for selected text */
-        "editor.selectionBackground": "#0d6efd30",  // blue-500 at 3/8 opacity
-        "editor.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-
-        /* same text as selection, OR text selected via a double-click; cf. wordHighlightBackground */
-        "editor.selectionHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "editor.selectionHighlightBorder": "#fff0",
-
-        /* use of symbol/text under cursor */
-        "editor.wordHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-        "editor.wordHighlightBorder": "#fff0",
-
-        /* definition/modification of symbol/text under cursor */
-        "editor.wordHighlightStrongBackground": "#e2d9f3",  // purple-100
-        "editor.wordHighlightStrongBorder": "#e2d9f3",  // purple-100
-
-        "editorError.background": "#fff0",
-        "editorError.foreground": "#dc3545",  // red-500
-        "editorOverviewRuler.errorForeground": "#dc3545",  // red-500
-        //"errorForeground": "#dc3545",  // red-500
-        "list.errorForeground": "#dc3545",
-
-        "editorWarning.background": "#fff0",
-        "editorWarning.foreground": "#ffc107",  // yellow-500
-        "editorOverviewRuler.warningForeground": "#ffc107",  // yellow-500
-        "list.warningForeground": "#ffc107",  // yellow-500
-
-        "editorInfo.background": "#fff0",
-        "editorInfo.foreground": "#198754", // green-500
-        "editorOverviewRuler.infoForeground": "#198754", // green-500
-        "list.infoForeground": "#198754", // green-500
-
-        /* colors for AI suggestions */
-        "editorGhostText.background": "#cfe2ff40",  // blue-100 at 25% opacity
-        "editorGhostText.foreground": "#6ea8fe",  // blue-300
-
-        "editorLineNumber.activeForeground": "#6ea8fe",  // blue-300
-        "editorLineNumber.dimmedForeground":"#0d6efd",  // blue-500
-        "editorLineNumber.foreground": "#CED4DA",  // gray-400
-
-        "editorLink.activeForeground": "#0d6efd",  // blue-500
-        "textLink.activeForeground": "#0d6efd",  // blue-500
-        "textLink.foreground": "#0d6efd",  // blue-500
-
-        "editorGutter.addedBackground": "#198754",  // green-500
-        "editorGutter.deletedBackground": "#dc3545",  // red-500
-        "editorGutter.modifiedBackground": "#ffc107",  // yellow-500
-        "editorOverviewRuler.addedForeground": "#198754",  // green-500
-        "editorOverviewRuler.deletedForeground": "#dc3545",  // red-500
-        "editorOverviewRuler.findMatchForeground": "#0d6efd80",  // blue-500 at 50% opacity
-        "editorOverviewRuler.modifiedForeground": "#ffc107",  // yellow-500
-
-        "gitHub.copilot.inline-edit.addedBackground": "#198754",    // green-500 for added text
-        "gitHub.copilot.inline-edit.removedBackground": "#dc3545",  // red-500 for removed text
-        "gitHub.copilot.inline-edit.changedBackground": "#ffc107",  // yellow-500 for changed text
-        "gitHub.copilot.inline-edit.border": "#adb5bd",  // gray-500 for the border
-
-        "editorWhitespace.foreground": "#0d6efd40",  // blue-500 at 1/4 opacity
-
-        "gitDecoration.deletedResourceForeground": "#adb5bd",  // gray-500
-        "gitDecoration.ignoredResourceForeground": "#adb5bd",  // gray-500
-        "gitDecoration.modifiedResourceForeground": "#198754",  // green-500
-        "gitDecoration.addedResourceForeground": "#0d6efd",  // blue-500
-        "gitDecoration.untrackedResourceForeground": "#0d6efd",  // blue-500
-        "gitDecoration.stageDeletedResourceForeground":"#6f42c1",  // purple-500
-        "gitDecoration.conflictingResourceForeground": "#dc3545",  // red-500
-        "gitDecoration.stageModifiedResourceForeground": "#198754",  // green-500
-        "gitDecoration.renamedResourceForeground": "#20c997",  // teal-500
-        "gitDecoration.submoduleResourceForeground": "#0aa2c0",  // cyan-600
-
-        "editor.bracketPairColorization.colorizedBracketBorder": true,
-
-        "editorBracketHighlight.foreground1": "#6f42c1",  // purple-500 for the first pair of matching braces
-        "editorBracketHighlight.foreground2": "#1aa179",  // teal-600 for the second pair
-        "editorBracketHighlight.foreground3": "#ca6510",  // orange-600 for the third pair
-        "editorBracketHighlight.foreground4": "#0aa2c0",  // cyan-600 for the fourth pair
-        "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545",  // red-500 for unexpected brackets
-    
-        "editorBracketMatch.background": "#9ec5fe",  // blue-200
-        "editorBracketMatch.border": "#9ec5fe"  // blue-200
-    },
-
-    // https://github.com/vscode-shellcheck/vscode-shellcheck/issues/192
-    "[shellscript]": {
-        "editor.showDeprecated": false
-    },
-
-    "java.configuration.runtimes": [
+  "[shellscript]": {
+    "editor.showDeprecated": false
+  },
+  "breadcrumbs.enabled": true,
+  "diffEditor.experimental.showMoves": true,
+  "editor.cursorStyle": "line",
+  "editor.detectIndentation": true,
+  "editor.find.addExtraSpaceOnTop": false,
+  "editor.fontFamily": "Input",
+  "editor.fontLigatures": false,
+  "editor.fontSize": 12,
+  "editor.glyphMargin": false,
+  "editor.guides.bracketPairsHorizontal": false,
+  "editor.guides.highlightActiveIndentation": "always",
+  "editor.guides.indentation": true,
+  "editor.hideCursorInOverviewRuler": false,
+  "editor.inlineSuggest.edits.showCollapsed": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.syntaxHighlightingEnabled": false,
+  "editor.lineHeight": 1.3,
+  "editor.lineNumbers": "interval",
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.minimap.renderCharacters": false,
+  "editor.occurrencesHighlight": "multiFile",
+  "editor.overtypeCursorStyle": "block-outline",
+  "editor.overviewRulerBorder": false,
+  "editor.renderFinalNewline": "dimmed",
+  "editor.renderLineHighlight": "gutter",
+  "editor.roundedSelection": false,
+  "editor.rulers": [80],
+  "editor.scrollbar.vertical": "visible",
+  "editor.showDeprecated": false,
+  "editor.showUnused": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.maxLineCount": 10,
+  "editor.tokenColorCustomizations": {
+    "[*Dark*]": {
+      "textMateRules": [
         {
-            "name": "JavaSE-1.8",
-            "path": "/Users/mdp/.sdkman/candidates/java/8.0.452-zulu",
-            "default": true
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "name": "reset colors on most scopes to simple black",
+          "scope": [
+            "constant",
+            "constant.character",
+            "constant.character.escape",
+            "constant.language",
+            "constant.other.option",
+            "entity",
+            "entity.name",
+            "entity.name.function",
+            "entity.name.namespace",
+            "entity.name.tag",
+            "entity.name.type",
+            "entity.other.attribute-name",
+            "entity.other.inherited-class",
+            "keyword",
+            "keyword.control",
+            "keyword.operator",
+            "keyword.operator.logical",
+            "keyword.operator.logical.python",
+            "keyword.operator.new",
+            "markup.bold",
+            "markup.heading",
+            "markup.inline.raw",
+            "markup.fenced_code.block.markdown",
+            "meta.definition.variable.name",
+            "meta.function-call.arguments",
+            "meta.paragraph.markdown",
+            "punctuation.definition.tag",
+            "punctuation.section.embedded",
+            "source",
+            "storage.modifier",
+            "storage.type",
+            "storage.type.groovy",
+            "storage.type.object.array.groovy",
+            "string",
+            "string.quoted.double.xml",
+            "string.quoted.single.yaml",
+            "string.regexp",
+            "string.unquoted.plain.out.yaml",
+            "storage.type.generic.groovy",
+            "storage.type.primitive.groovy",
+            "support.class",
+            "support.function",
+            "support.type",
+            "support.type.property-name.json",
+            "support.variable.js",
+            "text.xml",
+            "variable",
+            "variable.language",
+            "variable.other.constant"
+          ],
+          "settings": {
+            "fontStyle": "",
+            "foreground": "#000"
+          }
         },
         {
-            "name": "JavaSE-24",
-            "path": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem"
-        }
-    ],
-
-    "launch": {
-        "configurations": [],
-        "compounds": []
-    },
-
-    "sonarlint.connectedMode.connections.sonarcloud": [
+          "name": "reset styling on many scopes",
+          "scope": [
+            "invalid.deprecated.shell",
+            "keyword.operator",
+            "meta.function-call.arguments",
+            "meta.function-call punctuation",
+            "meta.function-call string.quoted punctuation.definition",
+            "punctuation.definition.inheritance.begin.python",
+            "punctuation.definition.inheritance.end.python",
+            "punctuation.separator",
+            "punctuation.separator.key-value"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        },
         {
-            "organizationKey": "openboxes",
-            "connectionId": "openboxes",
-            "region": "US"
+          "name": "reset styling on operators and symbols",
+          "scope": [
+            "keyword.operator.arithmetic",
+            "keyword.operator.assignment",
+            "keyword.operator.comparison",
+            "keyword.operator"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        },
+        {
+          "name": "reset styling on parentheses, brackets and braces",
+          "scope": [
+            "punctuation.definition.arguments",
+            "punctuation.definition.dict",
+            "punctuation.definition.list",
+            "punctuation.definition.parameters",
+            "punctuation.parenthesis"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        },
+        {
+          "name": "reset styling on key names",
+          "scope": [
+            "constant.other.key.groovy"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        },
+        {
+          "name": "render language keywords in bold text",
+          "scope": [
+            "keyword.control",
+            "keyword.operator.logical",
+            "keyword.operator.logical.python",
+            "keyword.operator.new",
+            "keyword.other",
+            "storage.modifier.static",
+            "storage.type",
+            "storage.type.class",
+            "storage.type.function",
+            "storage.type.groovy",
+            "storage.type.object",
+            "storage.type.object.array",
+            "storage.type.object.array.groovy",
+            "storage.type.primitive.groovy"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render language constants in bold text",
+          "scope": [
+            "constant.language"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render named constants in bold text",
+          "scope": [
+            "constant.other",
+            "variable.other.constant"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render YAML anchors and aliases and XML brackets in bold text",
+          "scope": [
+            "entity.name.type.anchor",
+            "punctuation.definition.tag",
+            "variable.other.alias"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render constant numbers in colorful bold italics",
+          "scope": [
+            "constant.numeric"
+          ],
+          "settings": {
+            "fontStyle": "bold italic",
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render interesting single characters in bold color",
+          "scope": [
+            "keyword.operator.unpacking",
+            "punctuation.separator.continuation",
+            "storage.type.string.python"
+          ],
+          "settings": {
+            "fontStyle": "bold",
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render YAML anchors in bold color",
+          "scope": [
+            "constant.language.merge",
+            "keyword.control.flow.block-scalar.folded",
+            "punctuation.definition.alias",
+            "punctuation.definition.anchor"
+          ],
+          "settings": {
+            "fontStyle": "bold",
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render strings and surrounding quotation marks in italics",
+          "scope": [
+            "punctuation.definition.string",
+            // "punctuation.separator",
+            // "punctuation.separator.key-value",
+            "string.quoted",
+            "string.unquoted",
+            "string.quoted.double.xml",
+            "string.quoted.double.yaml",
+            "string.quoted.double.yaml punctuation.definition.string",
+            "string.quoted.single.yaml",
+            "string.quoted.single.yaml punctuation.definition.string",
+            "string.unquoted.plain.out.yaml",
+            "text.xml"
+          ],
+          "settings": {
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "name": "render regular expressions in italics",
+          "scope": [
+            "string.regexp",
+            "meta.function-call.arguments string.regexp"
+          ],
+          "settings": {
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "name": "render regular expression special characters in bold color",
+          "scope": [
+            "constant.other.character-class.regexp",
+            "constant.other.set.regexp",
+            "keyword.control.anchor.regexp",
+            "keyword.operator.quantifier.regexp",
+            "support.other.escape.special.regexp",
+            "support.other.match",
+            "support.other.parenthesis.regexp punctuation.parenthesis",
+            "keyword.operator.or.regexp",
+            "punctuation.definition.group.regexp"
+          ],
+          "settings": {
+            "fontStyle": "bold",
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render docstrings in faint text",
+          "scope": [
+            "fenced_code.block.language.markdown",
+            "string.quoted.docstring",
+            "string.quoted.docstring punctuation.definition.string"
+          ],
+          "settings": {
+            "fontStyle": "",
+            "foreground": "#6c757d"  // gray-600
+          }
+        },
+        {
+          "name": "render comments in faint italics",
+          "scope": [
+            "comment",
+            "punctuation.definition.comment"
+          ],
+          "settings": {
+            "fontStyle": "italic",
+            "foreground": "#6c757d"  // gray-600
+          }
+        },
+        {
+          "name": "render TODO's and FIXME's in bold",
+          "scope": "keyword.codetag.notation.python",
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render decorators in bright color",
+          "scope": [
+            "entity.name.function.decorator",
+            "entity.name.function.preprocessor",
+            "meta.function.decorator",
+            "meta.preprocessor",
+            "punctuation.definition.list",
+            "punctuation.definition.list.begin.markdown",
+            "storage.type.annotation.groovy"
+          ],
+          "settings": {
+            "fontStyle": "",
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render decorator arguments in bold color",
+          "scope": [
+            "entity.name.function.decorator.arguments",
+            "meta.function.decorator.arguments",
+            "meta.function.decorator meta.function-call.arguments variable.parameter.function-call",
+            "meta.function.decorator meta.function-call.arguments keyword.operator.assignment",
+            "meta.function.decorator meta.function-call.arguments string.quoted",
+            "meta.function.decorator meta.function-call.arguments string.quoted punctuation.definition.string",
+            "meta.function.decorator meta.function.parameters string.quoted",
+            "meta.function.decorator meta.function.parameters string.quoted punctuation.definition.string"
+          ],
+          "settings": {
+            "foreground": "#ab296a"  // pink-600
+          }
+        },
+        {
+          "name": "render function definitions in bold",
+          "scope": [
+            "entity.name.function",
+            "support.function.magic.python"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render function calls in bold",
+          "scope": [
+            "meta.function-call",
+            "meta.function-call.generic"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render function call arguments in roman text",
+          "scope": [
+            "meta.function-call meta.function-call.arguments"
+          ],
+          "settings": {
+            "fontStyle": ""
+          }
+        },
+        {
+          "name": "render class definitions in bold",
+          "scope": [
+            "entity.name.class",
+            "entity.name.type.class",
+            "meta.implementation",
+            "storage.type.generic.groovy",
+            "support.class"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render class inheritance in bold italics",
+          "scope": [
+            "entity.other.inherited-class"
+          ],
+          "settings": {
+            "fontStyle": "bold italic"
+          }
+        },
+        {
+          "name": "render bold markdown in bold",
+          "scope": [
+            "markup.bold"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render markdown italic in italics",
+          "scope": [
+            "markup.italic"
+          ],
+          "settings": {
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "name": "render markdown headings in bold",
+          "scope": [
+            "entity.name.section.markdown",
+            "markup.heading"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render markdown hyperlinks in blue",
+          "scope": [
+            "markup.underline.link",
+            "markup.underline.link.comment",
+            "markup.underline.link.hover",
+            "markup.underline.link.markdown",
+            "meta.link.inline.markdown",
+            "punctuation.definition.link",
+            "string.other.link.title.markdown",
+            "string.quoted.double.html"
+          ],
+          "settings": {
+            "fontStyle": "",
+            "foreground": "#0a58ca"  // blue-600
+          }
+        },
+        {
+          "name": "render variable interpolation in strings in bold",
+          "scope": [
+            "meta.expression.assignment.shell",
+            "punctuation.definition.variable.shell",
+            "punctuation.section.embedded",
+            "punctuation.definition.variable.shell variable.other.normal.shell"
+          ],
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "name": "render invalid characters in red",
+          "scope": [
+            "invalid"
+          ],
+          "settings": {
+            "foreground": "#b02a37"  // red-600
+          }
         }
-    ],
+      ]
+    }
+  },
+  "explorer.decorations.colors": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.nextEditSuggestions.fixes": true,
+  "gradle.allowParallelRun": true,
+  "gradle.showStoppedDaemons": true,
+  "java.configuration.runtimes": [
+    {
+      "default": true,
+      "name": "JavaSE-1.8",
+      "path": "/Users/mdp/.sdkman/candidates/java/8.0.452-zulu"
+    },
+    {
+      "name": "JavaSE-21",
+      "path": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem"
+    }
+  ],
+  "java.jdt.ls.java.home": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem",
+  "json.schemas": [],
+  "launch": {
+    "compounds": [],
+    "configurations": []
+  },
+  "redhat.telemetry.enabled": false,
+  "sonarlint.connectedMode.connections.sonarcloud": [
+    {
+      "connectionId": "openboxes",
+      "organizationKey": "openboxes",
+      "region": "US"
+    }
+  ],
+  "sonarlint.pathToNodeExecutable": "/Users/mdp/.nvm/versions/node/v18.20.8/bin/node",
+  "window.systemColorTheme": "auto",
+  "window.zoomLevel": -1,
+  "workbench.activityBar.location": "default",
+  "workbench.colorCustomizations": {
 
-    "breadcrumbs.enabled": true,
-    "diffEditor.experimental.showMoves": true,
-    "editor.cursorStyle": "block",
-    "editor.detectIndentation": true,
-    "editor.find.addExtraSpaceOnTop": false,
-    "editor.fontFamily": "Input",
-    "editor.fontLigatures": false,
-    "editor.fontSize": 12,
-    "editor.glyphMargin": false,
-    "editor.guides.bracketPairsHorizontal": false,
-    "editor.guides.highlightActiveIndentation": "always",
-    "editor.guides.indentation": true,
-    "editor.hideCursorInOverviewRuler": false,
-    "editor.inlineSuggest.edits.showCollapsed": false,
-    "editor.inlineSuggest.enabled": true,
-    "editor.inlineSuggest.syntaxHighlightingEnabled": false,
-    "editor.lineHeight": 17,
-    "editor.lineNumbers": "interval",
-    "editor.linkedEditing": true,
-    "editor.minimap.enabled": false,
-    "editor.minimap.renderCharacters": false,
-    "editor.occurrencesHighlight": "multiFile",
-    "editor.overtypeCursorStyle": "block-outline",
-    "editor.overviewRulerBorder": false,
-    "editor.renderFinalNewline": "dimmed",
-    "editor.renderLineHighlight": "gutter",
-    "editor.roundedSelection": false,
-    "editor.rulers": [72, 80],
-    "editor.showUnused": true,
-    "editor.stickyScroll.enabled": true,
-    "editor.stickyScroll.maxLineCount": 10,
-    "explorer.decorations.colors": false,
-    "github.copilot.nextEditSuggestions.enabled": true,
-    "github.copilot.nextEditSuggestions.fixes": true,
-    "gradle.allowParallelRun": true,
-    "gradle.showStoppedDaemons": true,
-    "java.jdt.ls.java.home": "/Users/mdp/.sdkman/candidates/java/21.0.7-tem",
-    "redhat.telemetry.enabled": false,
-    "sonarlint.pathToNodeExecutable": "/Users/mdp/.nvm/versions/node/v18.20.8/bin/node",
-    "window.systemColorTheme": "auto",
-    "window.zoomLevel": -1,
-    "workbench.activityBar.location": "default",
-    "workbench.colorTheme": "Default Light Modern",
-    "workbench.editor.decorations.badges": false,
-    "workbench.editor.decorations.colors": true,
-    "workbench.editor.highlightModifiedTabs": false,
-    "workbench.editor.limit.enabled": false,
-    "workbench.editor.limit.perEditorGroup": true,
-    "workbench.editor.limit.value": 12,
-    "workbench.editor.showIcons": false,
-    "workbench.editor.tabActionCloseVisibility": false,
-    "workbench.editor.tabSizing": "shrink",
-    "workbench.fontAliasing": "default",
-    "workbench.panel.defaultLocation": "bottom",
-    "workbench.sideBar.location": "left"
+    /* apply the theme's distinctive blue to various UI elements */
+    "activityBarBadge.background": "#025fb8",  // VSCode blue
+    "activityBarBadge.foreground": "#fff",
+    "badge.background": "#025fb8",  // VSCode blue
+    "badge.foreground": "#fff",
+
+    "breadcrumb.background": "#fff",  // use white background for views above the editor
+    "debugIcon.breakpointForeground": "#dc3545",
+
+    /* colors for the diff view */
+    "diffEditor.insertedLineBackground": "#19875430",  // green-500 at 3/16 opacity
+    "diffEditor.insertedTextBackground": "#19875480",  // green-500 at 1/2 opacity
+    "diffEditor.removedLineBackground": "#dc354530",  // red-500 at 3/16 opacity
+    "diffEditor.removedTextBackground": "#dc354580",  // red-500 at 1/2 opacity
+    "diffEditor.renderSideBySide": true,
+
+    "editor.bracketPairColorization.colorizedBracketBorder": true,
+
+    /* colors for search results -- N.B., *Foreground colors are swapped */
+    "editor.findMatchBackground": "#146c43",  // main hit background: green-600
+    "editor.findMatchBorder": "#fff0",  // main hit: no border
+    "editor.findMatchHighlightForeground": "#fff",  // main hit foreground: white
+    "editor.findMatchForeground": "#146c43",  // other hits foreground: green-600
+    "editor.findMatchHighlightBackground": "#19875430",  // other hits background: green-500 at 3/16 opacity
+    "editor.findMatchHighlightBorder": "#fff0",  // other hits: no border
+
+    /* colors for selected text */
+    "editor.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editor.selectionBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+
+    /* colors for the line containing the cursor */
+    "editor.lineHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editor.lineHighlightBorder": "#fff0",
+
+    "editor.rangeHighlightBackground": "#fff0",  // highlights the line under the search result, never use
+
+    /* same text as selection, OR text selected via a double-click; cf. wordHighlightBackground */
+    "editor.selectionHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editor.selectionHighlightBorder": "#fff0",
+
+    /* use of symbol/text under cursor */
+    "editor.wordHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editor.wordHighlightBorder": "#fff0",
+
+    /* definition/modification of symbol/text under cursor */
+    "editor.wordHighlightStrongBackground": "#e0cffc",  // indigo-100
+    "editor.wordHighlightStrongBorder": "#e0cffc",  // indigo-100
+
+    /* rotate through four colors for matching braces */
+    "editorBracketHighlight.foreground1": "#6610f2",  // indigo-500 for the first pair of matching braces
+    "editorBracketHighlight.foreground2": "#1aa179",  // teal-600 for the second pair
+    "editorBracketHighlight.foreground3": "#ca6510",  // orange-600 for the third pair
+    "editorBracketHighlight.foreground4": "#0aa2c0",  // cyan-600 for the fourth pair
+    "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545",  // red-500 for unexpected brackets
+
+    /* highlight current bracket pair with same color as selection */
+    "editorBracketMatch.background": "#0d6efd30",  // match editor.selectionBackground
+    "editorBracketMatch.border": "#fff0",
+
+    /* colors for the cursor itself; background is text color when using a block cursor */
+    "editorCursor.background": "#fff",
+    "editorCursor.foreground": "#0d6efd",  // blue-500
+
+    /* use distinctive red to highlight errors, none of this underline stuff though */
+    "editorError.background": "#f8d7da",  // red-100
+    "editorError.border": "#fff0",
+    "editorError.foreground": "#fff0",
+
+    /* use blue for AI suggestions */
+    "editorGhostText.background": "#cfe2ff40",  // blue-100 at 25% opacity
+    "editorGhostText.foreground": "#6ea8fe",  // blue-300
+
+    "editorGutter.addedBackground": "#479f76",  // green-400
+    "editorGutter.background": "#fcfcfc",  // slightly lighter than sideBar.background; cf. panel.background
+    "editorGutter.deletedBackground": "#e35d6a",  // red-400
+    "editorGutter.modifiedBackground": "#ffc107",  // yellow-500
+
+    /* match styling of the theme's default value popup as best we can; cf. editorSuggestWidget */
+    "editorHoverWidget.background": "#e8e8e8",
+    "editorHoverWidget.border": "#e3e3e3",
+    "editorHoverWidget.foreground": "#1a1a1a",
+    "editorHoverWidget.highlightForeground": "#0f0",
+    "editorHoverWidget.shadow": "#0000",  // disable distracting shadow effect
+    "editorHoverWidget.statusBarBackground": "#ccc",
+
+    // match theme styling of indentation lines as best we can
+    "editorIndentGuide.activeBackground1": "#e5e5e5",
+    "editorIndentGuide.background1": "#e5e5e5",
+
+    /* use cyan to highlight nice-to-haves */
+    "editorInfo.background": "#cff4fc",  // cyan-100
+    "editorInfo.border": "#fff0",
+    "editorInfo.foreground": "#fff0",
+
+    /* colors for line numbers */
+    "editorLineNumber.activeForeground": "#6ea8fe",  // blue-300
+    "editorLineNumber.dimmedForeground":"#0d6efd",  // blue-500
+    "editorLineNumber.foreground": "#ced4da",  // gray-400
+
+    /* use blue-500 for URL links */
+    "editorLink.activeForeground": "#0d6efd",  // blue-500
+    "textLink.activeForeground": "#0d6efd",  // blue-500
+    "textLink.foreground": "#0d6efd",  // blue-500
+
+    /* colors for the ruler on the right hand side of the editor */
+    "editorOverviewRuler.addedForeground": "#479f76",  // green-400
+    "editorOverviewRuler.background": "#fff0",
+    "editorOverviewRuler.border": "#999",  // after transparency, renders as #e5e5e5
+    "editorOverviewRuler.deletedForeground": "#e35d6a",  // red-400; red-500 is too intense in the gutter
+    "editorOverviewRuler.errorForeground": "#e35d6a",  // red-400
+    "editorOverviewRuler.findMatchForeground": "#a3cfbb",  // green-200
+    "editorOverviewRuler.infoForeground": "#cff4fc", // cyan-100
+    "editorOverviewRuler.modifiedForeground": "#ffc107",  // yellow-500
+    // this setting doesn't seem to have any effect on the editor, so set it to a crazy color
+    "editorOverviewRuler.selectionHighlightForeground": "#d63384",  // pink-500
+    "editorOverviewRuler.warningForeground": "#ffc107",  // yellow-500
+    // the difference between these two is very subtle so set them the same
+    "editorOverviewRuler.wordHighlightForeground": "#9ec5fe",  // blue-200
+    "editorOverviewRuler.wordHighlightTextForeground": "#9ec5fe",  // blue-200
+    "editorOverviewRuler.wordHighlightStrongForeground": "#a370f7",  // indigo-500
+
+    "editorRuler.foreground": "#e5e5e580",  // ruler border: editorIndentGuide.background1 at 50% opacity
+
+    /* colors for the magic context at the top of the editor showing first line of each indentation level */
+    "editorStickyScroll.background": "#fff",
+    "editorStickyScroll.border": "#e5e5e5",  // same as editorIndentGuide.background1
+    "editorStickyScroll.shadow": "#0000",
+
+    /* this highlights the line anchoring current indentation level in the sticky scroller */
+    "editorStickyScrollHover.background": "#0d6efd18",  // blue-500 at 3/32 opacity
+
+    /* match styling of the theme's default value popup as best we can; cf. editorHoverWidget */
+    "editorSuggestWidget.background": "#e8e8e8",
+    "editorSuggestWidget.border": "#e3e3e3",
+    "editorSuggestWidget.foreground": "#1a1a1a",
+    "editorSuggestWidget.shadow": "#0000",  // disable distracting shadow effect
+
+    "editorWarning.background": "#fff3cd",  // yellow-100
+    "editorWarning.border": "#fff0",
+    "editorWarning.foreground": "#fff0",
+
+    "editorWhitespace.foreground": "#0d6efd40",  // blue-500 at 1/4 opacity
+
+    /* styling for the search widget */
+    "editorWidget.background": "#fff",
+    "editorWidget.border": "#0000",
+
+    "gitDecoration.addedResourceForeground": "#0d6efd",  // blue-500
+    "gitDecoration.conflictingResourceForeground": "#dc3545",  // red-500
+    "gitDecoration.deletedResourceForeground": "#adb5bd",  // gray-500
+    "gitDecoration.ignoredResourceForeground": "#adb5bd",  // gray-500
+    "gitDecoration.modifiedResourceForeground": "#198754",  // green-500
+    "gitDecoration.renamedResourceForeground": "#20c997",  // teal-500
+    "gitDecoration.stageDeletedResourceForeground":"#6f42c1",  // purple-500
+    "gitDecoration.stageModifiedResourceForeground": "#198754",  // green-500
+    "gitDecoration.submoduleResourceForeground": "#0aa2c0",  // cyan-600
+    "gitDecoration.untrackedResourceForeground": "#0d6efd",  // blue-500
+
+    "gitHub.copilot.inline-edit.addedBackground": "#198754",    // green-500 for added text
+    "gitHub.copilot.inline-edit.border": "#fff0",  // no additional border
+    "gitHub.copilot.inline-edit.changedBackground": "#ffc107",  // yellow-500 for changed text
+    "gitHub.copilot.inline-edit.removedBackground": "#dc3545",  // red-500 for removed text
+
+    /* colors for the selected line/object in list views and panels */
+    "list.activeSelectionBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+    "list.activeSelectionForeground": "#025fb8",  // VSCode blue
+    "list.activeSelectionIconForeground": "#025fb8",  // VSCode blue
+    "list.focusAndSelectionOutline": "#fff0",
+    "list.hoverBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "list.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "list.inactiveSelectionForeground": "#025fb8",  // VSCode blue
+    "list.inactiveSelectionIconForeground": "#025fb8",  // VSCode blue
+
+    "list.errorForeground": "#dc3545",  // red-500
+    "list.infoForeground": "#198754",  // green-500
+    "list.warningForeground": "#ffc107",  // yellow-500
+
+    "panel.background": "#fcfcfc",  // slightly lighter than sideBar.background; cf. editorGutter.background
+
+    /* colors for the scrollbar */
+    "scrollbar.shadow": "#0000",  // disable distracting shadow effect
+    "scrollbarSlider.activeBackground": "#5552",
+    "scrollbarSlider.background": "#bbb2",
+    "scrollbarSlider.hoverBackground": "#8882",
+
+    "sideBar.background": "#f8f8f8",  // the theme's default light gray
+    "tab.activeBackground": "#fff",
+    "tab.activeBorder": "#fff",
+    "tab.activeBorderTop": "#000",
+    "tab.inactiveBackground": "#f8f8f8",
+    "widget.shadow": "#0000"  // disable distracting shadow effect
+  },
+  "workbench.colorTheme": "Default Light Modern",
+  "workbench.editor.decorations.badges": false,
+  "workbench.editor.decorations.colors": true,
+  "workbench.editor.highlightModifiedTabs": false,
+  "workbench.editor.limit.enabled": false,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.value": 12,
+  "workbench.editor.showIcons": false,
+  "workbench.editor.tabActionCloseVisibility": false,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.fontAliasing": "default",
+  "workbench.panel.defaultLocation": "bottom",
+  "workbench.sideBar.location": "left"
 }

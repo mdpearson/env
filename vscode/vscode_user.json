@@ -28,7 +28,7 @@
   "editor.overviewRulerBorder": false,
   "editor.renderFinalNewline": "dimmed",
   "editor.renderLineHighlight": "gutter",
-  "editor.roundedSelection": false,
+  "editor.roundedSelection": true,
   "editor.rulers": [80],
   "editor.scrollbar.vertical": "visible",
   "editor.showDeprecated": false,
@@ -593,7 +593,7 @@
     "editorGutter.addedBackground": "#479f76",  // green-400
     "editorGutter.background": "#fcfcfc",  // slightly lighter than sideBar.background; cf. panel.background
     "editorGutter.deletedBackground": "#e35d6a",  // red-400
-    "editorGutter.modifiedBackground": "#ffc107",  // yellow-500
+    "editorGutter.modifiedBackground": "#cc9a06",  // theme renders this as stripes so use a darker shade: yellow-600
 
     /* match styling of the theme's default value popup as best we can; cf. editorSuggestWidget */
     "editorHoverWidget.background": "#e8e8e8",
@@ -604,7 +604,7 @@
     "editorHoverWidget.statusBarBackground": "#ccc",
 
     // match theme styling of indentation lines as best we can
-    "editorIndentGuide.activeBackground1": "#e5e5e5",
+    "editorIndentGuide.activeBackground1": "#cfe2ff",  // blue-100
     "editorIndentGuide.background1": "#e5e5e5",
 
     /* use cyan to highlight nice-to-haves */
@@ -706,14 +706,16 @@
     "sideBar.background": "#f8f8f8",  // the theme's default light gray
     "tab.activeBackground": "#fff",
     "tab.activeBorder": "#fff",
-    "tab.activeBorderTop": "#000",
+    "tab.activeBorderTop": "#fff0",
+    "tab.activeModifiedBorder": "#75b798",  // green-300, matches green-400 of *addedForeground
     "tab.inactiveBackground": "#f8f8f8",
+    "tab.inactiveModifiedBorder": "#75b798",  // green-300, matches green-400 of *addedForeground
     "widget.shadow": "#0000"  // disable distracting shadow effect
   },
   "workbench.colorTheme": "Default Light Modern",
-  "workbench.editor.decorations.badges": false,
-  "workbench.editor.decorations.colors": true,
-  "workbench.editor.highlightModifiedTabs": false,
+  "workbench.editor.decorations.badges": true,
+  "workbench.editor.decorations.colors": false,
+  "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.limit.enabled": false,
   "workbench.editor.limit.perEditorGroup": true,
   "workbench.editor.limit.value": 12,

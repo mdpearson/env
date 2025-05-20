@@ -538,7 +538,7 @@
 
     /* colors for selected text */
     "editor.inactiveSelectionBackground": "#cfe2ff",  // blue-100
-    "editor.selectionBackground": "#cfe2ff",  // blue-100
+    "editor.selectionBackground": "#9ec5fe",  // blue-200
 
     /* colors for the line containing the cursor */
     "editor.lineHighlightBackground": "#cfe2ff",  // blue-100
@@ -552,10 +552,10 @@
      * Note that this has lower priority than wordHighlightBackground, but higher
      * priority than selectionBackground, so it may not always be visible.
      */
-    "editor.selectionHighlightBackground": "#cfe2ff80",  // blue-100 at 50% opacity
+    "editor.selectionHighlightBackground": "#cfe2ff60",  // blue-100 at 3/8 opacity
 
     /* use of symbol/text under cursor, case sensitive */
-    "editor.wordHighlightBackground": "#cfe2ff80",  // blue-100 at 50% opacity
+    "editor.wordHighlightBackground": "#cfe2ff60",  // blue-100 at 3/8 opacity
     "editor.wordHighlightBorder": "#fff0",
 
     /* 
@@ -574,7 +574,7 @@
     "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545",  // red-500 for unexpected brackets
 
     /* highlight current bracket pair with same color as selection */
-    "editorBracketMatch.background": "#cfe2ff",  // match editor.selectionBackground
+    "editorBracketMatch.background": "#9ec5fe",  // blue-200: match editor.selectionBackground
     "editorBracketMatch.border": "#fff0",
 
     /* colors for the cursor itself; background is text color when using a block cursor */

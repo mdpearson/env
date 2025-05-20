@@ -529,32 +529,40 @@
     "editor.bracketPairColorization.colorizedBracketBorder": true,
 
     /* colors for search results -- N.B., *Foreground colors are swapped */
-    "editor.findMatchBackground": "#146c43",  // main hit background: green-600
+    "editor.findMatchBackground": "#a3cfbb",  // main hit background: green-200
     "editor.findMatchBorder": "#fff0",  // main hit: no border
-    "editor.findMatchHighlightForeground": "#fff",  // main hit foreground: white
-    "editor.findMatchForeground": "#146c43",  // other hits foreground: green-600
-    "editor.findMatchHighlightBackground": "#19875430",  // other hits background: green-500 at 3/16 opacity
+    "editor.findMatchHighlightForeground": "#146c43",  // main hit foreground: green-600
+    "editor.findMatchForeground": "#198754",  // other hits foreground: green-500
+    "editor.findMatchHighlightBackground": "#d1e7dd",  // other hits background: green-100
     "editor.findMatchHighlightBorder": "#fff0",  // other hits: no border
 
     /* colors for selected text */
-    "editor.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-    "editor.selectionBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+    "editor.inactiveSelectionBackground": "#cfe2ff",  // blue-100
+    "editor.selectionBackground": "#cfe2ff",  // blue-100
 
     /* colors for the line containing the cursor */
-    "editor.lineHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editor.lineHighlightBackground": "#cfe2ff",  // blue-100
     "editor.lineHighlightBorder": "#fff0",
 
     "editor.rangeHighlightBackground": "#fff0",  // highlights the line under the search result, never use
 
-    /* same text as selection, OR text selected via a double-click; cf. wordHighlightBackground */
-    "editor.selectionHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-    "editor.selectionHighlightBorder": "#fff0",
+    /* 
+     * Same text (case-insensitive) as selection, OR text selected via a double-click.
+     *
+     * Note that this has lower priority than wordHighlightBackground, but higher
+     * priority than selectionBackground, so it may not always be visible.
+     */
+    "editor.selectionHighlightBackground": "#cfe2ff80",  // blue-100 at 50% opacity
 
-    /* use of symbol/text under cursor */
-    "editor.wordHighlightBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    /* use of symbol/text under cursor, case sensitive */
+    "editor.wordHighlightBackground": "#cfe2ff80",  // blue-100 at 50% opacity
     "editor.wordHighlightBorder": "#fff0",
 
-    /* definition/modification of symbol/text under cursor */
+    /* 
+     * Definition/modification of symbol/text under cursor, but only in some languages.
+     *
+     * Other languages may use wordHighlightBackground instead.
+     */
     "editor.wordHighlightStrongBackground": "#e0cffc",  // indigo-100
     "editor.wordHighlightStrongBorder": "#e0cffc",  // indigo-100
 
@@ -566,7 +574,7 @@
     "editorBracketHighlight.unexpectedBracket.foreground": "#dc3545",  // red-500 for unexpected brackets
 
     /* highlight current bracket pair with same color as selection */
-    "editorBracketMatch.background": "#0d6efd30",  // match editor.selectionBackground
+    "editorBracketMatch.background": "#cfe2ff",  // match editor.selectionBackground
     "editorBracketMatch.border": "#fff0",
 
     /* colors for the cursor itself; background is text color when using a block cursor */
@@ -578,9 +586,9 @@
     "editorError.border": "#fff0",
     "editorError.foreground": "#fff0",
 
-    /* use blue for AI suggestions */
-    "editorGhostText.background": "#cfe2ff40",  // blue-100 at 25% opacity
-    "editorGhostText.foreground": "#6ea8fe",  // blue-300
+    /* use purple for magical AI suggestions */
+    "editorGhostText.background": "#f0ecf9",  // purple-050
+    "editorGhostText.foreground": "#8c68cd",  // purple-400
 
     "editorGutter.addedBackground": "#479f76",  // green-400
     "editorGutter.background": "#fcfcfc",  // slightly lighter than sideBar.background; cf. panel.background
@@ -591,7 +599,7 @@
     "editorHoverWidget.background": "#e8e8e8",
     "editorHoverWidget.border": "#e3e3e3",
     "editorHoverWidget.foreground": "#1a1a1a",
-    "editorHoverWidget.highlightForeground": "#0f0",
+    "editorHoverWidget.highlightForeground": "#0f0",  // no idea what this does, make it a crazy color
     "editorHoverWidget.shadow": "#0000",  // disable distracting shadow effect
     "editorHoverWidget.statusBarBackground": "#ccc",
 
@@ -600,13 +608,13 @@
     "editorIndentGuide.background1": "#e5e5e5",
 
     /* use cyan to highlight nice-to-haves */
-    "editorInfo.background": "#cff4fc",  // cyan-100
+    "editorInfo.background": "#e7f9fd",  // cyan-050
     "editorInfo.border": "#fff0",
     "editorInfo.foreground": "#fff0",
 
     /* colors for line numbers */
     "editorLineNumber.activeForeground": "#6ea8fe",  // blue-300
-    "editorLineNumber.dimmedForeground":"#0d6efd",  // blue-500
+    "editorLineNumber.dimmedForeground":"#6ea8fe",  // blue-300
     "editorLineNumber.foreground": "#ced4da",  // gray-400
 
     /* use blue-500 for URL links */
@@ -627,11 +635,11 @@
     "editorOverviewRuler.selectionHighlightForeground": "#d63384",  // pink-500
     "editorOverviewRuler.warningForeground": "#ffc107",  // yellow-500
     // the difference between these two is very subtle so set them the same
-    "editorOverviewRuler.wordHighlightForeground": "#9ec5fe",  // blue-200
-    "editorOverviewRuler.wordHighlightTextForeground": "#9ec5fe",  // blue-200
+    "editorOverviewRuler.wordHighlightForeground": "#cfe2ff",  // blue-100
+    "editorOverviewRuler.wordHighlightTextForeground": "#cfe2ff",  // blue-100
     "editorOverviewRuler.wordHighlightStrongForeground": "#a370f7",  // indigo-500
 
-    "editorRuler.foreground": "#e5e5e580",  // ruler border: editorIndentGuide.background1 at 50% opacity
+    "editorRuler.foreground": "#f2f2f2",  // ruler border: editorIndentGuide.background1, 50% lighter
 
     /* colors for the magic context at the top of the editor showing first line of each indentation level */
     "editorStickyScroll.background": "#fff",
@@ -639,7 +647,7 @@
     "editorStickyScroll.shadow": "#0000",
 
     /* this highlights the line anchoring current indentation level in the sticky scroller */
-    "editorStickyScrollHover.background": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "editorStickyScrollHover.background": "#cfe2ff",  // blue-100
 
     /* match styling of the theme's default value popup as best we can; cf. editorHoverWidget */
     "editorSuggestWidget.background": "#e8e8e8",
@@ -651,7 +659,7 @@
     "editorWarning.border": "#fff0",
     "editorWarning.foreground": "#fff0",
 
-    "editorWhitespace.foreground": "#0d6efd40",  // blue-500 at 1/4 opacity
+    "editorWhitespace.foreground": "#9ec5fe",  // blue-200
 
     /* styling for the search widget */
     "editorWidget.background": "#fff",
@@ -674,12 +682,12 @@
     "gitHub.copilot.inline-edit.removedBackground": "#dc3545",  // red-500 for removed text
 
     /* colors for the selected line/object in list views and panels */
-    "list.activeSelectionBackground": "#0d6efd30",  // blue-500 at 3/16 opacity
+    "list.activeSelectionBackground": "#cfe2ff",  // blue-100
     "list.activeSelectionForeground": "#025fb8",  // VSCode blue
     "list.activeSelectionIconForeground": "#025fb8",  // VSCode blue
     "list.focusAndSelectionOutline": "#fff0",
-    "list.hoverBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
-    "list.inactiveSelectionBackground": "#0d6efd18",  // blue-500 at 3/32 opacity
+    "list.hoverBackground": "#cfe2ff",  // blue-100
+    "list.inactiveSelectionBackground": "#cfe2ff",  // blue-100
     "list.inactiveSelectionForeground": "#025fb8",  // VSCode blue
     "list.inactiveSelectionIconForeground": "#025fb8",  // VSCode blue
 

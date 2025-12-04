@@ -66,6 +66,7 @@
 [mergetool "ksdiff"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 [push]
+	autoSetupRemote = true
 	default = simple
 [rebase]
 	whitespace = fix

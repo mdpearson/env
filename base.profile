@@ -20,6 +20,19 @@ export BIN_SH
 LC_COLLATE=POSIX
 export LC_COLLATE
 
+# don't print a login banner on DT console or IDE shells
+showbanner() {
+	[ ! "$DT" ] && [ "$TERM_PROGRAM" != "vscode" ] && \
+	[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]
+}
+
+if ! showbanner
+then
+	# tell Mac OS not to print its bash/zsh recommendation
+	BASH_SILENCE_DEPRECATION_WARNING=1
+	export BASH_SILENCE_DEPRECATION_WARNING
+fi
+
 # set up a simple path if this file has not yet been sourced by this user
 [ "$_ENV_PROFILED" = "$TTY.$USER.$PPID" ] || PATH=/usr/xpg4/bin:/bin:/usr/bin:/usr/ucb
 
@@ -267,7 +280,7 @@ then
 		[ "$2" = null_guard ] && return
 		res="`check_path \"$2\"`"
 		[ "$res" -eq 1 ] && eval "$1=\${$1:+\$$1:}\"$2\""
-		[ "$res" -eq 1 ] && printf "." >&2
+		[ "$res" -eq 1 ] && showbanner && printf "." >&2
 		unset res
 	}
 
@@ -277,7 +290,7 @@ then
 		[ "$2" = null_guard ] && return
 		res="`check_path \"$2\"`"
 		[ "$res" -eq 1 ] && eval "$1=\"$2\"\${$1:+:\$$1}"
-		[ "$res" -eq 1 ] && printf "." >&2
+		[ "$res" -eq 1 ] && showbanner && printf "." >&2
 		unset res
 	}
 
@@ -316,14 +329,14 @@ then
 				res="`check_path \"$2\"`"
 				[ "$res" -eq 1 ] && eval "$1=\${$1:+\$$1:}\"$2\""
 			fi
-			[ "$res" -eq 1 ] && printf "." >&2
+			[ "$res" -eq 1 ] && showbanner && printf "." >&2
 			unset res
 		else
 			#
 			# print a colon (a "double period") to indicate that the
 			# element was already present in the specified path.
 			#
-			printf ":" >&2
+			showbanner && printf ":" >&2
 		fi
 		unset arg prepend res
 	}
@@ -378,7 +391,7 @@ then
 	# set up, modify it with user- or installation-specific paths.
 	#
 
-	printf " configuring \$PATH and friends " >&2
+	showbanner && printf " configuring \$PATH and friends " >&2
 
 	#
 	# Define basic and X paths, per o/s release --
@@ -592,7 +605,7 @@ then
 		. /hpc/settings.sh
 	fi
 
-	echo " <done>" >&2
+	showbanner && echo " <done>" >&2
 
 	# support 1Password
 	SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -657,7 +670,7 @@ then
 	fi
 
 	# display a welcome message introducing the host and OS
-	if [ ! "$DT" ]
+	if showbanner
 	then
 		if [ -x "$HOME/bin/exec/iline" ]
 		then
@@ -729,7 +742,7 @@ then
 
 	unset arch ost plat rel
 
-	if [ ! "$DT" ]
+	if showbanner
 	then
 		# print out display information
 		printf '%s%s; ' "${pre}DISPLAY${post}=" "${DISPLAY:-unset}" >&2

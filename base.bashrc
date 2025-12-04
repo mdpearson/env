@@ -8,24 +8,66 @@
 # shell commands executed each time a bash shell is invoked
 #
 
-# don't run if shell is not interactive
-[[ $- == *i* ]] || return
+# quick function that consolidates history files among similar hosts
+get_histfile_name()
+{
+	case "$1" in
+		adenine)	echo "login-hosts" ;;
+		cytosine)	echo "login-hosts" ;;
+		guanine)	echo "login-hosts" ;;
+		thymine)	echo "login-hosts" ;;
+		pipeline-*) echo "qlogin-hosts" ;;
+		*)			echo "$1" ;;
+	esac
+}
 
-if [ -f "${HOME}/.git-prompt.sh" ]
-then
-	. "${HOME}/.git-prompt.sh"
-	export GIT_PS1_SHOWCOLORHINTS=1
-	export GIT_PS1_SHOWDIRTYSTATE=1
-	export GIT_PS1_SHOWSTASHSTATE=1
-	export GIT_PS1_SHOWUNTRACKEDFILES=1
-	export GIT_PS1_SHOWUPSTREAM="auto verbose"
-else
-	echo " (you may want to install git-prompt in ~/.git-prompt.sh)" >&2
-	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
-fi
+# create a unique history file for each host
+[ -d "$HOME/.bash_histories" ] || mkdir "$HOME/.bash_histories"
+histfile_name="$(get_histfile_name "$THOST")"
+[ "$histfile_name" ] || histfile_name="$(get_histfile_name "$HOST")"
+
+# configure history to have quite a long memory
+HISTCONTROL=ignoredups
+HISTFILE="$HOME/.bash_histories/$histfile_name"
+[ -f "$HISTFILE" ] || touch "$HISTFILE"
+HISTSIZE=$((64 * 1024 - 1))
+HISTFILESIZE=$((64 * 1024 - 1))
+unset histfile_name
+
+# update history on disk with current commands, then reload from disk
+function history_update
+{
+	[ -f "$HISTFILE" ] || return
+
+	history -a
+
+	. "$HOME/.isinstalled"
+	if [ "$(isinstalled python3)" ]
+	then
+		uniq_history -i "$HISTFILE"
+	else
+		sort -u "$HISTFILE" >| "$HISTFILE.tmp.$$"
+		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
+	fi
+
+	history -c
+	history -r
+}
 
 # run .bash_logout for all shells, not just login ones
+# shellcheck source=base.bash_logout
 trap '[ -f "$HOME/.bash_logout" ] && . "$HOME/.bash_logout"' EXIT
+
+# don't run the remainder of this code if shell is not interactive
+[[ $- == *i* ]] || return
+
+# don't run the remainder of this code if shell was started by an IDE
+if [[ "$TERM_PROGRAM" == "vscode" ]] || \
+   [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]
+then
+	PS1='bash(ide) $ '
+	return
+fi
 
 #
 # This file may be sourced by the user running under a different uid;
@@ -57,35 +99,46 @@ then
 fi
 
 # load up commands common to bash and ksh
+# shellcheck source=base.common.ksh
 [ -f "$HOME/.common.ksh" ] && . "$HOME/.common.ksh"
 [ -f "$HOME/.inputrc" ] && export INPUTRC="$HOME/.inputrc"
 
-get_histfile_name()
-{
-	case "$1" in
-		adenine)	echo "login-hosts" ;;
-		cytosine)	echo "login-hosts" ;;
-		guanine)	echo "login-hosts" ;;
-		thymine)	echo "login-hosts" ;;
-		pipeline-*)	echo "qlogin-hosts" ;;
-		*)			echo "$1" ;;
-	esac
-}
-
-# create a unique history file for each host
-[ -d "$HOME/.bash_histories" ] || mkdir "$HOME/.bash_histories"
-histfile_name="$(get_histfile_name "$THOST")"
-[ "$histfile_name" ] || histfile_name="$(get_histfile_name "$HOST")"
-
-HISTFILE="$HOME/.bash_histories/$histfile_name"
-unset histfile_name
-
-HISTCONTROL=ignoredups
-HISTSIZE=$((64 * 1024 - 1))
-HISTFILESIZE=$((64 * 1024 - 1))
-[ -f "$HISTFILE" ] || touch "$HISTFILE"
-
 TIMEFORMAT="		elapsed: %lR @ %P""%% (u:%lU|s:%lS)"
+
+set -b					# immediately notify of terminated processes
+set -C					# i.e., noclobber
+set +o posix			# strict posix compatibility breaks autocomplete
+set -P					# cd ../ follows physical not logical structure
+
+shopt -s cdspell		# look for minor typos in cd cmds
+shopt -s cmdhist		# save multiline cmds in one hist entry
+shopt -s checkwinsize	# update LINES and COLUMNS more often
+shopt -s histappend		# save history across sessions
+shopt -s histreedit		# edit failed history changes
+shopt -s histverify		# print changed cmd before running
+shopt -u huponexit		# don't send SIGHUP to children on exit
+shopt -u lithist		# save multiline commands with ';' delimiters not newlines
+shopt -u nullglob		# conflicts with bash completion, otherwise it's really useful
+shopt -s progcomp		# enable programmable completion
+shopt -u sourcepath		# don't use PATH for `.' commands
+
+# the following shopts work only for 2.05 or greater
+shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
+shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
+[ "$?" -eq 0 ] || alias echo="/bin/echo"		# use /bin/echo if above fails
+
+if [ -f "${HOME}/.git-prompt.sh" ]
+then
+	. "${HOME}/.git-prompt.sh"
+	export GIT_PS1_SHOWCOLORHINTS=1
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	export GIT_PS1_SHOWSTASHSTATE=1
+	export GIT_PS1_SHOWUNTRACKEDFILES=1
+	export GIT_PS1_SHOWUPSTREAM="auto verbose"
+else
+	echo " (you may want to install git-prompt in ~/.git-prompt.sh)" >&2
+	echo " (available at https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)" >&2
+fi
 
 function init_bash_prompt
 {
@@ -192,7 +245,7 @@ then
 		__GIT_PS1_RESET_FMT='\[\e[00m\]'		# reset these crazy colors
 		__GIT_PS1_STAGED_FMT='\[\e[32;01m\]'	# flag that staged files exist - bold green
 		__GIT_PS1_STASH_FMT='\[\e[01;02;04m\]'	# flag that stashed files exist - bold gray underlined
-		__GIT_PS1_UNTRACKED_FMT='\[\e[31;01m\]'	# flag that untracked files exist - bold red
+		__GIT_PS1_UNTRACKED_FMT='\[\e[31;01m\]' # flag that untracked files exist - bold red
 
 		# this variable is set in the git-prompt.sh script
 		# shellcheck disable=SC2154
@@ -277,6 +330,7 @@ function prompt_update
 		fi
 	fi
 }
+PROMPT_COMMAND='prompt_update $?'
 
 function log_error
 {
@@ -291,7 +345,6 @@ function log_error
 	fi
 	unset _errno _cmd
 }
-
 trap 'log_error $BASH_COMMAND' ERR
 
 # automatically call ls after cd if the listing is six lines or less
@@ -317,51 +370,7 @@ function cd_wrapper
 }
 alias cd='cd_wrapper'
 
-# update history on disk with current commands, then reload from disk
-function history_update
-{
-	[ -f "$HISTFILE" ] || return
-
-	history -a
-
-	. "$HOME/.isinstalled"
-	if [ "$(isinstalled python)" ]
-	then
-		uniq_history -i "$HISTFILE"
-	else
-		sort -u "$HISTFILE" >| "$HISTFILE.tmp.$$"
-		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
-	fi
-
-	history -c
-	history -r
-}
-
 init_bash_prompt
-
-PROMPT_COMMAND='prompt_update $?'
-
-set -b					# immediately notify of terminated processes
-set -C					# i.e., noclobber
-set +o posix			# strict posix compatibility breaks autocomplete
-set -P					# cd ../ follows physical not logical structure
-
-shopt -s cdspell		# look for minor typos in cd cmds
-shopt -s cmdhist		# save multiline cmds in one hist entry
-shopt -s checkwinsize	# update LINES and COLUMNS more often
-shopt -s histappend		# save history across sessions
-shopt -s histreedit		# edit failed history changes
-shopt -s histverify		# print changed cmd before running
-shopt -u huponexit		# don't send SIGHUP to children on exit
-shopt -u lithist		# save multiline commands with ';' delimiters not newlines
-shopt -u nullglob		# conflicts with bash completion, otherwise it's really useful
-shopt -s progcomp		# enable programmable completion
-shopt -u sourcepath		# don't use PATH for `.' commands
-
-# the following shopts work only for 2.05 or greater
-shopt -s no_empty_cmd_completion 2>/dev/null	# don't freeze on an accidental tab
-shopt -s xpg_echo 2>/dev/null					# use xpg4 semantics for echo
-[ "$?" -eq 0 ] || alias echo="/bin/echo"		# use /bin/echo if above fails
 
 # command-line completions generally use more bash-isms than I am willing to write
 . "$HOME/.isinstalled"

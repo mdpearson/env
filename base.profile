@@ -169,6 +169,10 @@ COLUMNS="`tput cols`"
 ENV="${HOME}/.kshrc"
 export COLUMNS ENV
 
+ANDROID_HOME=$HOME/Library/Android/sdk
+ANDROID_SDK_ROOT=$ANDROID_HOME
+export ANDROID_HOME ANDROID_SDK_ROOT
+
 if [ -r "${HOME}/.Xdefaults" ]
 then
 	XENVIRONMENT="${HOME}/.Xdefaults"
@@ -496,6 +500,9 @@ then
 			fi
 		done
 	fi
+
+    append_path customp $ANDROID_SDK_ROOT/emulator
+    append_path customp $ANDROID_SDK_ROOT/platform-tools
 
 	# adjust the PATH to support homebrew
 	if [ -f /opt/homebrew/bin/brew ]

@@ -9,7 +9,7 @@
 #
 
 --color-filename=bold
---color-match=bold blue underline
+--color-match=bold green underline
 --color-lineno=dark
 --ignore-dir=bower_components
 --ignore-dir=build

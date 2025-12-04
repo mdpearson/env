@@ -79,11 +79,13 @@
 	signingkey = __G_SIGNINGKEY__
 
 #
-# Green means staged and ready to go, or added text
+# Green means staged and ready to go, or added text, or found text
 #
 
 [color "diff"]
 	new = green
+[color "grep"]
+	match = green bold ul
 [color "status"]
 	added = green		# synonymous with 'updated'
 
@@ -106,8 +108,6 @@
 [color "decorate"]
 	HEAD = blue reverse bold
 	branch = blue
-[color "grep"]
-	match = blue bold ul
 [color "status"]
 	branch = blue reverse bold
 

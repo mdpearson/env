@@ -46,7 +46,7 @@ function history_update
 	then
 		uniq_history -i "$HISTFILE"
 	else
-		sort -u "$HISTFILE" >| "$HISTFILE.tmp.$$"
+		awk '!seen[$0]++' "$HISTFILE" >| "$HISTFILE.tmp.$$"
 		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
 	fi
 

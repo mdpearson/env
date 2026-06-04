@@ -9,6 +9,7 @@
 #
 
 import argparse
+import fcntl
 import shutil
 import sys
 import tempfile
@@ -35,11 +36,18 @@ def dedup_history_file(old_histfile, new_histfd=sys.stdout):
 
 if __name__ == "__main__":
     if args.in_place:
-        with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as tmpfile:
-            dedup_history_file(args.history_file, tmpfile)
-            tmpfile.seek(0)
-            with open(args.history_file, "w", encoding="utf-8") as dst_fd:
+        # lock $HISTFILE first so multiple shells don't step on each other's toes (e.g., at logout)
+        with open(args.history_file, "r+", encoding="utf-8") as dst_fd:
+            fcntl.flock(dst_fd.fileno(), fcntl.LOCK_EX)
+            with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as tmpfile:
+                dedup_history_file(args.history_file, tmpfile)
+                tmpfile.seek(0)
                 shutil.copyfileobj(tmpfile, dst_fd)
+                #
+                # Deduplication generally, but not always, shortens history.
+                # With no argument, truncate() just means "the file ends here".
+                #
+                dst_fd.truncate()
     else:
         dedup_history_file(args.history_file)
 

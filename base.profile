@@ -22,7 +22,7 @@ export LC_COLLATE
 
 # don't print a login banner on DT console or IDE shells
 showbanner() {
-	[ ! "$DT" ] && [ "$TERM_PROGRAM" != "vscode" ] && \
+	[ ! "$CLAUDECODE" ] && [ ! "$DT" ] && [ "$TERM_PROGRAM" != "vscode" ] && \
 	[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]
 }
 

@@ -62,7 +62,7 @@ trap '[ -f "$HOME/.bash_logout" ] && . "$HOME/.bash_logout"' EXIT
 [[ $- == *i* ]] || return
 
 # don't run the remainder of this code if shell was started by an IDE
-if [[ "$TERM_PROGRAM" == "vscode" ]] || \
+if [ "$CLAUDECODE" ] || [[ "$TERM_PROGRAM" == "vscode" ]] || \
    [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]
 then
 	PS1='bash(ide) $ '

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2014-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -8,18 +8,29 @@
 # make a best guess as to what the name of a Mac is
 #
 
-[ -f /Library/Preferences/SystemConfiguration/preferences.plist ] || exit 1
+. "$HOME/.isinstalled"
 
-# set THOST to the AppleTalk (user-chosen) name on Macs
-RawHostNameData=$(defaults read /Library/Preferences/SystemConfiguration/preferences.plist System)
-LocalHostName=$(echo "$RawHostNameData" \
-  | grep 'LocalHostName = ' \
-  | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' \
-  | uniq)
-ComputerName=$(echo "$RawHostNameData" \
-  | grep 'ComputerName = ' \
-  | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' \
-  | uniq)
+if [ "$(isinstalled scutil)" ]
+then
+	# scutil is really easy, if present
+	LocalHostName=$(scutil --get LocalHostName 2>/dev/null)
+	ComputerName=$(scutil --get ComputerName 2>/dev/null)
+elif [ -f /Library/Preferences/SystemConfiguration/preferences.plist ]
+then
+	# defaults is older but needs more parsing
+	RawHostNameData=$(defaults read /Library/Preferences/SystemConfiguration/preferences.plist System)
+	LocalHostName=$(echo "$RawHostNameData" \
+	  | grep 'LocalHostName = ' \
+	  | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' \
+	  | uniq)
+	ComputerName=$(echo "$RawHostNameData" \
+	  | grep 'ComputerName = ' \
+	  | sed -e 's/^ *//' -e 's/;$//' -e 's/.* = //' -e 's/^"//' -e 's/"$//' \
+	  | uniq)
+else
+	exit 1
+fi
+
 if [ "$LocalHostName" = "$ComputerName" ]
 then
 	THOST="$LocalHostName"
@@ -38,7 +49,7 @@ else
 
 	if [ "$AsciiLocalHostName" = "$AsciiComputerName" ]
 	then
-		THOST="UnicodeComputerName"
+		THOST="$UnicodeComputerName"
 	else
 		THOST="${UnicodeComputerName} (${LocalHostName})"
 	fi

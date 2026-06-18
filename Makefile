@@ -1,6 +1,6 @@
 #!/not/executable
 #
-# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -43,9 +43,16 @@ DOTFILES = \
 
 OVERRIDDEN_DOTFILES = .bash_login .bash_logout .bashrc .login
 
-XDOTFILES = .Xdefaults .dtprofile .fvwm/.fvwm2rc .dt/sessionetc .dt/sessions/dtperf
-
 SCRIPTS = aws_mfa.bash ccv cleanup ctags.py iline lwho stub tap xping uniq_history Darwin/bat Darwin/macname
+
+VSCODE_EXTENSIONS_JSON = $(HOME)/.vscode/extensions/extensions.json
+
+VSCODE_THEME_DIR = extensions/personal-themes
+
+VSCODE_THEMES = package.json \
+  themes/tokyo-night-light-stripped-color-theme.json
+
+XDOTFILES = .Xdefaults .dtprofile .fvwm/.fvwm2rc .dt/sessionetc .dt/sessions/dtperf
 
 XSCRIPTS = clust_fvwmenu fvbutton heir_fvwmenu hpcv ot_fvwmenu sdtp
 
@@ -58,12 +65,12 @@ ALLDOTFILES = $(OVERRIDDEN_DOTFILES) $(DOTFILES)
 endif
 
 ifeq ($(G_USE_FVWM),yes)
-TARGETS = $(addprefix bin/exec/,$(SCRIPTS) $(XSCRIPTS)) $(ALLDOTFILES) $(XDOTFILES)
+TARGETS = $(addprefix bin/exec/,$(SCRIPTS) $(XSCRIPTS)) $(ALLDOTFILES) $(addprefix .vscode/$(VSCODE_THEME_DIR)/,$(VSCODE_THEMES)) $(XDOTFILES)
 else
-TARGETS = $(addprefix bin/exec/,$(SCRIPTS)) $(ALLDOTFILES)
+TARGETS = $(addprefix bin/exec/,$(SCRIPTS)) $(ALLDOTFILES) $(addprefix .vscode/$(VSCODE_THEME_DIR)/,$(VSCODE_THEMES))
 endif
 
-default: $(addprefix $(HOME)/,$(TARGETS))
+default: $(addprefix $(HOME)/,$(TARGETS)) vscode-register
 	@ echo "<done>"
 
 PREPARE = "mkdir -p $(@D); \
@@ -83,6 +90,13 @@ $(HOME)/.%: base.%
 else
 $(HOME)/.profile_custom:
 endif
+
+# just copy vscode themes, no filtering
+$(addprefix $(HOME)/.vscode/$(VSCODE_THEME_DIR)/,$(VSCODE_THEMES)): \
+$(HOME)/.vscode/$(VSCODE_THEME_DIR)/%: vscode/$(VSCODE_THEME_DIR)/%
+	-$(SHELL) -c $(PREPARE)
+	cp $< $@
+	chmod 444 $@
 
 # messy rule for x dotfiles that need substantial pattern substitution
 $(HOME)/.Xdefaults: TSRC=base.Xdefaults
@@ -170,5 +184,18 @@ envclean:
 	for file in $(TARGETS); do \
 		rm -f $(HOME)/$$file; done
 clobber: clean envclean
+
+# to sideload themes into vscode these days you need to edit extensions.json
+.PHONY: vscode-register
+vscode-register: $(addprefix $(HOME)/.vscode/$(VSCODE_THEME_DIR)/,$(VSCODE_THEMES)) \
+                 vscode/$(VSCODE_THEME_DIR)/package.json
+	id="$$(jq -r '.publisher + "." + .name' vscode/$(VSCODE_THEME_DIR)/package.json)"; \
+	ver="$$(jq -r '.version' vscode/$(VSCODE_THEME_DIR)/package.json)"; \
+	tmp=$$(mktemp); \
+	jq --arg id "$$id" --arg ver "$$ver" \
+	   --arg path "$(HOME)/.vscode/$(VSCODE_THEME_DIR)" \
+	   --arg rel "$(notdir $(VSCODE_THEME_DIR))" \
+	   'map(select(.identifier.id != $$id)) + [{identifier:{id:$$id},version:$$ver,location:{"$$mid":1,path:$$path,scheme:"file"},relativeLocation:$$rel}]' \
+	   $(VSCODE_EXTENSIONS_JSON) > $$tmp && mv $$tmp $(VSCODE_EXTENSIONS_JSON)
 
 #EOF __TAGGED__

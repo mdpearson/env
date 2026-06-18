@@ -1,0 +1,21 @@
+{
+  "name": "tokyo-night-light-stripped",
+  "displayName": "Tokyo Night Light (Stripped)",
+  "description": "Tokyo Night Light by Enkia, with all syntax highlighting removed.",
+  "version": "1.0.0",
+  "publisher": "looptid-microsystems",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Tokyo Night Light (Stripped)",
+        "uiTheme": "vs",
+        "path": "./themes/tokyo-night-light-stripped-color-theme.json"
+      }
+    ]
+  }
+}

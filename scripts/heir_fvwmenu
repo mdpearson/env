@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2004-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2004-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -96,7 +96,7 @@ do
 		menucmd=$(echo "$MENU_SCRIPT" | cut -d' ' -f1)
 		menuent=1
 		. "$HOME/.isinstalled"
-		if [ "$menucmd" ] && [ `isinstalled "$menucmd"` ]
+		if [ "$menucmd" ] && isinstalled "$menucmd"
 		then
 			echo DestroyMenu $MENU_NAME
 			echo DestroyFunc $MENU_NAME.func

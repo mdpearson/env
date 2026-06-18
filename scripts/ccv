@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2003-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2003-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -14,7 +14,7 @@ PATH=$PATH:/usr/bin:/bin
 
 . "$HOME/.isinstalled"
 
-if [ `isinstalled gcc` ]
+if isinstalled gcc
 then
 	gccver=`gcc -V 2>&1 | awk '/ C / {print}' | \
 	  sed -e 's/cc: //' -e 's/ *on.*//'`
@@ -25,7 +25,7 @@ else
 	[ "$gccver" ] || gccver='[ gcc not found ]'
 fi
 
-if [ `isinstalled make` ]
+if isinstalled make
 then
 	make --version >/dev/null 2>&1
 	if [ $? -eq 0 ]
@@ -41,7 +41,7 @@ else
 fi
 
 javaver='[ java not found ]'
-if [ `isinstalled java` ]
+if isinstalled java
 then
     javaver='java '`java -version 2>&1 | awk 'NR == 1 { print $3 }' | sed 's/\"//g'`
 fi

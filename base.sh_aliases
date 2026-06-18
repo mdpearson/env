@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -75,15 +75,15 @@ rgrep()
 	grep -r "$*" ./* | nfilt
 }
 
-[ "`isinstalled cstyle`" ] && alias cstyle="cstyle -chpvP"
-[ "`isinstalled dbx`" ] && alias rdbx='dbx -s "$HOME/.dbxrc"'
-[ "`isinstalled node`" ] && alias clonejs="node ~/bin/clone.js"
-[ "`isinstalled python`" ] && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
+isinstalled cstyle && alias cstyle="cstyle -chpvP"
+isinstalled dbx && alias rdbx='dbx -s "$HOME/.dbxrc"'
+isinstalled node && alias clonejs="node ~/bin/clone.js"
+isinstalled python && alias pysum="python -c 'import sys; print sum([int(i) for sublist in sys.stdin for i in sublist.split()])'"
 
-[ "`isinstalled bsub`" ] && [ "`isinstalled bsub_wrapper`" ] && \
+isinstalled bsub && isinstalled bsub_wrapper && \
   alias bsub='bsub_wrapper'
 
-if [ "`isinstalled a2ps`" ]
+if isinstalled a2ps
 then
 	alias c2ps="a2ps -=code"
 	alias m2ps="a2ps -=man"
@@ -127,21 +127,21 @@ then
 fi
 
 unalias bbedit bbdiff bbfind 2>/dev/null
-if [ "`isinstalled edit`" ]
+if isinstalled edit
 then
-	[ "`isinstalled bbedit`" ] || alias bbedit="edit"
+	isinstalled bbedit || alias bbedit="edit"
 fi
-if [ "`isinstalled twdiff`" ]
+if isinstalled twdiff
 then
-	[ "`isinstalled bbdiff`" ] || alias bbdiff="twdiff"
+	isinstalled bbdiff || alias bbdiff="twdiff"
 fi
-if [ "`isinstalled twfind`" ]
+if isinstalled twfind
 then
-	[ "`isinstalled bbfind`" ] || alias bbfind="twfind"
+	isinstalled bbfind || alias bbfind="twfind"
 fi
 
 alias mods='svn status | grep "^[A|M]" | grep "\.\(py\|java\)$" | awk "{print \$(NF)}"'
-if [ "`isinstalled bbedit`" ] || [ "`isinstalled edit`" ]
+if isinstalled bbedit || isinstalled edit
 then
 	openmods()
 	{

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -40,9 +40,10 @@ function history_update
 	[ -f "$HISTFILE" ] || return
 
 	history -a
+	history -r
 
 	. "$HOME/.isinstalled"
-	if [ "$(isinstalled python3)" ]
+	if isinstalled python3
 	then
 		uniq_history -i "$HISTFILE"
 	else
@@ -381,7 +382,7 @@ then
 	restore_posix_flag=1
 fi
 
-if [ "$(isinstalled brew)" ]
+if isinstalled brew
 then
 	_brew_prefix="$(brew --prefix)"
 
@@ -391,6 +392,11 @@ then
 	fi
 
 	unset _brew_prefix
+fi
+
+if isinstalled fnm
+then
+	eval "$(fnm env --use-on-cd)"
 fi
 
 if [ -f "${HOME}/.git-completion.bash" ]
@@ -408,7 +414,7 @@ fi
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-if [ "$(isinstalled kubectl)" ]
+if isinstalled kubectl
 then
 	source <(kubectl completion bash)
 fi

@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2000-2015 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -41,7 +41,7 @@ cons_cmd="xterm -C -bg __MOD_BG__ -fg __MOD_TERM__ -fn 5x7 -title console \
 
 . "$HOME/.isinstalled"
 
-if [ `isinstalled sdtperfmeter` ]
+if isinstalled sdtperfmeter
 then
 	loadname="Sdtperfmeter"
 	load_cmd=sdtperfmeter

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2000-2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2000-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -531,7 +531,7 @@ then
 	. "$HOME/.isinstalled"
 
 	# look for gems in the tentative path
-	if [ "`isinstalled gem`" ]
+	if isinstalled gem
 	then
 		for p in `gem environment | awk '/GEM PATHS/{flag=1;next}/GEM CONFIGURATION/{flag=0}flag{print $2}'`
 		do
@@ -659,10 +659,10 @@ then
 		alias workoff="deactivate"
 	fi
 
-	[ "`isinstalled macname`" ] && THOST="`macname`"
+	isinstalled macname && THOST="`macname`"
 	[ "$THOST" ] && export THOST
 
-	if [ "`isinstalled sysctl`" ] && sysctl -n hw.ncpu >/dev/null 2>&1
+	if isinstalled sysctl && sysctl -n hw.ncpu >/dev/null 2>&1
 	then
 		MAKEFLAGS="-j`sysctl -n hw.ncpu`"
 		export MAKEFLAGS

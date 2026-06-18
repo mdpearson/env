@@ -10,7 +10,7 @@
 
 . "$HOME/.isinstalled"
 
-if [ "$(isinstalled scutil)" ]
+if isinstalled scutil
 then
 	# scutil is really easy, if present
 	LocalHostName=$(scutil --get LocalHostName 2>/dev/null)

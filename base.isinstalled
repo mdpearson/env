@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2014-25 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2014-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -9,13 +9,7 @@
 #
 
 isinstalled() {
-	if command -v "$*" >/dev/null 2>&1
-	then
-		echo 1
-	elif type "$*" >/dev/null 2>&1
-	then
-		echo 1
-	fi
+	command -v "$*" >/dev/null 2>&1 || type "$*" >/dev/null 2>&1
 }
 
 #EOF __TAGGED__

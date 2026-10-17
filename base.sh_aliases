@@ -19,19 +19,22 @@ unalias cp 2>/dev/null
 unalias ls 2>/dev/null
 unalias rm 2>/dev/null
 
-alias cp="cp -i"
+[ "$CLAUDECODE" ] || alias cp="cp -i"
 alias cpf="cp -f"
 
 alias emacs="emacs -nw"
 
-checkls_error="`ls --color=auto -ah 2>&1 > /dev/null`"
-if [ "$?" -ne 0 ] || [ "$checkls_error" ]
+if [ ! "$CLAUDECODE" ]
 then
-	alias ls='ls -Fb'
-else
-	alias ls='ls -Fbh --color=auto'
+    checkls_error="`ls --color=auto -ah 2>&1 > /dev/null`"
+    if [ "$?" -ne 0 ] || [ "$checkls_error" ]
+    then
+        alias ls='ls -Fb'
+    else
+        alias ls='ls -Fbh --color=auto'
+    fi
+    unset checkls_error
 fi
-unset checkls_error
 
 if [ "`uname`" = Darwin ]
 then
@@ -50,11 +53,11 @@ alias lt='ll -rt | tail'
 unset long_lsflags
 unset verylong_lsflags
 
-alias rm="rm -i"
+[ "$CLAUDECODE" ] || alias rm="rm -i"
 alias rmf="rm -f"
 alias rmrf="rm -rf"
 
-alias mv="mv -i"
+[ "$CLAUDECODE" ] || alias mv="mv -i"
 
 alias rehash='hash -r'
 alias hi="history"
@@ -114,7 +117,7 @@ lessl="`(type less 2>/dev/null) | awk '{print $NF}'`"
 if [ -x "$lessl" ]
 then
 	PAGER="$lessl"
-	LESS='-XaeqP?f%f:stdin. ?m[%i of %m] .?lB%lB?L/%L. .?eEOF:?pB%pB\%..%t'
+	LESS='-RXaeqP?f%f:stdin. ?m[%i of %m] .?lB%lB?L/%L. .?eEOF:?pB%pB\%..%t'
 	export LESS PAGER
 	alias more="less"
 fi

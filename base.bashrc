@@ -8,9 +8,52 @@
 # shell commands executed each time a bash shell is invoked
 #
 
+set -o pipefail
+
+. "$HOME/.isinstalled"
+
+# command-line completions generally use more bash-isms than I am willing to write
+trap - ERR
+if shopt -qo posix
+then
+	set +o posix
+	restore_posix_flag=1
+fi
+
+if isinstalled brew
+then
+	_brew_prefix="$(brew --prefix)"
+
+	if [ -f "${_brew_prefix}/etc/profile.d/bash_completion.sh" ]
+	then
+		. "${_brew_prefix}/etc/profile.d/bash_completion.sh"
+	fi
+
+	unset _brew_prefix
+fi
+
+if isinstalled fnm
+then
+	eval "$(fnm env --use-on-cd)"
+fi
+
 # >>> mise:activate >>> managed by mise — do not edit between markers
 eval "$(mise activate bash)"
 # <<< mise:activate <<<
+
+# the rest of this file can trip up agents and non-interactive shells
+if [ "$CLAUDECODE" ] || [[ $- != *i* ]]
+then
+	PS1="bash($-) \$ "
+	# restore shell settings after command-line completion magic is done
+    if [ "$restore_posix_flag" ]
+    then
+        set -o posix
+        unset restore_posix_flag
+    fi
+    unset isinstalled
+	return
+fi
 
 # quick function that consolidates history files among similar hosts
 get_histfile_name()
@@ -55,24 +98,14 @@ function history_update
 		mv -f "$HISTFILE.tmp.$$" "$HISTFILE"
 	fi
 
+    # unset isinstalled
 	history -c
 	history -r
 }
 
-# run .bash_logout for all shells, not just login ones
+# run .bash_logout for all interactive shells, not just login ones
 # shellcheck source=base.bash_logout
 trap '[ -f "$HOME/.bash_logout" ] && . "$HOME/.bash_logout"' EXIT
-
-# don't run the remainder of this code if shell is not interactive
-[[ $- == *i* ]] || return
-
-# don't run the remainder of this code if shell was started by an IDE
-if [ "$CLAUDECODE" ] || [[ "$TERM_PROGRAM" == "vscode" ]] || \
-   [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]
-then
-	PS1='bash(ide) $ '
-	return
-fi
 
 #
 # This file may be sourced by the user running under a different uid;
@@ -396,6 +429,7 @@ fi
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+. "$HOME/.isinstalled"
 if isinstalled kubectl
 then
 	source <(kubectl completion bash)

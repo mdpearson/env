@@ -442,6 +442,11 @@ then
 		append_path basep "$ppath"
 	done
 
+	for ppath in `cat /etc/paths`
+	do
+		append_path basep "$ppath"
+	done
+
 	PATH="`echo \"${basep}\" | \
 		sed -e 's/::/:/g' -e 's/:$//' -e 's/^://'`"
 	MANPATH="`echo \"${basem}\" | \

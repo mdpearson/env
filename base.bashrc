@@ -8,6 +8,10 @@
 # shell commands executed each time a bash shell is invoked
 #
 
+# >>> mise:activate >>> managed by mise — do not edit between markers
+eval "$(mise activate bash)"
+# <<< mise:activate <<<
+
 # quick function that consolidates history files among similar hosts
 get_histfile_name()
 {
@@ -331,7 +335,11 @@ function prompt_update
 		fi
 	fi
 }
-PROMPT_COMMAND='prompt_update $?'
+
+case "$PROMPT_COMMAND" in
+    *prompt_update*) ;;
+    *) PROMPT_COMMAND="prompt_update \$?; $PROMPT_COMMAND" ;;
+esac
 
 function log_error
 {
@@ -373,32 +381,6 @@ alias cd='cd_wrapper'
 
 init_bash_prompt
 
-# command-line completions generally use more bash-isms than I am willing to write
-. "$HOME/.isinstalled"
-trap - ERR
-if shopt -qo posix
-then
-	set +o posix
-	restore_posix_flag=1
-fi
-
-if isinstalled brew
-then
-	_brew_prefix="$(brew --prefix)"
-
-	if [ -f "${_brew_prefix}/etc/profile.d/bash_completion.sh" ]
-	then
-		. "${_brew_prefix}/etc/profile.d/bash_completion.sh"
-	fi
-
-	unset _brew_prefix
-fi
-
-if isinstalled fnm
-then
-	eval "$(fnm env --use-on-cd)"
-fi
-
 if [ -f "${HOME}/.git-completion.bash" ]
 then
 	. "$HOME/.git-completion.bash"
@@ -418,6 +400,8 @@ if isinstalled kubectl
 then
 	source <(kubectl completion bash)
 fi
+
+# eval "$(mise activate bash)"
 
 # restore shell settings after command-line completion magic is done
 if [ "$restore_posix_flag" ]

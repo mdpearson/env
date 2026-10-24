@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2003-2025 Matthew Pearson <matthewpearson@gmail.com>.
+# Copyright (c) 2003-2026 Matthew Pearson <matthewpearson@gmail.com>.
 #
 # These scripts are free. There is no warranty; your mileage may vary.
 # Visit http://creativecommons.org/licenses/by-nc-sa/4.0/ for more details.
@@ -10,6 +10,10 @@
 
 . "$HOME/.profile"
 . "$HOME/.bashrc"
+
+# >>> mise:activate >>> managed by mise — do not edit between markers
+eval "$(mise activate bash --shims)"
+# <<< mise:activate <<<
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 

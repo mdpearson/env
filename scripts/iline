@@ -245,8 +245,18 @@ sunhw() {
 
 	if [ $plat != 'i86pc' -a -x /usr/platform/$plat/sbin/prtdiag ]
 	then
-		fname=/tmp/iline.$$
-		/usr/platform/${plat}/sbin/prtdiag > $fname &
+		#
+		# Hold prtdiag's output in a private temp dir. mkdir is
+		# atomic and POSIX everywhere this runs; umask 077 keeps the
+		# dir (and the file within it) safe from /tmp symlink races.
+		# A failed mkdir degrades exactly as the old bare redirect
+		# did - prtdiag's redirect fails and we fall back to prtconf.
+		#
+		tmpdir=${TMPDIR:-/tmp}/iline.$$
+		(umask 077 && mkdir "$tmpdir") 2>/dev/null
+		trap 'rm -rf "$tmpdir"' EXIT HUP INT TERM
+		fname=$tmpdir/prtdiag
+		/usr/platform/${plat}/sbin/prtdiag > "$fname" &
 		baseline=`date | sed -e 's/.*://' -e 's/ .*//'`
 
 		#
@@ -277,9 +287,9 @@ sunhw() {
 				# In that case this check will fail and
 				# prtconf will run later (as it should).
 				#
-				if [ `cat $fname | wc -l` -lt 4 ]
+				if [ "`wc -l < \"$fname\"`" -lt 4 ]
 				then
-					rm $fname
+					rm -f "$fname"
 					check=f
 				fi
 				break
@@ -309,7 +319,7 @@ sunhw() {
 				}'`
 
 			tmp=`uname -m`
-			set -- `cat $fname | \
+			set -- `cat "$fname" | \
 				nawk 'BEGIN {
 					plat=hz="?"
 					mem=0
@@ -324,7 +334,7 @@ sunhw() {
 				/clock/ { if ($4 ~ /./) hz=$4 }
 				END { printf("%s %s %s\n",mem,hz,plat) }' \
 				arch=$tmp`
-			rm $fname
+			rm -f "$fname"
 			rawram=$1
 			bmhz=$2
 			shift 2

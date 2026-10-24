@@ -164,7 +164,7 @@ HOST="`hostname | sed 's/\..*//'`"	# drop domain name if present
 HOSTNAME="$HOST"
 export HOST HOSTNAME USER
 
-COLUMNS="`tput cols`"
+COLUMNS="`tput cols 2>/dev/null || echo 80`"
 [ "$COLUMNS" ] || COLUMNS=80
 ENV="${HOME}/.kshrc"
 export COLUMNS ENV

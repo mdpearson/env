@@ -821,7 +821,7 @@ else
 				# local host - bold text
 				pre=`tput bold 2>/dev/null`
 			fi
-			post=`tput sgr0`
+			post=`tput sgr0 2>/dev/null`
 			#
 			# tput embeds invisible control chars, the
 			# "width" of which varies by o/s.
@@ -855,7 +855,7 @@ else
 	  "${prefix:+$prefix }" "$CLASS" "$CHIPC" "${CMHZ:+$CMHZ }$CHIP" \
 	  "$coremsg" "$RAM" ${verbose:+${EXTRA:+" @ ${EXTRA}"}}`
 
-	tmp=`tput cols`
+	tmp=`tput cols 2>/dev/null || echo 80`
 	termwidth=`expr $tmp - ${limit:-0} + 1 + ${ccharf:-0}`
 
 	# if the resulting string is too long, try using sed to shorten it
@@ -872,7 +872,7 @@ then
 	# If the string is going to be wider than the screen, trim it
 	# and mark the cut end with a < to indicate incompleteness.
 	#
-	tmp=`tput cols`
+	tmp=`tput cols 2>/dev/null || echo 80`
 	clear=`expr $tmp - ${limit:-0} - 1 + ${ccharf:-0}`
 	if [ "$clear" -gt 0 ]
 	then

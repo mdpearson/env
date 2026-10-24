@@ -146,4 +146,9 @@ then
 	fi
 fi
 
+if [ -f "${HOME}/.config/op/plugins.sh" ]
+then
+	. ~/.config/op/plugins.sh
+fi
+
 #EOF __TAGGED__

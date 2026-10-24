@@ -173,6 +173,9 @@ ANDROID_HOME=$HOME/Library/Android/sdk
 ANDROID_SDK_ROOT=$ANDROID_HOME
 export ANDROID_HOME ANDROID_SDK_ROOT
 
+GITHUB_TOKEN='op://Work/GitHub/token'
+export GITHUB_TOKEN
+
 if [ -r "${HOME}/.Xdefaults" ]
 then
 	XENVIRONMENT="${HOME}/.Xdefaults"

@@ -31,12 +31,18 @@
 [color]
 	ui = auto
 [commit]
-	gpgsign = true
+	# GitHub signs squash merges so signed commits don't last long
+	gpgsign = false
 [core]
 	autocrlf = input
 	editor = emacs
 	pager = cat
 	safecrlf = false
+[credential "https://github.com"]
+	# 1. clear out any helper that's set elsewhere (e.g. osxkeychain)
+	helper =
+	# 2. use gh auth and provide an absolute path so UI tools can do this too
+	helper = !\"$HOME/.local/bin/mise\" exec -- gh auth git-credential
 [diff]
 	mnemonicprefix = true
 	tool = "ksdiff"
@@ -74,6 +80,14 @@
 	verbose = true
 [tag]
 	gpgsign = true
+
+# use gh's login to fetch BIOS-Genomics repos over https
+[url "https://github.com/BIOS-Genomics/"]
+	insteadOf = git@github.com:BIOS-Genomics/
+# always push with ssh, which needs 1Password's approval
+[url "ssh://git@github.com/"]
+	pushInsteadOf = git@github.com:
+	pushInsteadOf = https://github.com/
 [user]
 	email = __G_USER_EMAIL__
 	name = __G_USER_TRUENAME__
@@ -95,7 +109,7 @@
 #
 
 [color "status"]
-    changed = yellow
+	changed = yellow
 
 #
 # Blue means local, or found text
@@ -128,7 +142,7 @@
 [color "diff"]
 	old = red
 [color "status"]
-    untracked = red
+	untracked = red
 
 #
 # Red reverse means error

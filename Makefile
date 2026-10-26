@@ -71,6 +71,13 @@ TARGETS = $(addprefix bin/exec/,$(SCRIPTS)) $(ALLDOTFILES) $(addprefix .vscode/$
 endif
 
 default: $(addprefix $(HOME)/,$(TARGETS)) vscode-register
+	@ for cmd in $(G_POST_MAKE); do \
+		cmd=`echo "$$cmd" | sed 's/___/ /g'`; \
+		if [ -x "$${cmd%% *}" ]; \
+		then \
+			$$cmd || exit 1; \
+		fi; \
+	done
 	@ echo "<done>"
 
 PREPARE = "mkdir -p $(@D); \
@@ -144,7 +151,7 @@ $(HOME)/.my.%: filter.sh $(CONF) base.%
 $(HOME)/.%: filter.sh $(CONF) base.%
 	-$(SHELL) -c $(PREPARE)
 	$(SHELL) $< $(CONF) base$(@F) > $@
-	chmod 444 $@
+	chmod 644 $@
 
 # generate a simple script to run this makefile
 $(HOME)/bin/exec/stub: Makefile $(CONF)
